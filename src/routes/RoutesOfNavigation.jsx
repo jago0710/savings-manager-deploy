@@ -1,35 +1,40 @@
-import {Routes, Route } from "react-router";
+import {Routes, Route, Navigate } from "react-router";
 import Home from "../pages/Home";
 import Landing from "../pages/auth/Landing";
+import Accounts from "../pages/Accounts";
 import Savings from "../pages/Savings";
 import Dashboard from "../pages/Dashboard";
 import Settings from "../pages/Settings";
-import Register from "../pages/Auth/Register";
 import LoginContext from "../context/LoginContext";
 import { useContext } from "react";
-import Login from "../pages/Auth/Login";
+import useUser from "../hook/useUser";
 
 export default function RoutesOfNavigation(){
+
+const user = useUser();
+
 
 const {isLogin} = useContext(LoginContext)
 console.log(isLogin);
 
     const getRoutes = () =>{
-        if (isLogin) {
+
+        if (user) {
             return(
                 <Routes>
                     <Route path="" element={<Home/>} />
-                    <Route path="movements" element={<Savings/>} />
+                    <Route path="home" element={<Home/>} />
+                    <Route path="savings" element={<Savings/>} />
+                    <Route path="savings/:count" element={<Savings/>} />
+                    <Route path="accounts" element={<Accounts/>}/>
                     <Route path="dashborad" element={<Dashboard/>} />
                     <Route path="settings" element={<Settings/>}/>
-                </Routes>   
+                </Routes>  
             )
         } else {
             return (
                 <Routes>
-                    <Route path="" element={<Landing/>} />
-                    <Route path="login" element={<Login/>} />
-                    <Route path="register" element={<Register/>} />
+                    <Route path="/" element={<Landing/>} />
                 </Routes>
             )
         }

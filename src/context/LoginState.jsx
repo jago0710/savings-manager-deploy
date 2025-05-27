@@ -2,7 +2,7 @@ import { useState } from "react";
 import LoginContext from "./LoginContext";
 
 const LoginState = (props) => {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
 
     const getLogin = () => {return(isLogin)}
 

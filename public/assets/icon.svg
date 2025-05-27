@@ -1,0 +1,48 @@
+<svg data-v-0dd9719b="" version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 340.000000 250.000000" preserveAspectRatio="xMidYMid meet" color-interpolation-filters="sRGB" style="margin: auto;">
+	<rect data-v-0dd9719b="" x="0" y="0" width="100%" height="100%" fill="transparent" fill-opacity="1" class="background">
+	</rect>
+	<g data-v-0dd9719b="" fill="#edb350" class="icon-text-wrapper icon-svg-group iconsvg" transform="translate(45.80000305175781,0.9315109252929688)">
+		<g class="iconsvg-imagesvg" transform="translate(0,0)">
+			<g>
+				<svg filter="url(#colors9094324446)" x="0" y="0" width="258.39999999999986" height="258.13697480670476" filtersec="colorsf354397515" class="image-svg-svg primary" style="overflow: visible;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.320877157651168e-10 0 66.20999908447266 66.13999938964844">
+						<path d="M9.09 0h48a9.12 9.12 0 0 1 9.09 9.09v.14c-.17 5.28-3.63 4.32-7.47 2.47-3.18-1.5-6.89-3.11-14.84-3.11-11.87 0-22.74 4.57-22.74 14.73 0 9 8.45 13.51 18.12 18.4 9 4.57 15.29 8.39 15.29 15 0 6-5.53 9-12.64 9-15.8 0-18.24-10.18-19.79-16.58-.76-3.14-1.08-3-1.08 0 0 9.17-.1 13.75-.31 17H9.09A9.12 9.12 0 0 1 0 57.12v-48A9.12 9.12 0 0 1 9.09 0zm57.12 30.1c0-8.39-10.1-19.57-19.54-19.57-6.52 0-11.18 3.1-11.18 8.23 0 6.5 6.21 9.14 17.61 15.21 5.31 2.79 10 5.37 13.11 8.58z" fill="#333" fill-rule="evenodd">
+						</path>
+					</svg>
+				</svg>
+				<defs>
+					<filter id="colors9094324446">
+						<feColorMatrix type="matrix" values="0 0 0 0 0.9921875  0 0 0 0 0.984375  0 0 0 0 0.98046875  0 0 0 1 0" class="icon-fecolormatrix">
+						</feColorMatrix>
+					</filter>
+					<filter id="colorsf354397515">
+						<feColorMatrix type="matrix" values="0 0 0 0 0.99609375  0 0 0 0 0.99609375  0 0 0 0 0.99609375  0 0 0 1 0" class="icon-fecolormatrix">
+						</feColorMatrix>
+					</filter>
+					<filter id="colorsb3514179849">
+						<feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" class="icon-fecolormatrix">
+						</feColorMatrix>
+					</filter>
+				</defs>
+			</g>
+		</g>
+		<g transform="translate(124.19999694824219,257.13697814941406)">
+			<g data-gra="path-name" fill-rule="evenodd" class="tp-name iconsvg-namesvg">
+				<g transform="scale(1)">
+					<g>
+						<path d="" transform="translate(0, 0)">
+						</path>
+					</g>
+					<g data-gra="path-name-1" fill="#edb350" transform="translate(3,0)">
+						<g transform="scale(1)">
+							<path d="" transform="translate(0, 0)">
+							</path>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<defs v-gra="od">
+	</defs>
+</svg>

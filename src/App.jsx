@@ -1,5 +1,5 @@
 import RoutesOfNavigation from "./routes/RoutesOfNavigation";
-import LoginContext from "./context/LoginContext";
+import LoginContext from "./context/LoginContext"; // --> También es valido para utilizar el context
 import { BrowserRouter } from "react-router";
 import LoginState from "./context/LoginState";
 
