@@ -31,7 +31,7 @@ export default function Savings() {
           setCountSavings({ ...docData, movements });
           console.log("-------", docData.movements[docData.movements.length - 1].total);
           
-          setTotalMoney(docData.movements[docData.movements.length - 1].total);
+          setTotalMoney(parseFloat(docData.movements[docData.movements.length - 1].total));
         }
 
       } catch (error) {
