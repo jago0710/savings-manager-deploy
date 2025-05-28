@@ -101,9 +101,6 @@ export default function Savings() {
         movements: arrayUnion(newMovement),
         total: parseFloat(totalMoney) // opcional: actualizas también el saldo
       })
-      .then(
-        location.reload()
-      );
 
       console.log("✅ Movimiento agregado correctamente.");
     } else {
