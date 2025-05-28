@@ -42,7 +42,7 @@ export default function Savings() {
     if (!isNaN(countParse)) {
       getDates();
     }
-  }, [countParse, totalMoney]);
+  }, [countParse]);
 
   console.log("DATES-COUNT",countSavings);
   
