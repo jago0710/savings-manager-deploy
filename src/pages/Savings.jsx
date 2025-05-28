@@ -23,14 +23,17 @@ export default function Savings() {
     const getDates = async () => {
       try {
         const q = query(collection(db, "ACCOUNTS"), where("number", "==", countParse));
-        const querySnapshot = await getDocs(q);
-
+        const querySnapshot = await getDocs(q)
+        
         if (!querySnapshot.empty) {
           const docData = querySnapshot.docs[0].data();
           const movements = Array.isArray(docData.movements) ? docData.movements : [];
           setCountSavings({ ...docData, movements });
-          setTotalMoney(docData.movements[docData.movements.length].total); // asumiendo que tienes un balance
+          console.log("-------", docData.movements[docData.movements.length - 1].total);
+          
+          setTotalMoney(docData.movements[docData.movements.length - 1].total);
         }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
