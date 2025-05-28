@@ -84,7 +84,7 @@ export default function Savings() {
     setInputValue("");
     // Aquí podrías agregar la lógica para actualizar en Firebase también
 
-    location.reload();
+    
   };
 
   const addMovementToFirestore = async (newMovement) => {
@@ -100,7 +100,10 @@ export default function Savings() {
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
         total: parseFloat(totalMoney) // opcional: actualizas también el saldo
-      });
+      })
+      .then(
+        location.reload()
+      );
 
       console.log("✅ Movimiento agregado correctamente.");
     } else {
