@@ -29,7 +29,7 @@ export default function Savings() {
           const docData = querySnapshot.docs[0].data();
           const movements = Array.isArray(docData.movements) ? docData.movements : [];
           setCountSavings({ ...docData, movements });
-          setTotalMoney(docData.total || 0); // asumiendo que tienes un balance
+          setTotalMoney(docData.total); // asumiendo que tienes un balance
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -50,6 +50,7 @@ export default function Savings() {
       alert("Por favor ingresa un valor distinto de 0");
       return;
     }
+
     if (amount < 0) {
       if (!confirm("¿Estás seguro que quieres sacar dinero?")) {
         setInputValue("");
@@ -82,6 +83,8 @@ export default function Savings() {
 
     setInputValue("");
     // Aquí podrías agregar la lógica para actualizar en Firebase también
+
+    location.reload();
   };
 
   const addMovementToFirestore = async (newMovement) => {
@@ -146,8 +149,7 @@ export default function Savings() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
-              <button
-                className="bg-black text-white p-2 rounded-lg"
+              <button className="bg-black text-white p-2 rounded-lg"
                 onClick={saveValue}
                 type="button"
               >
