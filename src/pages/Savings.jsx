@@ -29,7 +29,7 @@ export default function Savings() {
           const docData = querySnapshot.docs[0].data();
           const movements = Array.isArray(docData.movements) ? docData.movements : [];
           setCountSavings({ ...docData, movements });
-          setTotalMoney(docData.total); // asumiendo que tienes un balance
+          setTotalMoney(docData.movements[docData.movements.length].total); // asumiendo que tienes un balance
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -39,7 +39,7 @@ export default function Savings() {
     if (!isNaN(countParse)) {
       getDates();
     }
-  }, [countParse]);
+  }, [countParse, totalMoney]);
 
   console.log("DATES-COUNT",countSavings);
   
@@ -83,8 +83,6 @@ export default function Savings() {
 
     setInputValue("");
     // Aquí podrías agregar la lógica para actualizar en Firebase también
-
-    
   };
 
   const addMovementToFirestore = async (newMovement) => {
