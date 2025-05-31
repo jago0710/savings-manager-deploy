@@ -53,7 +53,7 @@ export default function Accounts(){
 
     return(
         <>
-            <div className="flex">
+            <div className="sm:grid md:flex">
                 <Navbar />
                 <div  className="w-full mx-5">
                     <h1>ACCOUNTS</h1>

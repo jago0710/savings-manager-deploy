@@ -124,9 +124,9 @@ export default function Savings() {
   }
 
   return (
-    <section className="sm:grid md:flex border-5 border-red-700">
+    <section className="sm:grid md:flex">
       <Navbar />
-      <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full border-5 border-b-blue-700">
+      <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>

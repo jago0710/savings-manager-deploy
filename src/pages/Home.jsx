@@ -8,7 +8,7 @@ console.log("=>=>=>=> ",user);
 
     return(
         <>
-           <div className="flex">
+           <div className="sm:grid md:flex">
                 <Navbar/>
                 <div className="bg-neutral-200 b-1 w-full">
                     <h1>Bienvenid@ {user.displayName}</h1>

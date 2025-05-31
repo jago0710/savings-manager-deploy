@@ -21,7 +21,7 @@ export default function Navbar() {
     <>
       {/* Mobile top bar */}
       <div className="md:hidden h-6 p-4 flex justify-between items-center bg-white border-b">
-        <button onClick={() => setOpen(!open)} className="p-2 rounded-lg border">
+        <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
           <Menu className="h-5 w-5" />
         </button>
         <p className="text-xl font-bold ">/SAVINGS BANK</p>
@@ -32,7 +32,7 @@ export default function Navbar() {
         <section
           className={`${
             open ? "block" : "hidden"
-          } md:block w-64 bg-white border-r border-r-neutral-300 p-4  md:static`}
+          } md:block h-screen w-full md:w-68 bg-white border-r border-r-neutral-300 p-4  md:static`}
         >
             <div className="mb-4">
                 <h1 className="ml-2 text-2xl font-bold mb-2">/SAVINGS BANK</h1>
