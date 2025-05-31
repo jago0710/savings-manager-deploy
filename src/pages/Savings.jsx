@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { db } from "../firebase/database.jsx";
-import { addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import useUser from "../hook/useUser.jsx";
 import { useParams } from "react-router";
 
@@ -103,12 +103,12 @@ export default function Savings() {
         total: parseFloat(totalMoney) // opcional: actualizas también el saldo
       })
 
-      console.log("✅ Movimiento agregado correctamente.");
+      console.log("Movimiento agregado correctamente.");
     } else {
-      console.error("❌ No se encontró la cuenta.");
+      console.error("No se encontró la cuenta.");
     }
   } catch (error) {
-    console.error("❌ Error al agregar movimiento:", error);
+    console.error("Error al agregar movimiento:", error);
   }
 };
 
@@ -124,9 +124,9 @@ export default function Savings() {
   }
 
   return (
-    <section className="flex">
+    <section className="sm:grid md:flex border-5 border-red-700">
       <Navbar />
-      <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full ">
+      <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full border-5 border-b-blue-700">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
@@ -141,7 +141,7 @@ export default function Savings() {
           </div>
           <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col">
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1">
               <label>Ingresa una cantidad:</label>
               <input
                 className="border py-2 rounded-lg text-xl font-medium text-center"

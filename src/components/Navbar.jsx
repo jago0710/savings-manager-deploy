@@ -27,7 +27,7 @@ export default function Navbar() {
         <p className="text-xl font-bold ">/SAVINGS BANK</p>
       </div>
 
-      <div className="flex min-h-screen">
+      <div className="flex md:min-h-screen">
         {/* Sidebar */}
         <section
           className={`${

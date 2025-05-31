@@ -18,7 +18,7 @@ export function LoginGoogle(){
 
    //Function for add user, for create user
    const addUserInDataBase = (user) => {
-  
+      
       const newUser = {}
       newUser.uid = user.uid
       newUser.email = user.email
