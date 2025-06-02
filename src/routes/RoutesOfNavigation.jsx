@@ -22,7 +22,7 @@ console.log(isLogin);
         if (user) {
             return(
                 <Routes>
-                    <Route path="" element={<Home/>} />
+                    <Route path="*" element={<Home/>} />
                     <Route path="home" element={<Home/>} />
                     <Route path="savings" element={<Savings/>} />
                     <Route path="savings/:count" element={<Savings/>} />
@@ -34,7 +34,7 @@ console.log(isLogin);
         } else {
             return (
                 <Routes>
-                    <Route path="/" element={<Landing/>} />
+                    <Route path="*" element={<Landing/>} />
                 </Routes>
             )
         }

@@ -11,7 +11,6 @@ export default function Navbar() {
   const routes = [
     { href: "/home", label: "Inicio", icon: Home },
     { href: "/accounts", label: "Cuentas", icon: Wallet },
-    { href: "/savings", label: "Ahorros", icon: CreditCard },
     { href: "/dashborad", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
     { label: "Cerrar cuenta", icon: LogOut },
@@ -29,14 +28,14 @@ export default function Navbar() {
 
       <div className="flex md:min-h-screen">
         {/* Sidebar */}
-        <section
+        <div
           className={`${
             open ? "block" : "hidden"
           } md:block h-screen w-full md:w-68 bg-white border-r border-r-neutral-300 p-4  md:static`}
         >
             <div className="mb-4">
                 <h1 className="ml-2 text-2xl font-bold mb-2">/SAVINGS BANK</h1>
-                <i className="text-gray-700 font-bold ml-2 m-10 text-nowrap">Bienvenido {user.displayName}</i>
+                <p className="text-gray-700 font-bold ml-2 text-ellipsis truncate">Bienvenido {user.displayName}</p>
             </div>
           <nav className="flex flex-col gap-3">
             {routes.map(({ href, label, icon : Icon }, index) => (
@@ -56,7 +55,7 @@ export default function Navbar() {
             ))}
            
           </nav>
-        </section>
+        </div>
       </div>
     </>
   );

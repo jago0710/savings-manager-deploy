@@ -4,6 +4,9 @@ import { db } from "../firebase/database.jsx";
 import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import useUser from "../hook/useUser.jsx";
 import { useParams } from "react-router";
+import { InputText } from 'primereact/inputtext';
+import { Menu } from "primereact/menu";
+         
 
 export default function Savings() {
   const user = useUser();
@@ -126,6 +129,7 @@ export default function Savings() {
   return (
     <section className="sm:grid md:flex">
       <Navbar />
+      <Menu  className="w-full md:w-15rem"  />
       <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
@@ -156,6 +160,7 @@ export default function Savings() {
               >
                 Registrar
               </button>
+              <InputText type="text" className="p-inputtext-sm" placeholder="normal" />
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-2">
               {[5, 10, 20, 50].map((num) => (

@@ -7,17 +7,23 @@ import { LucideX } from "lucide-react";
 import { createAccount, ExistAccountInDataBase } from "../firebase/database";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/database";
+import { Button } from 'primereact/button';
+import { Chips } from "primereact/chips";
+
+
 export default function Accounts(){
     const currentUser = useUser();
 
     const [showForm, setShowForm ] = useState(false);
     const [numberAccount, setNumberAccount] = useState(Math.floor(Math.random() * 10000000000000000));
     const [cards, setCards] = useState([]);
+    const [owners, setOwners] = useState([]);
 
+    
 
     useEffect(() => {
         const fetchCards = async () => {
-          const q = query(collection(db, "ACCOUNTS"), where("owners", "==", currentUser.email));
+          const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email));
           const querySnapshot = await getDocs(q);
           const cardsData = querySnapshot.docs.map(doc => doc.data());
           setCards(cardsData);
@@ -31,18 +37,18 @@ export default function Accounts(){
             console.log("Ya existe una cuenta con esta id")
             setShowForm(false)
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-        } else {            
+        } else {     
+            setOwners(...owners, currentUser.email)    
             const newAccount = {}
             newAccount.number = numberAccount
             newAccount.createAccount = new Date().toLocaleDateString()
-            newAccount.owners = currentUser.email
-            newAccount.movements = [{   user: currentUser.displayName,
+            newAccount.owners = owners
+            newAccount.movements = [{ user: currentUser.displayName,
                 "date": new Date().toLocaleDateString(),
                 description: "Apertura",
                 amount: 0,
                 total: 0,
                 }]
-            newAccount.total = 0
             createAccount(newAccount)
             console.log("Creado con exito ", numberAccount);
             setShowForm(false)
@@ -57,7 +63,6 @@ export default function Accounts(){
                 <Navbar />
                 <div  className="w-full mx-5">
                     <h1>ACCOUNTS</h1>
-                    <p hidden>Para compartir un cuenta con alguien, solo tiene que enviar el número de cuenta y ellos lo podrán ingresar en su cuenta.</p>
                     <div className="flex flex-wrap gap-7 py-5">
                         <div className="flex flex-wrap gap-4">
                               {cards.map((card, index) => (
@@ -74,6 +79,9 @@ export default function Accounts(){
                             </div>
                             <CardBank title="Nueva tarjeta" number={numberAccount} createDate={new Date().toLocaleDateString()}/>
                             <button type="button" onClick={addAccountInDataBase} className="bg-black hover:bg-neutral-800 text-white py-4 px-8 rounded-xl">Crear nueva tarjeta</button>
+                             <Chips className="text-wrap" value={owners} onChange={(e) => setOwners(e.value)} />
+                            <Button label="Crear nueva cuenta" severity="primary" icon="pi pi-credit-card" text raised />
+                            <Button label="Añadir cuenta existente" severity="secondary" icon="pi pi-credit-card" text raised />
                         </div>
                     </div>
                 </div>
