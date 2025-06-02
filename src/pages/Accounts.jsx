@@ -80,7 +80,7 @@ export default function Accounts(){
                               ))}
                         </div>
                         <CardNew click={setShowForm} value={!showForm}/>
-                        <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border absolute w-[230] h-full bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
+                        <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border absolute w-[430] h-full bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
                             <div className="flex justify-between px-2 items-center border-b pb-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
                                 <button className="duration-500 hover:rotate-90"  onClick={() => setShowForm(!showForm)}>
