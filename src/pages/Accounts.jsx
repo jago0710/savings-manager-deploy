@@ -13,7 +13,8 @@ import { Chips } from "primereact/chips";
 
 export default function Accounts(){
     const currentUser = useUser();
-
+    const emailCurrentUser = currentUser.email;
+    
     const [showForm, setShowForm ] = useState(false);
     const [numberAccount, setNumberAccount] = useState(Math.floor(Math.random() * 10000000000000000));
     const [cards, setCards] = useState([]);
@@ -37,23 +38,32 @@ export default function Accounts(){
             console.log("Ya existe una cuenta con esta id")
             setShowForm(false)
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-        } else {     
-            setOwners(...owners, currentUser.email)    
-            const newAccount = {}
-            newAccount.number = numberAccount
-            newAccount.createAccount = new Date().toLocaleDateString()
-            newAccount.owners = owners
-            newAccount.movements = [{ user: currentUser.displayName,
-                "date": new Date().toLocaleDateString(),
+        } else {   
+            if (emailCurrentUser) {
+                const updatedOwners = [...owners, emailCurrentUser]
+                setOwners(updatedOwners)
+
+                const newAccount = {}
+                newAccount.number = numberAccount
+                newAccount.createAccount = new Date().toLocaleDateString()
+                newAccount.owners = updatedOwners
+                newAccount.movements = [{
+                user: currentUser.displayName,
+                date: new Date().toLocaleDateString(),
                 description: "Apertura",
                 amount: 0,
                 total: 0,
-                }]
-            createAccount(newAccount)
-            console.log("Creado con exito ", numberAccount);
-            setShowForm(false)
-            setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-            setCards([])
+            }]
+
+        createAccount(newAccount)
+        console.log("Creado con éxito", numberAccount)
+        setShowForm(false)
+        setNumberAccount(Math.floor(Math.random() * 10000000000000000))
+        setCards([])
+        setOwners([])
+} else {
+    console.log("No hay emailCurrentUser")
+}
         }
     }
 
