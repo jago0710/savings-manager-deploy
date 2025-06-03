@@ -9,12 +9,13 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/database";
 import { Button } from 'primereact/button';
 import { Chips } from "primereact/chips";
+import { FloatLabel } from 'primereact/floatlabel';
+
 
 
 export default function Accounts(){
     const currentUser = useUser();
-    const emailCurrentUser = currentUser.email;
-    
+
     const [showForm, setShowForm ] = useState(false);
     const [numberAccount, setNumberAccount] = useState(Math.floor(Math.random() * 10000000000000000));
     const [cards, setCards] = useState([]);
@@ -38,38 +39,29 @@ export default function Accounts(){
             console.log("Ya existe una cuenta con esta id")
             setShowForm(false)
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-        } else {   
-            if (emailCurrentUser) {
-                const updatedOwners = [...owners, emailCurrentUser]
-                setOwners(updatedOwners)
-
-                const newAccount = {}
-                newAccount.number = numberAccount
-                newAccount.createAccount = new Date().toLocaleDateString()
-                newAccount.owners = updatedOwners
-                newAccount.movements = [{
-                user: currentUser.displayName,
-                date: new Date().toLocaleDateString(),
+        } else {     
+            setOwners(...owners, currentUser.email)    
+            const newAccount = {}
+            newAccount.number = numberAccount
+            newAccount.createAccount = new Date().toLocaleDateString()
+            newAccount.owners = owners
+            newAccount.movements = [{ user: currentUser.displayName,
+                "date": new Date().toLocaleDateString(),
                 description: "Apertura",
                 amount: 0,
                 total: 0,
-            }]
-
-        createAccount(newAccount)
-        console.log("Creado con éxito", numberAccount)
-        setShowForm(false)
-        setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-        setCards([])
-        setOwners([])
-} else {
-    console.log("No hay emailCurrentUser")
-}
+                }]
+            createAccount(newAccount)
+            console.log("Creado con exito ", numberAccount);
+            setShowForm(false)
+            setNumberAccount(Math.floor(Math.random() * 10000000000000000))
+            setCards([])
         }
     }
 
     return(
         <>
-            <div className="sm:grid md:flex">
+            <section className="sm:grid md:flex">
                 <Navbar />
                 <div  className="w-full mx-5">
                     <h1>ACCOUNTS</h1>
@@ -80,7 +72,7 @@ export default function Accounts(){
                               ))}
                         </div>
                         <CardNew click={setShowForm} value={!showForm}/>
-                        <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border absolute w-[430] h-full bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
+                        <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border absolute w-[230] h-full bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
                             <div className="flex justify-between px-2 items-center border-b pb-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
                                 <button className="duration-500 hover:rotate-90"  onClick={() => setShowForm(!showForm)}>
@@ -88,14 +80,17 @@ export default function Accounts(){
                                 </button>
                             </div>
                             <CardBank title="Nueva tarjeta" number={numberAccount} createDate={new Date().toLocaleDateString()}/>
+                            <FloatLabel>
+                                <Chips id="miembros" className="border" value={owners} onChange={(e) => setOwners(e.value)} />
+                                <label htmlFor="miembros">Miembros...</label>
+                            </FloatLabel> 
                             <button type="button" onClick={addAccountInDataBase} className="bg-black hover:bg-neutral-800 text-white py-4 px-8 rounded-xl">Crear nueva tarjeta</button>
-                             <Chips className="text-wrap" value={owners} onChange={(e) => setOwners(e.value)} />
                             <Button label="Crear nueva cuenta" severity="primary" icon="pi pi-credit-card" text raised />
                             <Button label="Añadir cuenta existente" severity="secondary" icon="pi pi-credit-card" text raised />
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     )
 }

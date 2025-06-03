@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Home, Wallet, CreditCard, Settings, Menu, LayoutDashboard, LogOut } from "lucide-react";
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
+import { Chip } from "primereact/chip";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -33,9 +34,9 @@ export default function Navbar() {
             open ? "block" : "hidden"
           } md:block h-screen w-full md:w-68 bg-white border-r border-r-neutral-300 p-4  md:static`}
         >
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col gap-2">
                 <h1 className="ml-2 text-2xl font-bold mb-2">/SAVINGS BANK</h1>
-                <p className="text-gray-700 font-bold ml-2 text-ellipsis truncate">Bienvenido {user.displayName}</p>
+                <Chip label={user.displayName} image={user.photoURL}/>
             </div>
           <nav className="flex flex-col gap-3">
             {routes.map(({ href, label, icon : Icon }, index) => (

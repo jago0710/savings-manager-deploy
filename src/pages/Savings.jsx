@@ -6,6 +6,8 @@ import useUser from "../hook/useUser.jsx";
 import { useParams } from "react-router";
 import { InputText } from 'primereact/inputtext';
 import { Menu } from "primereact/menu";
+import { ProgressSpinner } from 'primereact/progressspinner';
+        
          
 
 export default function Savings() {
@@ -18,9 +20,9 @@ export default function Savings() {
   
   
 
-  const [countSavings, setCountSavings] = useState(null); // objeto cuenta o null
+  const [countSavings, setCountSavings] = useState(null); 
   const [totalMoney, setTotalMoney] = useState(0);
-  const [inputValue, setInputValue] = useState(0); // input controlado
+  const [inputValue, setInputValue] = useState(0); 
 
   useEffect(() => {
     const getDates = async () => {
@@ -103,7 +105,7 @@ export default function Savings() {
       // Paso 2: agregamos el nuevo movimiento al array
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
-        total: parseFloat(totalMoney) // opcional: actualizas también el saldo
+        total: parseFloat(totalMoney) //actualizas también el saldo
       })
 
       console.log("Movimiento agregado correctamente.");
@@ -117,10 +119,10 @@ export default function Savings() {
 
   if (!countSavings) {
     return (
-      <section className="flex">
+      <section className="sm:grid md:flex">
         <Navbar />
-        <div>
-          <h3>Selecciona la cuenta que quieres ver</h3>
+        <div className="h-screen w-full flex justify-center items-center">
+          <ProgressSpinner/>
         </div>
       </section>
     );
@@ -129,7 +131,7 @@ export default function Savings() {
   return (
     <section className="sm:grid md:flex">
       <Navbar />
-      <Menu  className="w-full md:w-15rem"  />
+      <Menu className="w-full md:w-15rem" />
       <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
