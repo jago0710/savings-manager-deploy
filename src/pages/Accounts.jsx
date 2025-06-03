@@ -50,23 +50,32 @@ export default function Accounts(){
             setShowForm(false)
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
         } else {     
-            setOwners(...owners, currentUser.email)    
-            const newAccount = {}
-            newAccount.number = numberAccount
-            newAccount.createAccount = new Date().toLocaleDateString()
-            newAccount.owners = owners
-            newAccount.color = colorCard
-            newAccount.movements = [{ user: currentUser.displayName,
-                "date": new Date().toLocaleDateString(),
+            if (currentUser.email) {
+                const updatedOwners = [...owners, currentUser.email]
+                setOwners(updatedOwners)
+
+                const newAccount = {}
+                newAccount.number = numberAccount
+                newAccount.createAccount = new Date().toLocaleDateString()
+                newAccount.owners = updatedOwners
+                newAccount.color = colorCard
+                newAccount.movements = [{
+                user: currentUser.displayName,
+                date: new Date().toLocaleDateString(),
                 description: "Apertura",
                 amount: 0,
                 total: 0,
-                }]
-            createAccount(newAccount)
-            console.log("Creado con exito ", numberAccount);
-            setShowForm(false)
-            setNumberAccount(Math.floor(Math.random() * 10000000000000000))
-            setCards([])
+            }]
+
+                createAccount(newAccount)
+                console.log("Creado con éxito", numberAccount)
+                setShowForm(false)
+                setNumberAccount(Math.floor(Math.random() * 10000000000000000))
+                setCards([])
+                setOwners([])
+            } else {
+                console.log("No hay emailCurrentUser")
+            }
         }
     }
 
