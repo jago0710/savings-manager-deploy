@@ -96,7 +96,7 @@ export default function Accounts(){
                             </div>
                             <CardBank title="Nueva tarjeta" color={colorCard} redirect={false} number={numberAccount} createDate={new Date().toLocaleDateString()}/>
                             <FloatLabel>
-                                <Chips id="miembros" className="w-80 border" value={owners} onChange={(e) => setOwners(e.value)} />
+                                <Chips id="miembros" value={owners} onChange={(e) => setOwners(e.value)} />
                                 <label htmlFor="miembros">Miembros...</label>
                             </FloatLabel> 
                             <ColorPicker format="rgb" value={colorRGB} onChange={changeColorCard} />
