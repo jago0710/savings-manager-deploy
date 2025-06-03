@@ -214,7 +214,7 @@ export default function Savings() {
                       currency: "EUR",
                     }).format(parseFloat(movement.total))}
                   </p>
-                  <p>{movement.user}</p>
+                  <p className="truncate">{movement.user}</p>
                 </div>
               ))
             ) : (
