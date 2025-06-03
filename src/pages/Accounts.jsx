@@ -55,6 +55,7 @@ export default function Accounts(){
             newAccount.number = numberAccount
             newAccount.createAccount = new Date().toLocaleDateString()
             newAccount.owners = owners
+            newAccount.color = colorCard
             newAccount.movements = [{ user: currentUser.displayName,
                 "date": new Date().toLocaleDateString(),
                 description: "Apertura",
@@ -83,7 +84,7 @@ export default function Accounts(){
                     <div className="flex flex-wrap gap-7 py-5">
                         <div className="flex flex-wrap gap-4">
                               {cards ? cards.map((card, index) => (
-                                <CardBank key={index} number={card.number} />
+                                <CardBank key={index} number={card.number} color={card.color}/>
                               )) : <ProgressSpinner />}
                         </div>
                         <CardNew click={setShowForm} value={!showForm}/>
