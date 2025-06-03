@@ -1,7 +1,7 @@
-export default function CardBank({title="SAVINGS BANK",number = "424242424242", createDate = "mastercard", color = "0,0,255", description="Viaje"}) {
+export default function CardBank({title="SAVINGS BANK",number = "424242424242", createDate = "mastercard", color = "0,0,255", description="Viaje", redirect = true}) {
   const backgroundImage = `linear-gradient(150deg, rgba(${color},0.33) 12%, rgba(${color},0.43) 31%, rgba(${color},0.23) 52%)`;
   return(
-        <a href={"/savings/" + number }
+        <a href={redirect ? "/savings/" + number : redirect }
   className="relative h-[203px] aspect-[1.579] rounded-xl overflow-hidden flex items-center justify-center font-[Trebuchet_MS] transition-all duration-300 ease-in hover:rotate-[1deg] hover:rotate-y-[10deg] hover:scale-105 hover:shadow-[0_9px_9px_#ddc]"
 >
   {/**<!-- Esta linea define el color de la tarjeta en el radial --> */}
@@ -29,12 +29,12 @@ export default function CardBank({title="SAVINGS BANK",number = "424242424242", 
           >
             {title}
           </p>
-          <p
+          <div
             className="select-none absolute top-[115px] left-[1.2rem] text-[1em] text-white text-opacity-75 text-shadow flex flex-col gap-2"
           >
             <p>{description}</p>
             <p>{number}</p>
-          </p>
+          </div>
           <p
             className="absolute bottom-[0.25em] right-[0.8em] text-[0.75em] text-white text-opacity-75 text-shadow select-none"
           >
