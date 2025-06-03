@@ -1,2 +1,4 @@
 @import "tailwindcss";
 @plugin "@midudev/tailwind-animations";
+@import 'primeicons/primeicons.css';
+        

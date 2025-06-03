@@ -15,7 +15,7 @@ const user = useUser();
 
 
 const {isLogin} = useContext(LoginContext)
-console.log(isLogin);
+console.log("IS LOGIN", isLogin);
 
     const getRoutes = () =>{
 

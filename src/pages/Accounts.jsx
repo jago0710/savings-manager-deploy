@@ -88,15 +88,17 @@ export default function Accounts(){
         <>
             <section className="sm:grid md:flex">
                 <Navbar />
-                <div  className="w-full mx-5">
-                    <h1>ACCOUNTS</h1>
-                    <div className="flex flex-wrap gap-7 py-5">
+                <div className="w-full">
+                    <div className="w-full py-5 px-7 text-xl border-b border-b-gray-200">
+                        <h1 className="font-bold font-sans">CUENTAS DE AHORRO </h1>
+                    </div>
+                    <div className="flex flex-wrap gap-7 p-5">
                         <div className="flex flex-wrap gap-4">
                               {cards ? cards.map((card, index) => (
                                 <CardBank key={index} number={card.number} color={card.color}/>
                               )) : <ProgressSpinner />}
-                        </div>
                         <CardNew click={setShowForm} value={!showForm}/>
+                        </div>
                         <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border fixed h-screen bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
                             <div className="flex justify-between px-2 items-center border-b pb-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>

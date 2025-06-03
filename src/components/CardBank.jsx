@@ -19,7 +19,7 @@ export default function CardBank({title="SAVINGS BANK",number = "424242424242", 
       className="h-[12.5em] aspect-[1.586] rounded-xl  opacity-95"
     >
       <div
-        className="relative w-full h-full rounded-[0.85em] border border-[#fff]"
+        className="relative w-full h-full rounded-[0.85em] border border-[transparent]"
       >
         <div
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[12em] aspect-[1.604] rounded-[0.6em] shadow-[-1px_-1px_0_#ddd]"
@@ -44,9 +44,11 @@ export default function CardBank({title="SAVINGS BANK",number = "424242424242", 
           {/**<!-- Círculos Mastercard --> */}
           <div
             className="absolute bottom-[1.25em] right-[2em] w-[2.5em] h-[2.5em] rounded-full text-white"
+            style={{ backgroundImage }}
           ></div>
           <div
             className="absolute bottom-[1.25em] right-[0.5em] w-[2.5em] h-[2.5em] rounded-full text-white"
+            style={{ backgroundImage }}
           ></div>
 
           {/**<!-- Chip --> */}

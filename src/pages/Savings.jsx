@@ -7,6 +7,11 @@ import { useParams } from "react-router";
 import { InputText } from 'primereact/inputtext';
 import { Menu } from "primereact/menu";
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { FloatLabel } from "primereact/floatlabel";
+import { InputNumber } from "primereact/inputnumber";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
         
          
 
@@ -22,7 +27,14 @@ export default function Savings() {
 
   const [countSavings, setCountSavings] = useState(null); 
   const [totalMoney, setTotalMoney] = useState(0);
-  const [inputValue, setInputValue] = useState(0); 
+  const [inputValue, setInputValue] = useState();
+  const [showDialog, setShowDialog] = useState(false);
+  const [typeMovement, setTypeMovement] = useState("Ingresar")
+
+  const movementsOptions = [
+    {label: "Ingresar", value: "Ingresar"},
+    {label: "Retirar", value: "Retirar"}
+  ]
 
   useEffect(() => {
     const getDates = async () => {
@@ -55,7 +67,7 @@ export default function Savings() {
   const saveValue = () => {
     const amount = parseFloat(inputValue);
     if (isNaN(amount) || amount === 0) {
-      alert("Por favor ingresa un valor distinto de 0");
+      setShowDialog(!showDialog);
       return;
     }
 
@@ -66,16 +78,27 @@ export default function Savings() {
       }
     }
 
+    let newTotal = null;
+
     // Actualizar totalMoney
-    const newTotal = totalMoney + amount;
-    setTotalMoney(newTotal);
+    if (typeMovement === "Retirar") {
+      newTotal = totalMoney - amount;
+      setTotalMoney(newTotal);
+    } else if (typeMovement === "Ingresar"){
+      newTotal = totalMoney + amount;
+      setTotalMoney(newTotal);
+    } else {
+      console.log("No se sumo ni resto el valor");
+      
+    }
+
 
     // Crear nuevo movimiento
     const today = new Date();
     const newMovement = {
       date: today.toLocaleDateString(),
-      description: amount < 0 ? "Retiro" : "Ingreso",
-      amount: amount.toFixed(2),
+      description: typeMovement,
+      amount: typeMovement === "Ingresar" ? amount.toFixed(2) : -amount.toFixed(2),
       total: newTotal.toFixed(2),
       "user": user?.displayName || "Anónimo",
     };
@@ -122,7 +145,7 @@ export default function Savings() {
       <section className="sm:grid md:flex">
         <Navbar />
         <div className="h-screen w-full flex justify-center items-center">
-          <ProgressSpinner/>
+          <ProgressSpinner />
         </div>
       </section>
     );
@@ -131,8 +154,12 @@ export default function Savings() {
   return (
     <section className="sm:grid md:flex">
       <Navbar />
-      <Menu className="w-full md:w-15rem" />
-      <div className="flex flex-col gap-4 lg:gap-7 lg:m-8 w-full">
+      <div className="flex flex-col w-full">
+        <div className="w-full py-5 px-7 flex gap-1 text-xl border-b border-b-gray-200">
+        <h1 className="font-bold font-sans">CUENTA:</h1>
+        <p>{count}</p>
+      </div>
+      <div className="flex flex-col gap-4 lg:gap-7 w-full p-7">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
@@ -145,37 +172,34 @@ export default function Savings() {
             </b>
             <p className="text-gray-600">Nº de cuenta: {count}</p>
           </div>
+          {/**ACCIONES RÁPIDAS PAR INGRESAR DINERO O RETIRAR */}
           <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col">
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
-            <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1">
-              <label>Ingresa una cantidad:</label>
-              <input
-                className="border py-2 rounded-lg text-xl font-medium text-center"
-                type="number"
-                placeholder="Ingresa una cantidad..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              <button className="bg-black text-white p-2 rounded-lg"
-                onClick={saveValue}
-                type="button"
-              >
-                Registrar
-              </button>
-              <InputText type="text" className="p-inputtext-sm" placeholder="normal" />
+            <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
+              <div className="flex gap-3 items-center">
+                <Dropdown value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label" className="h-18 w-full md:w-14rem" />
+                <FloatLabel className="my-2">
+                  <InputNumber className="p-inputtext-lg w-full h-18" placeholder="Ingresa una cantidad..." inputId="cantidad" value={inputValue} onValueChange={(e) => setInputValue(e.value)} 
+                  showButtons buttonLayout="horizontal" step={10}
+                      decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="EUR" locale="es-ES" />
+                  <label htmlFor="cantidad" className="text-xl pl-12">Cantidad</label>
+                </FloatLabel>
+              </div>
+              <Button className="shadow-blue-600" type="submit" label="Registrar" severity="secondary" text raised onClick={saveValue}/>
+              <Dialog header="Upps... " visible={showDialog} maximizable style={{ width: '23vw' }} onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
+                <p className="m-0">
+                    Puede que el valor que hayas ingresado sea un 0. <br /><br />
+                    O uno de estos valores: Simbolos, Caracteres, Letras.
+                </p>
+            </Dialog>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-2">
               {[5, 10, 20, 50].map((num) => (
-                <button
-                  key={num}
-                  className="rounded-lg border py-2 transition duration-200 hover:font-bold lg:hover:scale-110"
-                  onClick={() => setInputValue(num.toString())}
-                >
-                  {Intl.NumberFormat("es-ES", {
+                <Button key={num} onClick={() => setInputValue(num.toString())}  className="py-2 transition duration-200 hover:font-bold lg:hover:scale-110" type="submit" 
+                label={Intl.NumberFormat("es-ES", {
                     style: "currency",
                     currency: "EUR",
-                  }).format(num)}
-                </button>
+                  }).format(num)} severity="secondary" text raised></Button>
               ))}
             </div>
           </div>
@@ -222,6 +246,7 @@ export default function Savings() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
