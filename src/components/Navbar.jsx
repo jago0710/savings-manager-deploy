@@ -17,14 +17,15 @@ export default function Navbar() {
     { label: "Cerrar cuenta", icon: LogOut },
   ];
 
+
   return (
     <>
       {/* Mobile top bar */}
-      <div className="md:hidden h-6 p-4 flex justify-between items-center bg-white border-b">
-        <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
-          <Menu className="h-5 w-5" />
-        </button>
+      <div className="md:hidden h-16 p-4 flex justify-between items-center bg-white border-b">
         <p className="text-xl font-bold ">/SAVINGS BANK</p>
+        <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
+          <Menu className="h-7 w-7" />
+        </button>
       </div>
 
       <div className="flex md:min-h-screen">
@@ -35,7 +36,7 @@ export default function Navbar() {
           } md:block h-screen w-full md:w-68 bg-white border-r border-r-neutral-300 p-4  md:static`}
         >
             <div className="mb-4 flex flex-col gap-2">
-                <h1 className="ml-2 text-2xl font-bold mb-2">/SAVINGS BANK</h1>
+                <h1 className="hidden md:block ml-2 text-2xl font-bold mb-2">/SAVINGS BANK</h1>
                 <Chip label={user.displayName} image={user.photoURL}/>
             </div>
           <nav className="flex flex-col gap-3">
