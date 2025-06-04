@@ -3,7 +3,7 @@ import { Home, Wallet, CreditCard, Settings, Menu, LayoutDashboard, LogOut } fro
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
-import { Skeleton } from "primereact/Skeleton";
+import { Skeleton } from "primereact/skeleton";
 import { classNames } from "primereact/utils";
 
 export default function Navbar() {
