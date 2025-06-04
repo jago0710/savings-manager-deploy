@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Home, Wallet, CreditCard, Settings, Menu, LayoutDashboard, LogOut } from "lucide-react";
+import { Home, Wallet, Settings, Menu, LayoutDashboard, LogOut } from "lucide-react";
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
 import { Skeleton } from "primereact/skeleton";
-import { classNames } from "primereact/utils";
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
