@@ -3,6 +3,8 @@ import { Home, Wallet, CreditCard, Settings, Menu, LayoutDashboard, LogOut } fro
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
+import { Skeleton } from "primereact/Skeleton";
+import { classNames } from "primereact/utils";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -21,7 +23,7 @@ export default function Navbar() {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="md:hidden h-16 p-4 flex justify-between items-center bg-white border-b">
+      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-95 fixed z-2 w-full' : 'md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
         <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
         <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
           <Menu className="h-7 w-7" />
@@ -33,11 +35,13 @@ export default function Navbar() {
         <div
           className={`${
             open ? "block" : "hidden"
-          } md:block h-screen w-full md:w-68 bg-white border-r border-r-neutral-300 p-4  md:static`}
+          } md:block h-screen w-full md:w-67 bg-white border-r border-r-neutral-300 p-4 md:static z-1 fixed`}
         >
             <div className="mb-4 flex flex-col gap-2">
                 <h1 className="hidden md:block ml-2 text-2xl font-bold mb-2"><b className="text-red-700">/ </b>SAVINGS BANK</h1>
-                <Chip label={user.displayName} image={user.photoURL}/>
+                {user.displayName && user.photoURL 
+                ? <Chip label={user.displayName} image={user.photoURL} imageAlt="https://cdn-icons-png.flaticon.com/512/9131/9131529.png"/> 
+                : <Skeleton height="2rem" borderRadius="16px"></Skeleton>}
             </div>
           <nav className="flex flex-col gap-3">
             {routes.map(({ href, label, icon : Icon }, index) => (

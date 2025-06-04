@@ -1,8 +1,8 @@
-export default function CardBank({title="SAVINGS BANK",number = "424242424242", createDate = "mastercard", color = "0,0,255", description="Viaje", redirect = true}) {
+export default function CardBank({title="SAVINGS BANK",number = "424242424242", createDate = "mastercard", color = "0,0,255", description="...", redirect = true}) {
   const backgroundImage = `linear-gradient(150deg, rgba(${color},0.33) 12%, rgba(${color},0.43) 31%, rgba(${color},0.23) 52%)`;
   return(
         <a href={redirect ? "/savings/" + number : redirect }
-  className="relative h-[203px] aspect-[1.579] rounded-xl overflow-hidden flex items-center justify-center font-[Trebuchet_MS] transition-all duration-300 ease-in hover:rotate-[1deg] hover:rotate-y-[10deg] hover:scale-105 hover:shadow-[0_9px_9px_#ddc]"
+  className="relative h-[195px] aspect-[1.579] rounded-xl overflow-hidden flex items-center justify-center font-[Trebuchet_MS] transition-all duration-300 ease-in hover:rotate-[1deg] hover:rotate-y-[10deg] hover:scale-105 hover:shadow-[0_9px_9px_#ddc]"
 >
   {/**<!-- Esta linea define el color de la tarjeta en el radial --> */}
   <div
@@ -16,7 +16,7 @@ export default function CardBank({title="SAVINGS BANK",number = "424242424242", 
     ></div>
 
     <div
-      className="h-[12.5em] aspect-[1.586] rounded-xl  opacity-95"
+      className="h-[12.3em] aspect-[1.586] rounded-xl  opacity-95"
     >
       <div
         className="relative w-full h-full rounded-[0.85em] border border-[transparent]"

@@ -74,7 +74,7 @@ export default function Accounts(){
                 setCards([])
                 setOwners([])
             } else {
-                console.log("No hay emailCurrentUser")
+                console.log("No hay email actual del usuario")
             }
         }
     }
@@ -88,8 +88,8 @@ export default function Accounts(){
         <>
             <section className="sm:grid md:flex">
                 <Navbar />
-                <div className="w-full">
-                    <div className="w-full py-5 px-7 text-xl border-b border-b-gray-200">
+                <div className="w-full mt-15 md:mt-0">
+                    <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
                         <h1 className="font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
                     <div className="flex flex-wrap gap-7 p-5">
