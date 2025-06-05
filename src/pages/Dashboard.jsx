@@ -4,10 +4,10 @@ export default function Dashboard() {
   return (
     <>
       <div className="sm:grid md:flex">
-        <Navbar />
-        <div className="mt-15 md:mt-0">
-          <h1>DASHBOARD</h1>
-        </div>
+        <Navbar page="DASHBOARD" />
+                  <div className="mt-15 bg-gray-200 md:mt-0 w-full h-screen flex justify-center items-center">
+            <h1 className="text-3xl md:text-4xl">EN MANTENIMIENTO...</h1>
+          </div>
       </div>
     </>
   );

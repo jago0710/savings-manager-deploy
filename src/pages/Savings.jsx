@@ -158,7 +158,7 @@ export default function Savings() {
   if (!countSavings) {
     return (
       <section className="sm:grid md:flex">
-        <Navbar />
+        <Navbar page="MOVIMIENTOS"/>
         <div className="h-screen w-full flex justify-center items-center">
           <ProgressSpinner />
         </div>
@@ -168,9 +168,9 @@ export default function Savings() {
 
   return (
     <section className="sm:grid md:flex">
-      <Navbar />
-      <div className="flex flex-col w-full mt-15 md:mt-0">
-        <div className="w-full py-5 px-5 flex gap-1 text-xl border-b border-b-gray-200">
+      <Navbar page="MOVIMIENTOS"/>
+      <div className="flex flex-col w-full mt-16 md:mt-0">
+        <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
         </div>
       <div className="flex flex-col gap-4 lg:gap-7 w-full p-2 md:p-7">

@@ -17,8 +17,7 @@ export default function CardBank({
         aspect-[1.579] 
         h-[250px] 
         sm:w-auto
-        md:w-auto 
-        md:h-[195px]
+        md:h-[245px] 
         rounded-xl 
         overflow-hidden 
         flex 
@@ -46,32 +45,32 @@ export default function CardBank({
         <div className="w-full h-full rounded-xl opacity-95">
           <div className="relative w-full h-full rounded-[0.85em] border border-transparent">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-[0.6em] shadow-[-1px_-1px_0_#ddd]">
-              <p className="absolute top-[0.5em] left-[0.90em] text-white text-opacity-60 text-[2em] md:text-[1.25em] text-shadow select-none">
+              <p className="absolute top-[1em] left-[1.2em] text-white text-opacity-60 text-[1.40em] md:text-[1.40em] text-shadow select-none">
                 {title}
               </p>
-              <div className="select-none absolute top-[140px] md:top-[115px] left-[0.90em] md:left-[1.2rem] text-[1.7em] md:text-[1em] text-white text-opacity-75 text-shadow flex flex-col gap-2">
+              <div className="select-none absolute top-[140px] md:top-[135px] left-[1.4em] md:left-[1.4rem] text-[1.2em] md:text-[1.2em] text-white text-opacity-75 text-shadow flex flex-col gap-2">
                 <p>{description}</p>
                 <p>{number}</p>
               </div>
-              <p className="absolute bottom-[0.25em] right-[0.8em] text-[1.2em] md:text-[0.7em] text-white text-opacity-75 text-shadow select-none">
+              <p className="absolute bottom-[0.75em] right-[1.4em] md:right-[2em] text-[0.9em] md:text-[0.9em] text-white text-opacity-75 text-shadow select-none">
                 {createDate}
               </p>
 
               {/* Círculos Mastercard */}
               <div
-                className="absolute bottom-[2em] md:bottom-[1.25em] right-[2.5em] md:right-[2em] md:w-[2.5em] md:h-[2.5em] h-[3.5em] w-[3.5em] rounded-full"
+                className="absolute bottom-[2em] md:bottom-[2em] right-[3em] md:right-[3.5em] md:w-[4em] md:h-[4em] h-[3.5em] w-[3.5em] rounded-full"
                 style={{ backgroundImage }}
               ></div>
               <div
-                className="absolute bottom-[2em] md:bottom-[1.25em] right-[0.5em] md:w-[2.5em] md:h-[2.5em] h-[3.5em] w-[3.5em] rounded-full"
+                className="absolute bottom-[2em] md:bottom-[2em] right-[1.2em] md:w-[4em] md:h-[4em] h-[3.5em] w-[3.5em] rounded-full"
                 style={{ backgroundImage }}
               ></div>
 
               {/* Chip */}
               <div className="absolute top-[27.5%] left-[8.25%]">
                 <img
-                  className="select-none w-[65px] h-[65px] md:w-[50px] md:h-[50px]"
-                  src="./assets/Chip.png"
+                  className="select-none w-[65px] h-[45px] md:w-[55px] md:h-[40px]"
+                  src="./assets/Chip_Nuevo.png"
                   alt="Chip"
                 />
               </div>

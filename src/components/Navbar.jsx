@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Home, Wallet, Settings, Menu, LayoutDashboard, LogOut } from "lucide-react";
+import { useState } from "react";
+import { Home, Settings, Menu, LayoutDashboard, LogOut, WalletCardsIcon } from "lucide-react";
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
@@ -13,7 +13,7 @@ export default function Navbar({page}) {
 
   const routes = [
     { href: "/home", label: "Inicio", icon: Home },
-    { href: "/accounts", label: "Cuentas", icon: Wallet },
+    { href: "/accounts", label: "Cuentas", icon: WalletCardsIcon},
     { href: "/dashborad", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
     { href: "/home", label: "Cerrar cuenta", icon: LogOut },
@@ -23,13 +23,11 @@ export default function Navbar({page}) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-95 fixed z-2 w-full' : 'md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
+      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-95 fixed z-2 w-full' : 'animate-slide-in-right md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
         {
-          !page 
-          ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
-          : !open 
-            ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>{page}</p>
-            : <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
+          page && !open
+          ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>{page}</p>
+          : <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
         }
         <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
           <Menu className="h-7 w-7" />
@@ -40,7 +38,7 @@ export default function Navbar({page}) {
         {/* Sidebar */}
         <div
           className={`${
-            open ? "block" : "hidden"
+            open ? "animate-slide-in-right block" : "hidden"
           } md:block h-screen w-full md:w-67 bg-white border-r border-r-neutral-300 p-4 md:static z-1 fixed`}
         >
             <div className="mb-4 flex flex-col gap-2  mt-15 md:mt-0">
