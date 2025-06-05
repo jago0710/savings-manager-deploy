@@ -13,9 +13,9 @@ export default function Landing(){
                 <p className="hidden sm:block text-neutral-500">Entrar con google</p>
                 </button>
            </section>
-            <section id="content" className="flex lg:flex-row flex-col-reverse h-full  items-center justify-center gap-6">
-                <div className="flex flex-col md:gap-6 gap-2 w-[40%]">
-                    <h1 className="lg:text-6xl sm:text-3xl font-bold">
+            <section id="content" className="flex lg:flex-row flex-col-reverse h-full  items-center justify-end md:justify-center gap-6">
+                <div className="flex flex-col md:gap-6 gap-8  md:w-[40%]">
+                    <h1 className="lg:text-6xl text-3xl font-bold">
                         Empieza y ahorra con tu persona favorita
                     </h1>
                     <div className="text-gray-600 lg:text-2xl">
@@ -27,7 +27,7 @@ export default function Landing(){
                     <button onClick={LoginGoogle} className="bg-black text-white text-2xl py-2 px-4 rounded-lg">Comenzar</button>
                 </div>
                 <div>
-                    <img className="md:h-auto h-90" src="./landing/cards.svg" alt="cards" />
+                    <img className="md:h-96 lg:h-auto h-90" src="./landing/cards.svg" alt="cards" />
                 </div>
             </section>
         </div>

@@ -154,12 +154,11 @@ export default function Savings() {
   return (
     <section className="sm:grid md:flex">
       <Navbar />
-      <div className="flex flex-col w-full">
-        <div className="w-full py-5 px-7 flex gap-1 text-xl border-b border-b-gray-200">
-        <h1 className="font-bold font-sans">CUENTA:</h1>
-        <p>{count}</p>
-      </div>
-      <div className="flex flex-col gap-4 lg:gap-7 w-full p-7">
+      <div className="flex flex-col w-full mt-15">
+        <div className="w-full py-5 px-5 flex gap-1 text-xl border-b border-b-gray-200">
+          <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
+        </div>
+      <div className="flex flex-col gap-4 lg:gap-7 w-full p-2 md:p-7">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
@@ -177,21 +176,24 @@ export default function Savings() {
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex gap-3 items-center">
-                <Dropdown value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label" className="h-18 w-full md:w-14rem" />
-                <FloatLabel className="my-2">
-                  <InputNumber className="p-inputtext-lg w-full h-18" placeholder="Ingresa una cantidad..." inputId="cantidad" value={inputValue} onValueChange={(e) => setInputValue(e.value)} 
-                  showButtons buttonLayout="horizontal" step={10}
-                      decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="EUR" locale="es-ES" />
-                  <label htmlFor="cantidad" className="text-xl pl-12">Cantidad</label>
-                </FloatLabel>
+                <Dropdown className="w-1/2" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
+                <InputNumber className="p-inputtext-md w-auto" inputStyle={{width: '100%', textSizeAdjust: 'auto'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" />
               </div>
-              <Button className="shadow-blue-600" type="submit" label="Registrar" severity="secondary" text raised onClick={saveValue}/>
+              <div>
+                 <button className="bg-black text-white p-2 rounded-lg w-full"
+                onClick={saveValue}
+                type="button"
+              >
+                Registrar movimiento
+              </button>
+              <Button className="w-full" type="submit" label="Registrar movimiento" severity="secondary" text raised onClick={saveValue}/>
               <Dialog header="Upps... " visible={showDialog} maximizable style={{ width: '23vw' }} onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">
                     Puede que el valor que hayas ingresado sea un 0. <br /><br />
                     O uno de estos valores: Simbolos, Caracteres, Letras.
                 </p>
             </Dialog>
+              </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-2">
               {[5, 10, 20, 50].map((num) => (
