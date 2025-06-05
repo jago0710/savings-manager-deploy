@@ -87,10 +87,10 @@ export default function Accounts(){
     return(
         <>
             <section className="sm:grid md:flex">
-                <Navbar />
-                <div className="w-full mt-15 md:mt-0">
+                <Navbar page="CUENTAS DE AHORRO" />
+                <div className="w-full mt-12 md:mt-0">
                     <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
-                        <h1 className="font-bold font-sans">CUENTAS DE AHORRO </h1>
+                        <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
                     <div className="flex flex-wrap gap-7 px-5 md:p-5">
                         <div className="flex flex-wrap gap-4">
@@ -99,7 +99,7 @@ export default function Accounts(){
                               )) : <ProgressSpinner />}
                         <CardNew click={setShowForm} value={!showForm}/>
                         </div>
-                        <div className={showForm ? "animate-slide-in-left flex flex-col gap-5 top-0 right-0 border fixed h-screen bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
+                        <div className={showForm ? "animate-slide-in-right flex flex-col gap-5 top-0 z-2 right-0 border fixed h-screen bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
                             <div className="flex justify-between px-2 items-center border-b pb-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
                                 <button className="duration-500 hover:rotate-90"  onClick={() => setShowForm(!showForm)}>

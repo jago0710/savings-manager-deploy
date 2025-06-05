@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { db } from "../firebase/database.jsx";
 import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import useUser from "../hook/useUser.jsx";
 import { useParams } from "react-router";
-import { InputText } from 'primereact/inputtext';
-import { Menu } from "primereact/menu";
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { FloatLabel } from "primereact/floatlabel";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
+import { confirmPopup, ConfirmPopup } from "primereact/confirmpopup";
+import { Toast } from 'primereact/toast';
         
          
 
@@ -23,7 +22,7 @@ export default function Savings() {
   console.log("USER", user);
   console.log("COUNT: ", count);
   
-  
+  const toast = useRef(null);
 
   const [countSavings, setCountSavings] = useState(null); 
   const [totalMoney, setTotalMoney] = useState(0);
@@ -64,24 +63,41 @@ export default function Savings() {
   console.log("DATES-COUNT",countSavings);
   
 
+  const confirm = (event) => {
+        confirmPopup({
+            target: event.currentTarget,
+            message: `¿Estas seguro de retirar ese dinero?`,
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            acceptLabel: 'Acceptar',
+            rejectLabel: 'Cancelar',
+            accept,
+            reject
+        });
+  };
+
+  const accept = () => {
+        toast.current.show({ severity: 'success', summary: '¡Retiro con exito!', detail: `Se ha retirado ${inputValue}€`, life: 3000 });
+        saveValue()
+      };
+
+  const reject = () => {
+        toast.current.show({ severity: 'warn', summary: 'Operación cancelada', detail: 'La operación de ha cancelado', life: 3000 });
+    };
+
   const saveValue = () => {
+    
     const amount = parseFloat(inputValue);
     if (isNaN(amount) || amount === 0) {
       setShowDialog(!showDialog);
       return;
     }
 
-    if (amount < 0) {
-      if (!confirm("¿Estás seguro que quieres sacar dinero?")) {
-        setInputValue("");
-        return;
-      }
-    }
-
     let newTotal = null;
 
     // Actualizar totalMoney
     if (typeMovement === "Retirar") {
+      
       newTotal = totalMoney - amount;
       setTotalMoney(newTotal);
     } else if (typeMovement === "Ingresar"){
@@ -108,8 +124,7 @@ export default function Savings() {
     // Actualizar movimientos en estado
     setCountSavings((prev) => ({
       ...prev,
-      movements: [...(prev?.movements || []), newMovement],
-      total: newTotal,
+      movements: [...(prev?.movements || []), newMovement]
     }));
 
     setInputValue("");
@@ -180,11 +195,13 @@ export default function Savings() {
                 <InputNumber className="p-inputtext-md w-1/2" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
               <div>
-              <Button className="w-full" type="submit" label="Registrar movimiento" severity="secondary" text raised onClick={saveValue}/>
-              <Dialog header="Upps... " visible={showDialog} maximizable style={{ width: '23vw' }} onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
+              <Toast ref={toast} />
+              <ConfirmPopup />
+              <Button className="w-full" type="submit" label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
+              <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Upps... " visible={showDialog}  onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">
                     Puede que el valor que hayas ingresado sea un 0. <br /><br />
-                    O uno de estos valores: Simbolos, Caracteres, Letras.
+                    O un simbolo, caracter o letra.
                 </p>
             </Dialog>
               </div>

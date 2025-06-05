@@ -6,7 +6,7 @@ import { Chip } from "primereact/chip";
 import { Skeleton } from "primereact/skeleton";
 
 
-export default function Navbar() {
+export default function Navbar({page}) {
   const [open, setOpen] = useState(false);
   const currentPath = window.location.pathname;
   const user = useUser();
@@ -24,7 +24,13 @@ export default function Navbar() {
     <>
       {/* Mobile top bar */}
       <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-95 fixed z-2 w-full' : 'md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
-        <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
+        {
+          !page 
+          ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
+          : !open 
+            ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>{page}</p>
+            : <p className="text-xl font-bold "><b className="text-red-700">/ </b>SAVINGS BANK</p>
+        }
         <button onClick={() => setOpen(!open)} className="p-2 rounded-lg ">
           <Menu className="h-7 w-7" />
         </button>
@@ -37,7 +43,7 @@ export default function Navbar() {
             open ? "block" : "hidden"
           } md:block h-screen w-full md:w-67 bg-white border-r border-r-neutral-300 p-4 md:static z-1 fixed`}
         >
-            <div className="mb-4 flex flex-col gap-2">
+            <div className="mb-4 flex flex-col gap-2  mt-15 md:mt-0">
                 <h1 className="hidden md:block ml-2 text-2xl font-bold mb-2"><b className="text-red-700">/ </b>SAVINGS BANK</h1>
                 {user.displayName && user.photoURL
                 ? <Chip label={user.displayName} image={user.photoURL} imageAlt="Foto perfil" /> 
