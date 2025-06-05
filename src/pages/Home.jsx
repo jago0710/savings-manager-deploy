@@ -10,7 +10,7 @@ console.log("=>=>=>=> ",user);
         <>
            <div className="sm:grid md:flex">
                 <Navbar/>
-                <div className="bg-neutral-200 b-1 w-full">
+                <div className="bg-neutral-200 b-1 w-full mt-15 md:mt-0">
                     <h1>Bienvenid@ {user.displayName}</h1>
                     <button onClick={closeSession}>Salir</button> <br />
                     <a href="savings">ir a Savings</a>

@@ -5,7 +5,9 @@ export default function Dashboard() {
     <>
       <div className="sm:grid md:flex">
         <Navbar />
-        <h1>DASHBOARD</h1>
+        <div className="mt-15 md:mt-0">
+          <h1>DASHBOARD</h1>
+        </div>
       </div>
     </>
   );

@@ -154,7 +154,7 @@ export default function Savings() {
   return (
     <section className="sm:grid md:flex">
       <Navbar />
-      <div className="flex flex-col w-full mt-15">
+      <div className="flex flex-col w-full mt-15 md:mt-0">
         <div className="w-full py-5 px-5 flex gap-1 text-xl border-b border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
         </div>
@@ -177,15 +177,9 @@ export default function Savings() {
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex gap-3 items-center">
                 <Dropdown className="w-1/2" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
-                <InputNumber className="p-inputtext-md w-auto" inputStyle={{width: '100%', textSizeAdjust: 'auto'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" />
+                <InputNumber className="p-inputtext-md w-1/2" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
               <div>
-                 <button className="bg-black text-white p-2 rounded-lg w-full"
-                onClick={saveValue}
-                type="button"
-              >
-                Registrar movimiento
-              </button>
               <Button className="w-full" type="submit" label="Registrar movimiento" severity="secondary" text raised onClick={saveValue}/>
               <Dialog header="Upps... " visible={showDialog} maximizable style={{ width: '23vw' }} onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">

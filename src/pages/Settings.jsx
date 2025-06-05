@@ -5,7 +5,9 @@ export default function Settings(){
         <>
         <div className="sm:grid md:flex">
           <Navbar />
-          <h1>SETTINGS</h1>
+          <div className="mt-15 md:mt-0">
+            <h1>SETTINGS</h1>
+          </div>
         </div>
       </>
     )

@@ -39,8 +39,8 @@ export default function Navbar() {
         >
             <div className="mb-4 flex flex-col gap-2">
                 <h1 className="hidden md:block ml-2 text-2xl font-bold mb-2"><b className="text-red-700">/ </b>SAVINGS BANK</h1>
-                {user.displayName && user.photoURL 
-                ? <Chip label={user.displayName} image={user.photoURL} imageAlt="https://cdn-icons-png.flaticon.com/512/9131/9131529.png"/> 
+                {user.displayName && user.photoURL
+                ? <Chip label={user.displayName} image={user.photoURL} imageAlt="Foto perfil" /> 
                 : <Skeleton height="2rem" borderRadius="16px"></Skeleton>}
             </div>
           <nav className="flex flex-col gap-3">
