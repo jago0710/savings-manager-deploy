@@ -49,11 +49,19 @@ export default function Accounts(){
             console.log("Ya existe una cuenta con esta id")
             setShowForm(false)
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
+            console.log(owners);
+            
         } else {     
-            if (currentUser.email) {
+            if (currentUser.email && !owners) {
                 const updatedOwners = [...owners, currentUser.email]
                 setOwners(updatedOwners)
+                console.log(owners);
+            } else {
+                console.log(currentUser.email);
+                console.log("No hay email actual del usuario")
+            }
 
+            if (owners){
                 const newAccount = {}
                 newAccount.number = numberAccount
                 newAccount.createAccount = new Date().toLocaleDateString()
@@ -73,9 +81,9 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
-            } else {
-                console.log("No hay email actual del usuario")
             }
+
+            setOwners([])
         }
     }
 
@@ -99,6 +107,7 @@ export default function Accounts(){
                               )) : <ProgressSpinner />}
                         <CardNew click={setShowForm} value={!showForm}/>
                         </div>
+                        {/** Panel para crear una nueva tarjeta */}
                         <div className={showForm ? "animate-slide-in-right flex flex-col gap-5 top-0 z-2 right-0 border fixed h-screen bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
                             <div className="flex justify-between px-2 items-center border-b pb-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
@@ -108,7 +117,7 @@ export default function Accounts(){
                             </div>
                             <CardBank title="Nueva tarjeta" color={colorCard} redirect={false} number={numberAccount} createDate={new Date().toLocaleDateString()}/>
                             <div className="flex flex-row">
-                                <FloatLabel>
+                            <FloatLabel>
                                 <Chips id="miembros" value={owners} onChange={(e) => setOwners(e.value)} />
                                 <label htmlFor="miembros">Miembros...</label>
                             </FloatLabel> 
