@@ -11,6 +11,8 @@ import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { confirmPopup, ConfirmPopup } from "primereact/confirmpopup";
 import { Toast } from 'primereact/toast';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
         
          
 

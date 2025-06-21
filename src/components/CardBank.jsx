@@ -47,7 +47,7 @@ export default function CardBank({
           <div className="relative w-full h-full rounded-[0.85em] border border-transparent">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-[0.6em] shadow-[-1px_-1px_0_#ddd]">
               <p className="absolute top-[1em] left-[1.2em] text-white text-opacity-60 text-[1.2em] md:text-[1.2em] text-shadow select-none">
-                <b className="text-red-500 opacity-50 mr-1">/</b>{title}
+                <b className="opacity-80 mr-1">/</b>{title}
               </p>
               <div className="select-none absolute top-[120px] md:top-[120px] left-[1.4em] md:left-[1.4rem] text-[1.1em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-2">
                 <p>{description}</p>
