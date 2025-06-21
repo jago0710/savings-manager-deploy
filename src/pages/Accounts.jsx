@@ -7,11 +7,11 @@ import { LucideX } from "lucide-react";
 import { createAccount, ExistAccountInDataBase } from "../firebase/database";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/database";
-import { Button } from 'primereact/button';
 import { Chips } from "primereact/chips";
-import { FloatLabel } from 'primereact/floatlabel';
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ColorPicker } from "primereact/colorpicker";
+import { InputText } from 'primereact/inputtext';
+
 
 
 
@@ -24,9 +24,11 @@ export default function Accounts(){
     const [owners, setOwners] = useState([]);
     const [colorRGB, setColorRGB] = useState({ r: 100, g: 102, b: 241 });
     const [colorCard, setColorCard] = useState();
+    const [descriptionCard, setDescriptionCard] = useState();
     
 
     useEffect(() => {
+        setColorCard(`${colorRGB.r},${colorRGB.g},${colorRGB.b}`)
         const fetchCards = async () => {
             if (!currentUser?.email) return;
 
@@ -39,9 +41,11 @@ export default function Accounts(){
                 console.error("Error fechings accounts", e);
                 
             }
+            
         }
     
         fetchCards();
+        
       }, [currentUser.email, cards]);
 
     const addAccountInDataBase = async () =>{
@@ -51,9 +55,10 @@ export default function Accounts(){
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
             console.log(owners);
             
-        } else {     
-            if (currentUser.email && !owners) {
-                const updatedOwners = [...owners, currentUser.email]
+        } else {   
+            let updatedOwners  
+            if (currentUser.email) {
+                updatedOwners = [...owners, currentUser.email]
                 setOwners(updatedOwners)
                 console.log(owners);
             } else {
@@ -64,6 +69,7 @@ export default function Accounts(){
             if (owners){
                 const newAccount = {}
                 newAccount.number = numberAccount
+                newAccount.description = descriptionCard
                 newAccount.createAccount = new Date().toLocaleDateString()
                 newAccount.owners = updatedOwners
                 newAccount.color = colorCard
@@ -103,28 +109,37 @@ export default function Accounts(){
                     <div className="flex flex-wrap gap-7 md:p-5">
                         <div className="flex flex-wrap gap-4">
                               {cards ? cards.map((card, index) => (
-                                <CardBank key={index} number={card.number} color={card.color}/>
+                                <CardBank key={index} number={card.number} description={card.description} createDate={card.createAccount} color={card.color}/>
                               )) : <ProgressSpinner />}
                         <CardNew click={setShowForm} value={!showForm}/>
                         </div>
                         {/** Panel para crear una nueva tarjeta */}
-                        <div className={showForm ? "animate-slide-in-right flex flex-col gap-5 top-0 z-2 right-0 border fixed h-screen bg-white border-gray-300 shadow-lg  p-5 rounded-xl" : "hidden"}>
-                            <div className="flex justify-between px-2 items-center border-b pb-5">
+                        <div className={showForm ? "animate-slide-in-right flex flex-col gap-5 top-0 z-2 right-0 border fixed w-full sm:w-95 h-full bg-white border-gray-300 shadow-lg  rounded-l-xl" : "hidden"}>
+                            <div className="flex justify-between items-center border-b border-gray-300 p-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
                                 <button className="duration-500 hover:rotate-90"  onClick={() => setShowForm(!showForm)}>
                                     <LucideX />
                                 </button>
                             </div>
-                            <CardBank title="Nueva tarjeta" color={colorCard} redirect={false} number={numberAccount} createDate={new Date().toLocaleDateString()}/>
-                            <div className="flex flex-row">
-                            <FloatLabel>
-                                <Chips id="miembros" value={owners} onChange={(e) => setOwners(e.value)} />
-                                <label htmlFor="miembros">Miembros...</label>
-                            </FloatLabel> 
-                            <ColorPicker format="rgb" value={colorRGB} onChange={changeColorCard} />
+                            <CardBank title="Nueva tarjeta" color={colorCard} redirect={false} number={numberAccount} description={descriptionCard} createDate={new Date().toLocaleDateString()}/>
+                            <div className="px-5 flex flex-col gap-4">
+                                <div className="flex border border-gray-300 h-15 justify-between items-center px-5 rounded-md">
+                                    <p className="text-gray-600">Cambia el color de la tarjeta:</p>
+                                    <ColorPicker pt={{input : {className : 'right-0'}}} format="rgb" value={colorRGB} onChange={changeColorCard} />
+                                </div>
+                                <InputText placeholder="Descripción" pt={{root: {className : 'w-full'}}} type="text" value={descriptionCard} onChange={(e) => setDescriptionCard(e.target.value)} />
+                                <Chips 
+                                pt={{
+                                    token : {className : 'flex justify-between items-center rounded-md bg-gray-100 py-2'},
+                                    removeTokenIcon : {color : 'red', class : 'h-5 w-5'},
+                                    input : {className : 'border border-gray-300 h-13 pl-3 w-full rounded', type : 'email'}, 
+                                    label : {className : 'w-full truncate'}, 
+                                    container : {className : 'flex flex-col-reverse gap-3'}}} allowDuplicate="false" id="miembros" separator="," unstyled="true" placeholder="ej: email@gmail.com" value={owners} onChange={(e) => setOwners(e.value)} />
+                            <div className="flex flex-col gap-3">
+                                <button onClick={() => console.log(owners)}>click</button>
+                                <button type="button" onClick={addAccountInDataBase} className="bg-black hover:bg-neutral-800 text-white py-4 px-8 rounded-xl">Crear nueva tarjeta</button>
                             </div>
-                            <button type="button" onClick={addAccountInDataBase} className="bg-black hover:bg-neutral-800 text-white py-4 px-8 rounded-xl">Crear nueva tarjeta</button>
-                            <Button label="Añadir cuenta existente" severity="secondary" icon="pi pi-credit-card" text raised />
+                            </div>
                         </div>
                     </div>
                 </div>

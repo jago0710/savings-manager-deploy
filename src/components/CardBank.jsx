@@ -70,7 +70,7 @@ export default function CardBank({
               {/* Chip */}
               <div className="absolute top-[27.5%] left-[8.25%]">
                 <img
-                  className="select-none w-[50px] bg-cover h-[45px] md:w-[45px] md:h-[40px]"
+                  className="select-none w-[50px] bg-cover h-[45px] md:w-[45px] md:h-[42px]"
                   src="./assets/Chip.png"
                   alt="Chip"
                 />
