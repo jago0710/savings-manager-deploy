@@ -100,7 +100,7 @@ export default function Accounts(){
                     <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
                         <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
-                    <div className="flex flex-wrap gap-7 px-5 md:p-5">
+                    <div className="flex flex-wrap gap-7 md:p-5">
                         <div className="flex flex-wrap gap-4">
                               {cards ? cards.map((card, index) => (
                                 <CardBank key={index} number={card.number} color={card.color}/>

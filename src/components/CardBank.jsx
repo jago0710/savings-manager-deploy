@@ -3,7 +3,7 @@ export default function CardBank({
   number = "424242424242",
   createDate = "mastercard",
   color = "0,0,255",
-  description = "...",
+  description = "--:--",
   redirect = true,
 }) {
   const backgroundImage = `linear-gradient(150deg, rgba(${color},0.33) 12%, rgba(${color},0.43) 31%, rgba(${color},0.23) 52%)`;
@@ -12,10 +12,11 @@ export default function CardBank({
     <a
       href={redirect ? "/savings/" + number : redirect}
       className="
+        mx-5
         relative 
-        w-[100%]
+        w-[89vw]
         aspect-[1.579] 
-        h-[220px] 
+        h-[210px] 
         sm:w-auto
         md:h-[200px] 
         rounded-xl 
