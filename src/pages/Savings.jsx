@@ -252,12 +252,12 @@ export default function Savings() {
 
   <div className="flex justify-between text-sm text-gray-700">
     <span className="font-medium">Monto:</span>
-    <span>${detailMovement.amount}</span>
+    <span>{detailMovement.amount}€</span>
   </div>
 
   <div className="flex justify-between text-sm text-gray-700">
     <span className="font-medium">Total:</span>
-    <span>${detailMovement.total}</span>
+    <span>{detailMovement.total}€</span>
   </div>
 
   <div className="flex justify-between text-sm text-gray-700">
