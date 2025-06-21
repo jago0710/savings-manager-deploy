@@ -31,6 +31,8 @@ export default function Savings() {
   const [inputValue, setInputValue] = useState();
   const [showDialog, setShowDialog] = useState(false);
   const [typeMovement, setTypeMovement] = useState("Ingresar")
+  const [detailMovement, setDetailMoviment] = useState();
+  const [viewModalMovement, setViewModalMovement] = useState(false);
 
   const movementsOptions = [
     {label: "Ingresar", value: "Ingresar"},
@@ -168,6 +170,12 @@ export default function Savings() {
     );
   }
 
+  const viewMovement = (movement) => {
+    setDetailMoviment(movement)
+    setViewModalMovement(true)
+  }
+
+
   return (
     <section className="sm:grid md:flex">
       <Navbar page="MOVIMIENTOS"/>
@@ -221,22 +229,54 @@ export default function Savings() {
         </div>
         <div className="border border-gray-300 rounded-lg p-5 w-full">
           <p className="font-bold text-2xl mb-5">Historial de movimientos</p>
-          <div className="grid grid-cols-5 border-b border-b-gray-300 pb-5 text-center">
+          <div className="grid grid-cols-4 border-b border-b-gray-300 pb-5 text-center">
             <p>Fecha</p>
-            <p>Descripción</p>
+            <p hidden>Descripción</p>
             <p>Monto</p>
             <p>Total</p>
             <p>Usuario</p>
           </div>
           <div className="flex flex-col-reverse">
+            <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
+                {detailMovement 
+                ? <div className="space-y-4">
+  <div className="flex justify-between text-sm text-gray-700">
+    <span className="font-medium">Usuario:</span>
+    <span>{detailMovement.user}</span>
+  </div>
+
+  <div className="flex justify-between text-sm text-gray-700">
+    <span className="font-medium">Descripción:</span>
+    <span>{detailMovement.description}</span>
+  </div>
+
+  <div className="flex justify-between text-sm text-gray-700">
+    <span className="font-medium">Monto:</span>
+    <span>${detailMovement.amount}</span>
+  </div>
+
+  <div className="flex justify-between text-sm text-gray-700">
+    <span className="font-medium">Total:</span>
+    <span>${detailMovement.total}</span>
+  </div>
+
+  <div className="flex justify-between text-sm text-gray-700">
+    <span className="font-medium">Fecha:</span>
+    <span>{detailMovement.date}</span>
+  </div>
+</div>
+ 
+                :<p>No hay datos.</p>}
+            </Dialog>
             {countSavings.movements && countSavings.movements.length > 0 ? (
               countSavings.movements.map((movement, index) => (
-                <div
+                <div 
+                  onClick={() => viewMovement(movement)}
                   key={index}
-                  className="grid grid-cols-5 justify-around py-7 border-b-gray-200 border-b text-center"
+                  className="grid grid-cols-4 justify-around py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
                 >
                   <p>{movement.date}</p>
-                  <p>{movement.description}</p>
+                  <p hidden>{movement.description}</p>
                   <p
                     style={{
                       color: parseFloat(movement.amount) < 0 ? "red" : "green",
