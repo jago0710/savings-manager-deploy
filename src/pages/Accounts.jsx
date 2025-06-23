@@ -86,6 +86,7 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
+                setDescriptionCard()
             } else {
                 const newAccount = {}
                 newAccount.number = numberAccount
@@ -107,6 +108,7 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
+                setDescriptionCard()
             }
 
             setOwners([])
@@ -183,7 +185,7 @@ export default function Accounts(){
                                     label : {className : 'w-full truncate'}, 
                                     container : {className : 'flex flex-col-reverse gap-3'}}} allowDuplicate="false" id="miembros" separator="," unstyled="true" placeholder="ej: email@gmail.com" value={owners} onChange={addMember} />
                             <div className="flex flex-col gap-3">
-                                <button onClick={() => console.log(owners)}>click</button>
+                                {/*<button onClick={() => console.log(owners)}>click</button>*/}
                                 <button type="button" onClick={addAccountInDataBase} className="bg-black hover:bg-neutral-800 text-white py-4 px-8 rounded-xl">Crear nueva tarjeta</button>
                             </div>
                             </div>
