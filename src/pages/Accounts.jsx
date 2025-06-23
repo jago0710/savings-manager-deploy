@@ -30,6 +30,7 @@ export default function Accounts(){
     
 
     useEffect(() => {
+        setDescriptionCard();
         setColorCard(`${colorRGB.r},${colorRGB.g},${colorRGB.b}`)
         const fetchCards = async () => {
             if (!currentUser?.email) return;
@@ -86,7 +87,6 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
-                setDescriptionCard(undefined)
             } else {
                 const newAccount = {}
                 newAccount.number = numberAccount
@@ -108,7 +108,6 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
-                setDescriptionCard(undefined)
             }
 
             setOwners([])
@@ -148,7 +147,7 @@ export default function Accounts(){
         <>
             <section className="sm:grid md:flex">
                 <Navbar page="CUENTAS DE AHORRO" />
-                <div className="w-full mt-12 md:mt-0">
+                <div className="w-full mt-12 md:mt-0 md:ml-67">
                     <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
                         <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>

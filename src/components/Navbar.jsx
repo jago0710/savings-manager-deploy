@@ -39,7 +39,7 @@ export default function Navbar({page}) {
         <div
           className={`${
             open ? "animate-slide-in-right block" : "hidden"
-          } md:block h-screen w-full md:w-67 bg-white border-r border-r-neutral-300 p-4 md:static z-1 fixed`}
+          } md:block h-screen w-full md:w-67 bg-white border-r border-r-neutral-300 p-4 z-1 fixed`}
         >
             <div className="mb-4 flex flex-col gap-2  mt-15 md:mt-0">
                 <h1 className="hidden md:block ml-2 text-2xl font-bold mb-2"><b className="text-red-700">/ </b>SAVINGS BANK</h1>
