@@ -10,7 +10,7 @@ export default function Navbar({page}) {
   const [open, setOpen] = useState(false);
   const currentPath = window.location.pathname;
   const user = useUser();
-
+  
   const routes = [
     { href: "/home", label: "Inicio", icon: Home },
     { href: "/accounts", label: "Cuentas", icon: WalletCardsIcon},

@@ -12,13 +12,12 @@ export default function CardBank({
     <a
       href={redirect ? "/savings/" + number : redirect}
       className="
-        mx-5
         relative 
-        w-[89vw]
+        min-w-[89vw]
         aspect-[1.579] 
-        h-[210px] 
-        sm:w-auto
-        md:h-[200px] 
+        min-h-[210px] 
+        sm:min-w-auto
+        md:min-h-[200px] 
         rounded-xl 
         overflow-hidden 
         flex 
@@ -31,7 +30,7 @@ export default function CardBank({
         hover:rotate-[1deg] 
         hover:rotate-y-[10deg] 
         hover:scale-105 
-        hover:shadow-[0_9px_9px_#ddc]
+        hover:shadow-[0_6px_6px_#ccc]
       "
     >
       <div
@@ -43,7 +42,7 @@ export default function CardBank({
           className="absolute w-[50em] aspect-[1.58] rounded-xl bg-[linear-gradient(115deg,rgba(0,0,0,1)_42%,rgba(255,255,255,1)_47%,rgba(255,255,255,1)_51%,rgba(0,0,0,1)_52%)] opacity-[0.05] animate-[rotate_4s_linear_infinite] pointer-events-none z-[1] hidden peer-hover:block"
         ></div>
 
-        <div className="w-full h-full rounded-xl opacity-95">
+        <div className="w-full h-full rounded-xl">
           <div className="relative w-full h-full rounded-[0.85em] border border-transparent">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-[0.6em] shadow-[-1px_-1px_0_#ddd]">
               <p className="absolute top-[1em] left-[1.2em] text-white text-opacity-60 text-[1.2em] md:text-[1.2em] text-shadow select-none">
