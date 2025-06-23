@@ -86,7 +86,7 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
-                setDescriptionCard()
+                setDescriptionCard(undefined)
             } else {
                 const newAccount = {}
                 newAccount.number = numberAccount
@@ -108,7 +108,7 @@ export default function Accounts(){
                 setNumberAccount(Math.floor(Math.random() * 10000000000000000))
                 setCards([])
                 setOwners([])
-                setDescriptionCard()
+                setDescriptionCard(undefined)
             }
 
             setOwners([])
