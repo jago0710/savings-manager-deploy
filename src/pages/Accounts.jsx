@@ -151,8 +151,8 @@ export default function Accounts(){
                     <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
                         <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
-                    <div className={cards ? "flex flex-wrap gap-7 pb-5 sm:px-5 md:p-5" : "flex justify-center items-center h-full"}>
-                        <div className={cards ? "flex flex-wrap gap-5 justify-center items-center sm:justify-start sm:items-start" : "flex justify-center items-center h-full"}>
+                    <div className={cards ? "flex flex-wrap gap-7 pb-5 sm:px-5 md:p-5" : "flex justify-center items-center h-screen"}>
+                        <div className={cards ? "flex flex-wrap gap-5 justify-center items-center sm:justify-start sm:items-start" : "flex justify-center items-center h-screen"}>
                               {cards ? cards.map((card, index) => (
                                 <CardBank key={index} number={card.number} description={card.description} createDate={card.createAccount} color={card.color}/>
                               )) : <ProgressSpinner />}
