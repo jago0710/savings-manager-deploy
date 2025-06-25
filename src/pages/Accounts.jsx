@@ -24,13 +24,12 @@ export default function Accounts(){
     const [numberAccount, setNumberAccount] = useState(Math.floor(Math.random() * 10000000000000000));
     const [cards, setCards] = useState();
     const [owners, setOwners] = useState([]);
-    const [colorRGB, setColorRGB] = useState({ r: 200, g: 133, b: 0 });
+    const [colorRGB, setColorRGB] = useState({ r: 145, g: 110, b: 0 });
     const [colorCard, setColorCard] = useState();
-    const [descriptionCard, setDescriptionCard] = useState();
+    const [descriptionCard, setDescriptionCard] = useState(null);
     
 
     useEffect(() => {
-        setDescriptionCard();
         setColorCard(`${colorRGB.r},${colorRGB.g},${colorRGB.b}`)
         const fetchCards = async () => {
             if (!currentUser?.email) return;
@@ -151,7 +150,7 @@ export default function Accounts(){
                     <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
                         <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
-                    <div className={cards ? "flex flex-wrap gap-7 pb-5 sm:px-5 md:p-5" : "flex justify-center items-center h-screen"}>
+                    <div className={cards ? "flex flex-wrap gap-7 pb-5 sm:px-5 md:p-5 md:justify-start justify-center" : "flex justify-center items-center h-screen"}>
                         <div className={cards ? "flex flex-wrap gap-5 justify-center items-center sm:justify-start sm:items-start" : "flex justify-center items-center h-screen"}>
                               {cards ? cards.map((card, index) => (
                                 <CardBank key={index} number={card.number} description={card.description} createDate={card.createAccount} color={card.color}/>
@@ -170,11 +169,11 @@ export default function Accounts(){
                             </div>
                             <div className="px-5 flex flex-col gap-4 overflow-y-scroll h-full my-5">
                             <CardBank title="Nueva tarjeta" color={colorCard} redirect={false} number={numberAccount} description={descriptionCard} createDate={new Date().toLocaleDateString()}/>
-                                <div className="flex border border-gray-300 min-h-15 justify-between items-center px-5 rounded-md">
+                                <div className="flex border border-gray-300 min-h-14 justify-between items-center px-5 rounded-md">
                                     <p className="text-gray-600">Cambia el color de la tarjeta:</p>
                                     <ColorPicker pt={{input : {className : 'right-0'}}} format="rgb" value={colorRGB} onChange={changeColorCard} />
                                 </div>
-                                <InputText required placeholder="Descripción" pt={{root: {className : 'w-full'}}} type="text" value={descriptionCard} onChange={(e) => setDescriptionCard(e.target.value)} />
+                                <InputText placeholder="Descripción" pt={{root: {className : 'w-full'}}} type="text" value={descriptionCard} onChange={(e) => setDescriptionCard(e.target.value)} />
                                 <Toast ref={toast}></Toast>
                                 <Chips 
                                 pt={{

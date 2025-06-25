@@ -200,14 +200,25 @@ export default function Savings() {
           <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col">
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
-              <div className="flex gap-3 items-center">
-                <Dropdown className="w-1/2" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
-                <InputNumber className="p-inputtext-md w-1/2" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
+              <div className="flex flex-col md:flex-row gap-3 items-center">
+                <Dropdown className="w-full md:w-1/3" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
+                <InputNumber className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
-              <div>
+              <div className="flex flex-col gap-2">
               <Toast ref={toast} />
               <ConfirmPopup />
-              <Button className="w-full" type="submit" label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
+            {screen.width < 480 
+            ? null 
+            : <div className="grid grid-cols-4 sm:grid-cols-4 gap-2">
+              {[5, 10, 20, 50].map((num) => (
+                <Button key={num} onClick={() => setInputValue(num.toString())}  className="" type="submit" 
+                label={Intl.NumberFormat("es-ES", {
+                    style: "currency",
+                    currency: "EUR",
+                  }).format(num)} severity="secondary" text raised></Button>
+              ))}
+            </div>}
+              <Button pt={{root : {class : 'bg-black text-white rounded-md w-full p-3'}}} className="w-full" type="submit"  label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
               <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Upps... " visible={showDialog}  onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">
                     Puede que el valor que hayas ingresado sea un 0. <br /><br />
@@ -215,15 +226,6 @@ export default function Savings() {
                 </p>
             </Dialog>
               </div>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-2">
-              {[5, 10, 20, 50].map((num) => (
-                <Button key={num} onClick={() => setInputValue(num.toString())}  className="py-2 transition duration-200 hover:font-bold lg:hover:scale-110" type="submit" 
-                label={Intl.NumberFormat("es-ES", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(num)} severity="secondary" text raised></Button>
-              ))}
             </div>
           </div>
         </div>
@@ -237,7 +239,7 @@ export default function Savings() {
             <p>Usuario</p>
           </div>
           <div className="flex flex-col-reverse">
-            <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
+            <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement 
                 ? <div className="space-y-4">
   <div className="flex justify-between text-sm text-gray-700">

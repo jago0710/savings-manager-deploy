@@ -6,11 +6,12 @@ export default function CardBank({
   description = "--:--",
   redirect = true,
 }) {
-  const backgroundImage = `linear-gradient(150deg, rgba(${color},0.33) 12%, rgba(${color},0.43) 31%, rgba(${color},0.23) 52%)`;
+  const backgroundImage = `linear-gradient(145deg, rgba(${color},0.50) 12%, rgba(${color},0.70) 25%, rgba(${color},0.50) 62%)`;
+  const background = `linear-gradient(145deg, rgba(${color},0.30) 12%, rgba(${color},0.50) 25%, rgba(${color},0.30) 62%)`;
 
   return (
     <a
-      href={redirect ? "/savings/" + number : redirect}
+      href={redirect ? "/savings/" + number : undefined}
       className="
         relative 
         min-w-[89vw]
@@ -39,7 +40,7 @@ export default function CardBank({
       >
         {/* Efecto radial decorativo */}
         <div
-          className="absolute w-[50em] aspect-[1.58] rounded-xl bg-[linear-gradient(115deg,rgba(0,0,0,1)_42%,rgba(255,255,255,1)_47%,rgba(255,255,255,1)_51%,rgba(0,0,0,1)_52%)] opacity-[0.05] animate-[rotate_4s_linear_infinite] pointer-events-none z-[1] hidden peer-hover:block"
+          className="absolute w-[50em] aspect-[1.58] rounded-xl bg-[linear-gradient(115deg,rgba(0,0,0,1)_42%,rgba(255,255,255,1)_47%,rgba(255,255,255,1)_51%,rgba(0,0,0,1)_52%)] opacity-[0.05] animate-[rotate_4s_linear_infinite] pointer-events-none z-[10] hidden peer-hover:block"
         ></div>
 
         <div className="w-full h-full rounded-xl">
@@ -49,7 +50,7 @@ export default function CardBank({
                 <b className="opacity-80 mr-1">/</b>{title}
               </p>
               <div className="select-none absolute top-[120px] md:top-[120px] left-[1.4em] md:left-[1.4rem] text-[1.1em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-2">
-                <p>{description}</p>
+                <p>{description == null ? "--:--" : description}</p>
                 <p>{number}</p>
               </div>
               <p className="absolute bottom-[0.75em] right-[1.8em] text-[0.9em] md:text-[0.9em] text-white text-opacity-75 text-shadow select-none">
@@ -59,18 +60,18 @@ export default function CardBank({
               {/* Círculos Mastercard */}
               <div
                 className="absolute bottom-[2em] md:bottom-[2em] right-[3em] md:right-[3em] md:w-[3em] md:h-[3em] h-[3.5em] w-[3.5em] rounded-full"
-                style={{ backgroundImage }}
+                style={{ background }}
               ></div>
               <div
                 className="absolute bottom-[2em] md:bottom-[2em] right-[1.2em] md:w-[3em] md:h-[3em] h-[3.5em] w-[3.5em] rounded-full"
-                style={{ backgroundImage }}
+                style={{ background }}
               ></div>
 
               {/* Chip */}
-              <div className="absolute top-[27.5%] left-[8.25%]">
+              <div className="absolute top-[27.5%] left-[9.50%]">
                 <img
-                  className="select-none w-[50px] bg-cover h-[45px] md:w-[45px] md:h-[42px]"
-                  src="./assets/Chip.png"
+                  className="select-none w-[45px] bg-cover h-[30px] md:w-[42px] md:h-[28px]"
+                  src="./assets/ChipDorado.png"
                   alt="Chip"
                 />
               </div>
