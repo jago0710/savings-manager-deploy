@@ -5,6 +5,7 @@ import { Knob } from 'primereact/knob';
 
 export default function Dashboard() {
 
+const [porcentajeOb, setporcentajeOb] = useState(80);
   
 
   return (
@@ -15,39 +16,52 @@ export default function Dashboard() {
             <div className="hidden md:block w-full py-5 px-7 text-xl bg-white md:border-b md:border-b-gray-200">
                 <h1 className="font-bold font-sans">DASHBOARD</h1>
             </div>
-            <div className="p-5 grid lg:grid-cols-4 grid-cols-2 gap-5">
-                <div className="h-48 rounded-md border border-gray-200 flex flex-col-reverse md:flex-row justify-around items-center bg-white">
-                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <p className="text-3xl">252,35€</p>
-                        <p className="text-xl">Ingresos <span className="pi pi-arrow-up-right" style={{ fontSize: '1.5rem', color : "#0384fc" }}></span></p>
+            <div className="p-2 grid lg:grid-cols-4 grid-cols-2 gap-2">
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
+                    <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
+                        <div>
+                            <p className="text-xl sm:text-3xl">185,00€</p>
+                            <p>Actual</p>
+                        </div>
+                        <Knob pt={{root : {className : ''}}} value={porcentajeOb} onChange={(e) => setValue(e.value)} valueTemplate={porcentajeOb + "%"} />
+                        <div>
+                            <p className="text-xl sm:text-3xl">215,00€</p>
+                            <p>Objetivo</p>
+                        </div>
                     </div>
                 </div>
-                <div className="h-48 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-40 rounded-md border border-gray-200 flex flex-col-reverse md:flex-row justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <p className="text-3xl">125€</p>
-                        <p className="text-xl">Retiros <span className="pi pi-arrow-down-right" style={{ fontSize: '1.5rem', color : "red"}}></span></p>
+                        <span className="pi pi-arrow-up-right" style={{ fontSize: '1.5rem', color : "#0384fc" }}></span>
+                        <p className="text-2xl sm:text-3xl">252,35€</p>
+                        <p className="text-xl">Ingresos</p>
                     </div>
                 </div>
-                <div className="h-48 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <p className="text-3xl">92,50€</p>
-                        <p className="text-xl">Prestamos <span className="pi pi-building-columns" style={{ fontSize: '1.5rem', color : "#ffa600"}}></span></p>
+                        <span className="pi pi-arrow-down-right" style={{ fontSize: '1.5rem', color : "red"}}></span>
+                        <p className="text-2xl sm:text-3xl">125,00€</p>
+                        <p className="text-xl">Retiros</p>
                     </div>
                 </div>
-                <div className="h-48 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <p className="text-3xl">70.512,98€</p>
-                        <p className="text-xl">Benefios <span className="pi pi-chart-line" style={{ fontSize: '1.5rem', color : "#069c0b"}}></span></p>
+                        <span className="pi pi-building-columns" style={{ fontSize: '1.5rem', color : "#ffa600"}}></span>
+                        <p className="text-2xl sm:text-3xl">92,50€</p>
+                        <p className="text-xl">Prestamos</p>
                     </div>
                 </div>
-                <Knob value={60} onChange={(e) => setValue(e.value)} valueTemplate={'60%'} />
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
+                        <span className="pi pi-chart-line" style={{ fontSize: '1.5rem', color : "#069c0b"}}></span>
+                        <p className="text-2xl sm:text-3xl">70.512,98€</p>
+                        <p className="text-xl">Benefios</p>
+                    </div>
+                </div>
                 {/** Abajo cuando este en mantenimiento */}
                 <h1 hidden className="text-3xl md:text-4xl">EN MANTENIMIENTO...</h1>
             </div>
-
-
           </div>
-          
       </div>
     </>
   );
