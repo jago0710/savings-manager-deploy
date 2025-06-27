@@ -180,15 +180,15 @@ export default function Savings() {
 
 
   return (
-    <section className="sm:grid md:flex overflow-auto">
+    <section className="sm:grid md:flex overflow-auto bg-gray-50">
       <Navbar page="MOVIMIENTOS"/>
       <div className="flex flex-col w-full mt-16 md:mt-0 md:ml-67 overflow-auto">
-        <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b border-b-gray-200">
+        <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b bg-white border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
         </div>
         <div className="flex flex-col gap-4 lg:gap-7 w-full p-2 md:p-7">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-7">
-          <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2">
+          <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2 bg-white">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
             <b className="font-bold text-3xl">
               Saldo:{" "}
@@ -200,7 +200,7 @@ export default function Savings() {
             <p className="text-gray-600">Nº de cuenta: {count}</p>
           </div>
           {/**ACCIONES RÁPIDAS PAR INGRESAR DINERO O RETIRAR */}
-          <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col">
+          <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col bg-white">
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex flex-col md:flex-row gap-3 items-center">
@@ -231,7 +231,7 @@ export default function Savings() {
             </div>
           </div>
         </div>
-        <div className="border border-gray-300 rounded-lg p-5 w-full">
+        <div className="border border-gray-300 bg-white rounded-lg p-5 w-full">
           <p className="font-bold text-2xl mb-5">Historial de movimientos</p>
           <div className="grid grid-cols-4 border-b border-b-gray-300 pb-5 text-center">
             <p>Fecha</p>

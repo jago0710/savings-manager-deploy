@@ -146,8 +146,8 @@ export default function Accounts(){
         <>
             <section className="sm:grid md:flex">
                 <Navbar page="CUENTAS DE AHORRO" />
-                <div className="w-full mt-12 md:mt-0 md:ml-67">
-                    <div className="w-full py-5 px-7 text-xl md:border-b md:border-b-gray-200">
+                <div className="w-full mt-12 md:mt-0 md:ml-67 bg-gray-50">
+                    <div className="w-full py-5 px-7 text-xl md:border-b bg-white md:border-b-gray-200">
                         <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
                     </div>
                     <div className={cards ? "flex flex-wrap gap-7 pb-5 sm:px-5 md:p-5 md:justify-start justify-center" : "flex justify-center items-center h-screen"}>

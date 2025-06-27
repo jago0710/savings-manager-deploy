@@ -27,7 +27,7 @@ console.log("IS LOGIN", isLogin);
                     <Route path="savings" element={<Savings/>} />
                     <Route path="savings/:count" element={<Savings/>} />
                     <Route path="accounts" element={<Accounts/>}/>
-                    <Route path="dashborad" element={<Dashboard/>} />
+                    <Route path="dashboard" element={<Dashboard/>} />
                     <Route path="settings" element={<Settings/>}/>
                 </Routes>  
             )
