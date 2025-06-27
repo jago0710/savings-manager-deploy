@@ -14,7 +14,7 @@ export default function Navbar({page}) {
   const routes = [
     { href: "/home", label: "Inicio", icon: Home },
     { href: "/accounts", label: "Cuentas", icon: WalletCardsIcon},
-    { href: "/dashborad", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
     { href: "/home", label: "Cerrar cuenta", icon: LogOut },
   ];
