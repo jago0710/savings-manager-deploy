@@ -13,6 +13,8 @@ import { confirmPopup, ConfirmPopup } from "primereact/confirmpopup";
 import { Toast } from 'primereact/toast';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { ScrollTop } from "primereact/scrolltop";
+import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
         
          
 
@@ -68,8 +70,9 @@ export default function Savings() {
   
 
   const confirm = (event) => {
-        confirmPopup({
+        confirmDialog({
             target: event.currentTarget,
+            header: 'Confirmar',
             message: `¿Estas seguro de retirar ese dinero?`,
             icon: 'pi pi-exclamation-triangle',
             defaultFocus: 'accept',
@@ -86,7 +89,7 @@ export default function Savings() {
       };
 
   const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Operación cancelada', detail: 'La operación de ha cancelado', life: 3000 });
+        toast.current.show({ severity: 'warn', summary: 'Operación cancelada',  life: 3000 });
     };
 
   const saveValue = () => {
@@ -177,9 +180,9 @@ export default function Savings() {
 
 
   return (
-    <section className="sm:grid md:flex">
+    <section className="sm:grid md:flex overflow-auto">
       <Navbar page="MOVIMIENTOS"/>
-      <div className="flex flex-col w-full mt-16 md:mt-0 md:ml-67">
+      <div className="flex flex-col w-full mt-16 md:mt-0 md:ml-67 overflow-auto">
         <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
         </div>
@@ -202,23 +205,22 @@ export default function Savings() {
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex flex-col md:flex-row gap-3 items-center">
                 <Dropdown className="w-full md:w-1/3" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
-                <InputNumber className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
+                <InputNumber pt={{}} className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
               <div className="flex flex-col gap-2">
-              <Toast ref={toast} />
-              <ConfirmPopup />
-            {screen.width < 480 
-            ? null 
+              <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
+              <ConfirmDialog position="top" />
+            {screen.width < 480 ? null 
             : <div className="grid grid-cols-4 sm:grid-cols-4 gap-2">
               {[5, 10, 20, 50].map((num) => (
-                <Button key={num} onClick={() => setInputValue(num.toString())}  className="" type="submit" 
+                <Button key={num} onClick={() => setInputValue(num.toString())} type="submit" 
                 label={Intl.NumberFormat("es-ES", {
                     style: "currency",
                     currency: "EUR",
                   }).format(num)} severity="secondary" text raised></Button>
               ))}
             </div>}
-              <Button pt={{root : {class : 'bg-black text-white rounded-md w-full p-3'}}} className="w-full" type="submit"  label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
+              <Button pt={{root : {class : 'bg-gray-500 text-white rounded-md w-full p-3'}}} className="w-full" type="submit"  label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
               <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Upps... " visible={showDialog}  onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">
                     Puede que el valor que hayas ingresado sea un 0. <br /><br />
@@ -240,33 +242,33 @@ export default function Savings() {
           </div>
           <div className="flex flex-col-reverse">
             <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
-                {detailMovement 
+                {detailMovement
                 ? <div className="space-y-4">
-  <div className="flex justify-between text-sm text-gray-700">
-    <span className="font-medium">Usuario:</span>
-    <span>{detailMovement.user}</span>
-  </div>
+                      <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium">Usuario:</span>
+                        <span>{detailMovement.user}</span>
+                      </div>
 
-  <div className="flex justify-between text-sm text-gray-700">
-    <span className="font-medium">Descripción:</span>
-    <span>{detailMovement.description}</span>
-  </div>
+                      <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium">Descripción:</span>
+                        <span>{detailMovement.description}</span>
+                      </div>
 
-  <div className="flex justify-between text-sm text-gray-700">
-    <span className="font-medium">Monto:</span>
-    <span>{detailMovement.amount}€</span>
-  </div>
+                      <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium">Monto:</span>
+                        <span>{detailMovement.amount}€</span>
+                      </div>
 
-  <div className="flex justify-between text-sm text-gray-700">
-    <span className="font-medium">Total:</span>
-    <span>{detailMovement.total}€</span>
-  </div>
+                      <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium">Total:</span>
+                        <span>{detailMovement.total}€</span>
+                      </div>
 
-  <div className="flex justify-between text-sm text-gray-700">
-    <span className="font-medium">Fecha:</span>
-    <span>{detailMovement.date}</span>
-  </div>
-</div>
+                      <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium">Fecha:</span>
+                        <span>{detailMovement.date}</span>
+                      </div>
+                    </div>
  
                 :<p>No hay datos.</p>}
             </Dialog>
@@ -304,6 +306,7 @@ export default function Savings() {
           </div>
         </div>
       </div>
+      <ScrollTop target="parent" threshold={100} className="w-2rem h-2rem border-round bg-primary" icon="pi pi-arrow-up text-base" />
       </div>
     </section>
   );
