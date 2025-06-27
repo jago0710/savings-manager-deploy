@@ -103,8 +103,7 @@ export default function Savings() {
     let newTotal = null;
 
     // Actualizar totalMoney
-    if (typeMovement === "Retirar") {
-      
+    if (typeMovement === "Retirar" && (totalMoney - amount) >= 0) {
       newTotal = totalMoney - amount;
       setTotalMoney(newTotal);
     } else if (typeMovement === "Ingresar"){
@@ -122,8 +121,9 @@ export default function Savings() {
       date: today.toLocaleDateString(),
       description: typeMovement,
       amount: typeMovement === "Ingresar" ? amount.toFixed(2) : -amount.toFixed(2),
-      total: newTotal.toFixed(2),
+      total: newTotal,
       "user": user?.displayName || "Anónimo",
+      userPhoto: user?.photoURL
     };
     
     addMovementToFirestore(newMovement);
@@ -233,22 +233,28 @@ export default function Savings() {
         </div>
         <div className="border border-gray-300 bg-white rounded-lg p-5 w-full">
           <p className="font-bold text-2xl mb-5">Historial de movimientos</p>
-          <div className="grid grid-cols-4 border-b border-b-gray-300 pb-5 text-center">
-            <p>Fecha</p>
-            <p hidden>Descripción</p>
+          <div className="grid grid-cols-4 md:grid-cols-6 border-b border-b-gray-300 pb-5 text-center">
+            <p>Imagen</p>
+            <p>Usuario</p>
+            <p className="hidden md:block">Descripción</p>
             <p>Monto</p>
             <p>Total</p>
-            <p>Usuario</p>
+            <p className="hidden md:block">Fecha</p>
           </div>
           <div className="flex flex-col-reverse">
             <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
                 ? <div className="space-y-4">
                       <div className="flex justify-between text-sm text-gray-700">
+                        <span className="font-medium"></span>
+                        <img className="h-15 w-15 rounded-full" src={detailMovement.userPhoto} alt="Foto del implicado" />
+                      </div>
+
+                      <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Usuario:</span>
                         <span>{detailMovement.user}</span>
                       </div>
-
+                      
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Descripción:</span>
                         <span>{detailMovement.description}</span>
@@ -277,10 +283,17 @@ export default function Savings() {
                 <div 
                   onClick={() => viewMovement(movement)}
                   key={index}
-                  className="grid grid-cols-4 justify-around py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
+                  className="grid grid-cols-4 md:grid-cols-6 justify-around py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
                 >
-                  <p>{movement.date}</p>
-                  <p hidden>{movement.description}</p>
+
+                  <div className="flex justify-center items-center">
+                    <img className="rounded-full h-7 w-7" src={movement.userPhoto} alt="foto usuario" />
+                  </div>
+                  <p className="truncate">{movement.user}</p>
+
+                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : "text-blue-500 hidden md:block"}>
+                    {movement.description}
+                  </p>
                   <p
                     style={{
                       color: parseFloat(movement.amount) < 0 ? "red" : "green",
@@ -297,7 +310,7 @@ export default function Savings() {
                       currency: "EUR",
                     }).format(parseFloat(movement.total))}
                   </p>
-                  <p className="truncate">{movement.user}</p>
+                    <p className="hidden md:block">{movement.date}</p>
                 </div>
               ))
             ) : (

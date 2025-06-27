@@ -73,6 +73,7 @@ export default function Accounts(){
                 newAccount.owners = updatedOwners
                 newAccount.color = colorCard
                 newAccount.movements = [{
+                userPhoto: currentUser.photoURL,
                 user: currentUser.displayName,
                 date: new Date().toLocaleDateString(),
                 description: "Apertura",
@@ -94,6 +95,7 @@ export default function Accounts(){
                 newAccount.owners = [currentUser.email]
                 newAccount.color = colorCard
                 newAccount.movements = [{
+                userPhoto: currentUser.photoURL,
                 user: currentUser.displayName,
                 date: new Date().toLocaleDateString(),
                 description: "Apertura",
