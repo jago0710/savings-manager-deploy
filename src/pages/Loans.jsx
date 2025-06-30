@@ -5,6 +5,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/database.jsx";
 import useUser from "../hook/useUser.jsx";
 import 'primeicons/primeicons.css';
+import Header from "../components/Header.jsx";
         
 
 export default function Loans() {
@@ -46,15 +47,14 @@ export default function Loans() {
             <div className="sm:grid md:flex">
                 <Navbar page="PRESTAMOS"></Navbar>
                 <div className="mt-15 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
-                    <div className="hidden md:flex w-full py-5 px-7 text-xl bg-white md:border-b md:border-b-gray-200  flex-row justify-between items-center">
-                        <h1 className="font-bold font-sans">PRESTAMOS</h1>
-                        <div className="w-md">
-                            <Dropdown loading={accounts.length <= 0 ? true : false} filter
-                            value={selectedAccount} onChange={(e) => setSelectedAccount(e.value)} options={accounts} optionLabel="label" 
-                            placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
-                        </div>
+                    <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
+                    
+                    {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}
+                    <div hidden={selectedAccount ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                        <h1 className="text-center">No tienes prestamos en {selectedAccount} <span className="pi pi-sparkles" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
-                    <div className="m-2 bg-white h-full border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+
+                    <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                         <h1>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
                 </div>

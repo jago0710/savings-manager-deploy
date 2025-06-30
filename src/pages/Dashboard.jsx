@@ -6,6 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 import useUser from "../hook/useUser";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/database";
+import Header from "../components/Header";
 
 export default function Dashboard() {
     
@@ -43,20 +44,17 @@ export default function Dashboard() {
             
           });
 
-  
+  const changeValue = (e) => {
+    (e) => setSelectedAccount(e.value)
+  }
 
   return (
     <>
       <div className="sm:grid md:flex">
         <Navbar page="DASHBOARD" />
           <div className="mt-15 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
-            <div className="hidden md:flex w-full py-5 px-7 text-xl bg-white md:border-b md:border-b-gray-200  flex-row justify-between items-center">
-                <h1 className="font-bold font-sans">DASHBOARD</h1>
-                <div className="w-md">
-                    <Dropdown loading={accounts ? false : true} key={1} filter value={selectedAccount} onChange={(e) => setSelectedAccount(e.value)} options={accounts} optionLabel="label" 
-                            placeholder="Selecciona una cuenta" className="w-full md:w-14rem " /></div>
-            </div>
-            <div className="p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={selectedAccount ? false : true}>
+            <Header title="DASHBOARD" dropdown dropdownData={accounts} dropValue={selectedAccount} change={setSelectedAccount}></Header>
+            <div className="md:mt-0 mt-[73px] p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={selectedAccount ? false : true}>
                 <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
                     <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
                         <div>
@@ -100,7 +98,7 @@ export default function Dashboard() {
                 </div>
             </div>
                 {/** Abajo cuando este en mantenimiento */}
-                <div className="m-2 bg-white h-full border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white h-full border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                     <h1 hidden={selectedAccount ? true : false}>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                 </div>
           </div>
