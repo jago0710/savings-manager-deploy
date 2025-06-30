@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Home, Settings, Menu, LayoutDashboard, LogOut, WalletCardsIcon } from "lucide-react";
+import { Home, Settings, Menu, LayoutDashboard, LogOut, WalletCardsIcon, HandCoins} from "lucide-react";
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
 import { Skeleton } from "primereact/skeleton";
+import { href } from "react-router";
 
 
 export default function Navbar({page}) {
@@ -14,6 +15,7 @@ export default function Navbar({page}) {
   const routes = [
     { href: "/home", label: "Inicio", icon: Home },
     { href: "/accounts", label: "Cuentas", icon: WalletCardsIcon},
+    { href: "/loans", label: "Prestamos", icon: HandCoins},
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
     { href: "/home", label: "Cerrar cuenta", icon: LogOut },

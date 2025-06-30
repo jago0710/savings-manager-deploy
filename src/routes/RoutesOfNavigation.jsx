@@ -1,4 +1,4 @@
-import {Routes, Route, Navigate } from "react-router";
+import {Routes, Route } from "react-router";
 import Home from "../pages/Home";
 import Landing from "../pages/auth/Landing";
 import Accounts from "../pages/Accounts";
@@ -8,6 +8,7 @@ import Settings from "../pages/Settings";
 import LoginContext from "../context/LoginContext";
 import { useContext } from "react";
 import useUser from "../hook/useUser";
+import Loans from "../pages/Loans";
 
 export default function RoutesOfNavigation(){
 
@@ -27,6 +28,7 @@ console.log("IS LOGIN", isLogin);
                     <Route path="savings" element={<Savings/>} />
                     <Route path="savings/:count" element={<Savings/>} />
                     <Route path="accounts" element={<Accounts/>}/>
+                    <Route path="loans" element={<Loans/>}/>
                     <Route path="dashboard" element={<Dashboard/>} />
                     <Route path="settings" element={<Settings/>}/>
                 </Routes>  

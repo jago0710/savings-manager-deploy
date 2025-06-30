@@ -2,10 +2,47 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Chart } from 'primereact/chart';
 import { Knob } from 'primereact/knob';
+import { Dropdown } from 'primereact/dropdown';
+import useUser from "../hook/useUser";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase/database";
 
 export default function Dashboard() {
+    
+    const currentUser = useUser();
 
-const [porcentajeOb, setporcentajeOb] = useState(80);
+    const [porcentajeOb, setporcentajeOb] = useState(80);
+    const [accounts,  setAccounts] = useState([]);
+    const [selectedAccount, setSelectedAccount] = useState();
+
+        useEffect(() => {
+            const fetchAccounts = async () => {
+                if (!currentUser?.email) return;
+    
+                try{
+                const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email));
+                const querySnapshot = await getDocs(q);
+                const accountsData = querySnapshot.docs.map(doc => doc.data());
+                setAccounts(accountsData);
+
+                const formattedAccounts = accountsData.map(element => ({
+                    label: element.description  + " - " + element.number ,
+                    value: element.number
+                }));
+
+                setAccounts(formattedAccounts);
+
+                } catch (e){
+                    console.error("Error fechings accounts", e);
+                    
+                }
+                
+            }
+        
+            fetchAccounts();
+            
+          });
+
   
 
   return (
@@ -13,10 +50,13 @@ const [porcentajeOb, setporcentajeOb] = useState(80);
       <div className="sm:grid md:flex">
         <Navbar page="DASHBOARD" />
           <div className="mt-15 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
-            <div className="hidden md:block w-full py-5 px-7 text-xl bg-white md:border-b md:border-b-gray-200">
+            <div className="hidden md:flex w-full py-5 px-7 text-xl bg-white md:border-b md:border-b-gray-200  flex-row justify-between items-center">
                 <h1 className="font-bold font-sans">DASHBOARD</h1>
+                <div className="w-md">
+                    <Dropdown loading={accounts ? false : true} key={1} filter value={selectedAccount} onChange={(e) => setSelectedAccount(e.value)} options={accounts} optionLabel="label" 
+                            placeholder="Selecciona una cuenta" className="w-full md:w-14rem " /></div>
             </div>
-            <div className="p-2 grid lg:grid-cols-4 grid-cols-2 gap-2">
+            <div className="p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={selectedAccount ? false : true}>
                 <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
                     <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
                         <div>
@@ -58,9 +98,11 @@ const [porcentajeOb, setporcentajeOb] = useState(80);
                         <p className="text-xl">Benefios</p>
                     </div>
                 </div>
-                {/** Abajo cuando este en mantenimiento */}
-                <h1 hidden className="text-3xl md:text-4xl">EN MANTENIMIENTO...</h1>
             </div>
+                {/** Abajo cuando este en mantenimiento */}
+                <div className="m-2 bg-white h-full border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                    <h1 hidden={selectedAccount ? true : false}>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
+                </div>
           </div>
       </div>
     </>
