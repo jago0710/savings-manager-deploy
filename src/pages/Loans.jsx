@@ -90,26 +90,33 @@ export default function Loans() {
                 <div className="mt-15 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
                     {/**Aqui de pondrá un header mobile */}
                     <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
-                    <div className="flex gap-5">
+                    {/**<div className="flex gap-5">
                         <button className="border" onClick={mostrar}>mostrar loans</button>
                         <button className="border" onClick={mostrar2}>number</button>
+                    </div>*/}
+                    <div className="md:hidden mt-[73px] mx-2">
+                        <Dropdown  loading={accounts.length <= 0 ? true : false} filter 
+                        value={selectedAccount} onChange={(e) => setSelectedAccount(e.target.value)} options={accounts} optionLabel="label" 
+                        placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
                     </div>
                     
-                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 text-xl md:text-3xl text-gray-500">
                         
-                            <DataTable sortIcon value={loans[0]?.loans} tableStyle={{ minWidth: '50rem' }}>
-                                <Column field="nombre" header="Code"></Column>
-                                <Column field="cantidad" header="Name"></Column>
+                            <DataTable rowCheckbox removableSort sortMode="multiple" selection={true} value={loans[0]?.loans} tableStyle={{ minWidth: '20rem' }}>
+                                <Column field="user" header="Nombre" sortable style={{ width: '25%' }}></Column>
+                                <Column field="amount" header="Monto" sortable style={{ width: '25%' }}></Column>
+                                <Column field="status" header="Estado" sortable style={{ width: '25%' }}></Column>
+                                <Column field="date" header="Fecha" sortable style={{ width: '25%' }}></Column>
                             </DataTable>
                         
                     </div>
 
                     {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}
-                    <div hidden={loans[0]?.loans?.length <= 0 ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                    <div hidden={loans[0]?.loans?.length <= 0 ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                         <h1 className="text-center">No tienes prestamos aqui <span className="pi pi-sparkles" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
 
-                    <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-[73px] bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                    <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                         <h1>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
                 </div>

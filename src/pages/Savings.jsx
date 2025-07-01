@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { db } from "../firebase/database.jsx";
-import { arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import useUser from "../hook/useUser.jsx";
 import { useParams } from "react-router";
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -63,39 +63,68 @@ export default function Savings() {
     }
   }, [countParse]);
 
+  const confirmDetails = () => {
+    return(
+      <div className="flex flex-col gap-2">
+        <p><b>Prestamo:</b> Se te registrará el prestamo y tendrás que devolver el dinero</p>
+        <p><b>Beneficio:</b> No se te pedirá la devolución del dinero</p>
+      </div>
+    )
+  }
+
   console.log("DATES-COUNT",countSavings);
   
 
   const confirm = (event) => {
         confirmDialog({
             target: event.currentTarget,
-            header: 'Confirmar',
-            message: `¿Estas seguro de retirar ese dinero?`,
-            icon: 'pi pi-exclamation-triangle',
+            header: 'Confirma el tipo de retiro',
+            message: confirmDetails,
+            icon: 'pi pi-exclamation-circle',
             defaultFocus: 'accept',
-            acceptLabel: 'Acceptar',
-            rejectLabel: 'Cancelar',
+            acceptLabel: 'Prestamo',
+            rejectLabel: 'Beneficio',
             accept,
             reject
         });
   };
 
   const accept = () => {
-        toast.current.show({ severity: 'success', summary: '¡Retiro con exito!', detail: `Se ha retirado ${inputValue}€`, life: 3000 });
-        saveValue()
+        toast.current.show({ severity: 'success', summary: '¡Prestamo realizado!', detail: `Te has prestado ${inputValue}€`, life: 3000 });
+        saveValue("Prestamo")
+        saveToLoans()
       };
 
   const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Operación cancelada',  life: 3000 });
+        toast.current.show({ severity: 'success', summary: '¡Retiro con exito!', detail: `Se ha retirado en beneficio ${inputValue}€`, life: 3000 });
+        saveValue()
     };
+  
+  const saveToLoans = () => {
 
-  const saveValue = () => {
+    const amount = parseFloat(inputValue);
+
+    const today = new Date();
+    //Aqui creo un nuevo prestamo
+    const newLoan = {
+      id: crypto.randomUUID(),
+      userEmail: user?.email,
+      "user": user?.displayName,
+      userPhoto: user?.photoURL,
+      amount: amount.toFixed(2),
+      status: "sin pagar",
+      date: today.toLocaleDateString(),
+    }
+
+    addLoanToFirestore(newLoan);
+    setInputValue("");
+  }
+
+  const saveValue = (prestamo) => {
+    console.log(prestamo);
+    
     
     const amount = parseFloat(inputValue);
-    if (isNaN(amount) || amount === 0) {
-      setShowDialog(!showDialog);
-      return;
-    }
 
     let newTotal = null;
 
@@ -111,15 +140,23 @@ export default function Savings() {
       
     }
 
+    let type;
+
+    if (!prestamo) {
+      type = typeMovement
+    } else {
+      type = prestamo
+    }
 
     // Crear nuevo movimiento
     const today = new Date();
     const newMovement = {
+      id: crypto.randomUUID(),
       date: today.toLocaleDateString(),
-      description: typeMovement,
+      description: type,
       amount: typeMovement === "Ingresar" ? amount.toFixed(2) : -amount.toFixed(2),
       total: newTotal,
-      "user": user?.displayName || "Anónimo",
+      "user": user?.displayName,
       userPhoto: user?.photoURL
     };
     
@@ -135,16 +172,35 @@ export default function Savings() {
     // Aquí podrías agregar la lógica para actualizar en Firebase también
   };
 
-  const addMovementToFirestore = async (newMovement) => {
+const addLoanToFirestore = async (newLoan) => {
   try {
-    // Paso 1: buscar el documento de la cuenta por número
+    const q = query(collection(db, "ACCOUNTS"), where("number", "==", parseInt(count)));
+    const querySnapshot = await getDocs(q)
+
+    if (!querySnapshot.empty) {
+      const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id)
+        // Actualizo y agrego el Prestamo
+      await updateDoc(docRef, {
+        loans : arrayUnion(newLoan)
+      })
+    } else {
+      console.log("No se encotró la cuenta");
+    }
+  } catch (error){
+    console.error("Error al agregar prestamo:", error);
+  }
+}
+
+const addMovementToFirestore = async (newMovement) => {
+  try {
+    //Busco el documento de la cuenta por el número
     const q = query(collection(db, "ACCOUNTS"), where("number", "==", parseInt(count)));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtenemos el ID del documento
+      const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtengo el ID del documento para actualizar el docmento
 
-      // Paso 2: agregamos el nuevo movimiento al array
+      // Actualizo y agrego el movimiento
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
         total: parseFloat(totalMoney) //actualizas también el saldo
@@ -175,6 +231,23 @@ export default function Savings() {
     setViewModalMovement(true)
   }
 
+  const verify = (e) => {
+    const amount = parseFloat(inputValue);
+    if (isNaN(amount) || amount === 0) {
+      setShowDialog(!showDialog);
+      return;
+    }
+    
+    if (typeMovement === "Retirar" && inputValue && (totalMoney - inputValue) >= 0 ) {
+      confirm(e)
+    } else if ((totalMoney - inputValue) < 0) {
+      const ejemplo = totalMoney - inputValue;
+      toast.current.show({ severity: 'warn', summary: 'Movimiento invalido!', detail: 'La cuenta no puede quedar en negativo o números rojos', life: 3000 });
+    }else{
+      saveValue()
+    }
+    
+  }
 
   return (
     <section className="sm:grid md:flex overflow-auto bg-gray-50">
@@ -217,7 +290,7 @@ export default function Savings() {
                   }).format(num)} severity="secondary" text raised></Button>
               ))}
             </div>}
-              <Button pt={{root : {class : 'bg-gray-500 text-white rounded-md w-full p-3'}}} className="w-full" type="submit"  label="Registrar movimiento" severity="secondary" text raised onClick={typeMovement === "Retirar" && inputValue ? confirm : saveValue}/>
+              <Button pt={{root : {class : 'bg-gray-500 text-white rounded-md w-full p-3'}}} className="w-full" type="submit"  label="Registrar movimiento" severity="secondary" text raised onClick={(e) => verify(e)}/>
               <Dialog headerStyle={{width : "80vw"}} contentStyle={{width : "80vw"}} header="Upps... " visible={showDialog}  onHide={() => {if (!showDialog) return; setShowDialog(false); }}>
                 <p className="m-0">
                     Puede que el valor que hayas ingresado sea un 0. <br /><br />
@@ -288,14 +361,10 @@ export default function Savings() {
                   </div>
                   <p className="truncate">{movement.user}</p>
 
-                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : "text-blue-500 hidden md:block"}>
+                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : movement.description == "Prestamo" ?  "text-yellow-600 hidden md:block" : "text-blue-500 hidden md:block"}>
                     {movement.description}
                   </p>
-                  <p
-                    style={{
-                      color: parseFloat(movement.amount) < 0 ? "red" : "green",
-                    }}
-                  >
+                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : movement.description == "Prestamo" ?  "text-yellow-600 hidden md:block" : "text-blue-500 hidden md:block"}>
                     {Intl.NumberFormat("es-ES", {
                       style: "currency",
                       currency: "EUR",
