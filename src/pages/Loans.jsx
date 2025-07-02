@@ -131,7 +131,7 @@ export default function Loans() {
 
           const getButtonsOfAction = () => {
             return(
-                <Button label="Pagar" icon="pi pi-dollar" severity="success" disabled={!selectedLoans || !selectedLoans.length} onClick={mostrarLog} ></Button>
+                <Button label="Pagar" severity="success" disabled={!selectedLoans || !selectedLoans.length} onClick={mostrarLog} ></Button>
             )
           }
 
@@ -143,7 +143,7 @@ export default function Loans() {
             });
             }
             return(
-                <p className="font-bold md:text-3xl">Cantidad a pagar: {Intl.NumberFormat("es-ES", {
+                <p className="font-bold text-xl md:text-3xl">Total: {Intl.NumberFormat("es-ES", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(total))}</p>
