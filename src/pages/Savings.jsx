@@ -112,7 +112,7 @@ export default function Savings() {
       "user": user?.displayName,
       userPhoto: user?.photoURL,
       amount: amount.toFixed(2),
-      status: "sin pagar",
+      status: "pendiente",
       date: today.toLocaleDateString(),
     }
 
@@ -303,13 +303,12 @@ const addMovementToFirestore = async (newMovement) => {
         </div>
         <div className="border border-gray-300 bg-white rounded-lg p-5 w-full">
           <p className="font-bold text-2xl mb-5">Historial de movimientos</p>
-          <div className="grid grid-cols-4 md:grid-cols-6 border-b border-b-gray-300 pb-5 text-center">
-            <p>Imagen</p>
-            <p>Usuario</p>
+          <div className="grid grid-cols-4 md:grid-cols-5 border-b border-b-gray-300 pb-5 text-center">
+            <p>Fecha</p>
             <p className="hidden md:block">Descripción</p>
             <p>Monto</p>
             <p>Total</p>
-            <p className="hidden md:block">Fecha</p>
+            <p>Usuario</p>
           </div>
           <div className="flex flex-col-reverse">
             <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
@@ -353,18 +352,14 @@ const addMovementToFirestore = async (newMovement) => {
                 <div 
                   onClick={() => viewMovement(movement)}
                   key={index}
-                  className="grid grid-cols-4 md:grid-cols-6 justify-around py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
+                  className="grid grid-cols-4 md:grid-cols-5 justify-around py-5 md:py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
                 >
+                  <p>{movement.date}</p>
 
-                  <div className="flex justify-center items-center">
-                    <img className="rounded-full h-7 w-7" src={movement.userPhoto} alt="foto usuario" />
-                  </div>
-                  <p className="truncate">{movement.user}</p>
-
-                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : movement.description == "Prestamo" ?  "text-yellow-600 hidden md:block" : "text-blue-500 hidden md:block"}>
+                  <p className={movement.description == "Ingresar" ? "hidden md:block" : movement.description == "Retirar" ? "hidden md:block" : movement.description == "Prestamo" ?  "hidden md:block" : "hidden md:block"}>
                     {movement.description}
                   </p>
-                  <p className={movement.description == "Ingresar" ? "text-green-700 hidden md:block" : movement.description == "Retirar" ? "text-red-600 hidden md:block" : movement.description == "Prestamo" ?  "text-yellow-600 hidden md:block" : "text-blue-500 hidden md:block"}>
+                  <p className={movement.description == "Ingresar" ? "text-green-700" : movement.description == "Retirar" ? "text-red-600" : movement.description == "Prestamo" ?  "text-orange-500" : "text-blue-500"}>
                     {Intl.NumberFormat("es-ES", {
                       style: "currency",
                       currency: "EUR",
@@ -376,7 +371,11 @@ const addMovementToFirestore = async (newMovement) => {
                       currency: "EUR",
                     }).format(parseFloat(movement.total))}
                   </p>
-                    <p className="hidden md:block">{movement.date}</p>
+
+                    <span className="flex items-center gap-2">
+                    <img className="rounded-full h-7 w-7" src={movement.userPhoto} alt="Perfil de usuario" />
+                    <p className="truncate">{movement.user}</p>
+                  </span>
                 </div>
               ))
             ) : (
