@@ -12,6 +12,7 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { ColorPicker } from "primereact/colorpicker";
 import { InputText } from 'primereact/inputtext';
 import { Toast } from "primereact/toast";
+import { InputNumber } from "primereact/inputnumber";
 
 
 
@@ -27,6 +28,7 @@ export default function Accounts(){
     const [colorRGB, setColorRGB] = useState({ r: 145, g: 110, b: 0 });
     const [colorCard, setColorCard] = useState();
     const [descriptionCard, setDescriptionCard] = useState(null);
+    const [target, setTarget] = useState();
     
 
     useEffect(() => {
@@ -72,6 +74,8 @@ export default function Accounts(){
                 newAccount.createAccount = new Date().toLocaleDateString()
                 newAccount.owners = updatedOwners
                 newAccount.color = colorCard
+                newAccount.target = target
+                newAccount.loans = []
                 newAccount.movements = [{
                 userPhoto: currentUser.photoURL,
                 user: currentUser.displayName,
@@ -176,6 +180,7 @@ export default function Accounts(){
                                     <ColorPicker pt={{input : {className : 'right-0'}}} format="rgb" value={colorRGB} onChange={changeColorCard} />
                                 </div>
                                 <InputText placeholder="Descripción" pt={{root: {className : 'w-full'}}} type="text" value={descriptionCard} onChange={(e) => setDescriptionCard(e.target.value)} />
+                                 <InputNumber placeholder="Objetivo" pt={{root: {className : 'w-full'}}} type="number" value={target} onChange={(e) => setTarget(e.target.value)} />
                                 <Toast ref={toast}></Toast>
                                 <Chips 
                                 pt={{
