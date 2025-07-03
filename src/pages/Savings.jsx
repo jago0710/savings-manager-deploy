@@ -45,7 +45,7 @@ export default function Savings() {
         const querySnapshot = await getDocs(q)
         
         if (!querySnapshot.empty) {
-          const docData = querySnapshot.docs[0].data();
+          const docData =  querySnapshot.docs[0].data();
           const movements = Array.isArray(docData.movements) ? docData.movements : [];
           setCountSavings({ ...docData, movements });
           console.log("-------", docData.movements[docData.movements.length - 1].total);
@@ -61,7 +61,7 @@ export default function Savings() {
     if (!isNaN(countParse)) {
       getDates();
     }
-  }, [countParse]);
+  }, [countParse, movementsOptions]);
 
   const confirmDetails = () => {
     return(
@@ -352,7 +352,7 @@ const addMovementToFirestore = async (newMovement) => {
                 <div 
                   onClick={() => viewMovement(movement)}
                   key={index}
-                  className="grid grid-cols-4 md:grid-cols-5 justify-around py-5 md:py-7 border-b-gray-200 border-b text-center hover:bg-blue-100 "
+                  className="grid grid-cols-4 md:grid-cols-5 justify-around py-5 md:py-5 border-b-gray-200 border-b text-center hover:bg-blue-100 "
                 >
                   <p>{movement.date}</p>
 
