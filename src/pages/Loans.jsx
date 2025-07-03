@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { Dropdown } from "primereact/dropdown";
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/database.jsx";
 import useUser from "../hook/useUser.jsx";
 import 'primeicons/primeicons.css';
@@ -24,6 +24,7 @@ export default function Loans() {
     const [accounts,  setAccounts] = useState([]);
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [selectedLoans, setSelectedLoans] = useState(null);
+    const [viewAllloans, setViewAllLoans] = useState(false)
 
         useEffect(() => {
              const fetchLoans = async () => {
@@ -40,7 +41,7 @@ export default function Loans() {
 
                     setLoans(loansData)
 
-                    console.log(loansData);
+                    console.log("Loans Data: ",loansData);
                     
 
                 } catch (e){
@@ -54,29 +55,31 @@ export default function Loans() {
         }, [selectedAccount])
 
         useEffect(() => {
-            const fetchAccounts = async () => {
+            
                 if (!currentUser?.email) return;
                 
-                try{
                 const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email));
-                const querySnapshot = await getDocs(q);
-                const accountsData = querySnapshot.docs.map(doc => doc.data());
-                setAccountsData(accountsData);
+                const unsubscripte = onSnapshot(q, (querySnapshot) => {
+                    const accountsData = querySnapshot.docs.map(doc => doc.data());
+                    setAccountsData(accountsData);
+                    
+                    const formattedAccounts = accountsData.map(element => ({
+                        label: element.description  + " - " + element.number,
+                        value: element.number
+                    }));
+                    
+                    setAccounts(formattedAccounts);
+                    
+                }, (error) => {
+                    console.error("Error en la subcripción:", error);
+                    
+                });
 
-                const formattedAccounts = accountsData.map(element => ({
-                    label: element.description  + " - " + element.number,
-                    value: element.number
-                }));
-
-                setAccounts(formattedAccounts);
-                
-                } catch (e){
-                    console.error("Error fechings accounts", e);
-                }
-                
+            return () => {
+                unsubscripte();
             }
-            fetchAccounts();
-          });
+                   
+          }, [currentUser?.email]);
 
           const amountRow = (rowData) => {
             return (
@@ -95,8 +98,8 @@ export default function Loans() {
 
           const userRow = (rowData) => {
             return(
-                <span className="flex flex-row gap-1">
-                    <img className="h-5 w-5 rounded-full" src={rowData.userPhoto} alt="Perfil del usuario" />
+                <span className="flex flex-row gap-2 items-center">
+                    <img className="h-7 w-7 rounded-full" src={rowData.userPhoto} alt="Perfil del usuario" />
                     <p className="truncate">{rowData.user}</p>
                 </span>
             )
@@ -129,9 +132,16 @@ export default function Loans() {
             
           }
 
+          const resetValuesForViewAlls = () => {
+            setViewAllLoans(!viewAllloans)
+            setSelectedLoans(null)
+          }
+
+
           const getButtonsOfAction = () => {
             return(
-                <Button label="Pagar" severity="success" disabled={!selectedLoans || !selectedLoans.length} onClick={mostrarLog} ></Button>
+                        <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} severity="success" raised  disabled={!selectedLoans || !selectedLoans.length} onClick={mostrarLog} ></Button>
+                        
             )
           }
 
@@ -143,21 +153,27 @@ export default function Loans() {
             });
             }
             return(
-                <p className="font-bold text-xl md:text-3xl">Total: {Intl.NumberFormat("es-ES", {
+                <div className="flex items-center gap-2">
+                    <p className="font-bold text-xl md:text-3xl">Total:</p>
+                    <p className="font-bold text-xl md:text-3xl">{Intl.NumberFormat("es-ES", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(total))}</p>
+                </div>
             )
           }
-          
-          const sum = (a, b) => {
-            return a + b
+
+          const allHeader = () => {
+            return(
+                <span className="pi pi-thumbtack" style={{width: "22px"}}></span>
+            )
           }
-    return(
+
+    return (
         <>
             <div className="sm:grid md:flex">
                 <Navbar page="PRESTAMOS"></Navbar>
-                <div className="mt-15 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
+                <div className="mt-0 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
                     {/**Aqui de pondrá un header mobile */}
                     <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
                     {/**<div className="flex gap-5">
@@ -165,17 +181,21 @@ export default function Loans() {
                         <button className="border" onClick={mostrar2}>number</button>
                     </div>*/}
                     <div className="md:hidden mt-[73px] mx-2">
-                        <Dropdown  loading={accounts.length <= 0 ? true : false} filter 
+                        <Dropdown loading={accounts.length <= 0 ? true : false} filter 
                         value={selectedAccount} onChange={(e) => setSelectedAccount(e.target.value)} options={accounts} optionLabel="label" 
                         placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
                     </div>
-                    
-                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
-                            <Toolbar left={getTotal} right={getButtonsOfAction}></Toolbar>
-                            <DataTable className="w-full" removableSort stripedRows selection={selectedLoans} onSelectionChange={(e) => setSelectedLoans(e.value)}
+                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
+                            <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
+                            <div>
+                                <Button icon={viewAllloans ? "pi pi-user" : "pi pi-users"}  label={viewAllloans ? "Mis prestamos" : "Ver todos"} severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
+                            </div>
+                            <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
                             sortField="date" sortOrder={-1} value={loans[0]?.loans}>
-                                <Column selectionMode="multiple" exportable={true}></Column>
-                                <Column field="user" header="Usuario" body={userRow} sortable></Column>
+                                {!viewAllloans 
+                                ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple" exportable={false}></Column> 
+                                : <Column pt={{root : {className : 'w-3'}}} header={allHeader}></Column>}
+                                <Column field="user" header="Usuario" body={userRow} sortable style={{ minWidth: '10px'}}> </Column>
                                 <Column field="date" header="Fecha" sortable></Column>
                                 <Column field="amount" header="Monto" body={amountRow} sortable></Column>
                                 <Column field="status" header="Estado" body={statusRow} sortable></Column>
