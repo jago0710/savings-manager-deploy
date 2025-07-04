@@ -204,7 +204,7 @@ const addMovementToFirestore = async (newMovement) => {
       // Actualizo y agrego el movimiento
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
-        total: parseFloat(totalMoney) //actualizas también el saldo
+        total: totalMoney
       })
 
       console.log("Movimiento agregado correctamente.");
@@ -315,6 +315,7 @@ const addMovementToFirestore = async (newMovement) => {
             <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
                 ? <div className="space-y-4">
+                      
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium"></span>
                         <img className="h-15 w-15 rounded-full" src={detailMovement.userPhoto} alt="Foto del implicado" />
@@ -332,18 +333,25 @@ const addMovementToFirestore = async (newMovement) => {
 
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Monto:</span>
-                        <span>{detailMovement.amount}€</span>
+                        <span>{Intl.NumberFormat("es-ES", {
+                                style: "currency",
+                                currency: "EUR",
+                                }).format(detailMovement.amount)}</span>
                       </div>
 
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Total:</span>
-                        <span>{detailMovement.total}€</span>
+                        <span>{Intl.NumberFormat("es-ES", {
+                                style: "currency",
+                                currency: "EUR",
+                                }).format(detailMovement.total)}</span>
                       </div>
 
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Fecha:</span>
                         <span>{detailMovement.date}</span>
                       </div>
+
                     </div>
  
                 :<p>No hay datos.</p>}

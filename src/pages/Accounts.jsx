@@ -28,7 +28,7 @@ export default function Accounts(){
     const [colorRGB, setColorRGB] = useState({ r: 145, g: 110, b: 0 });
     const [colorCard, setColorCard] = useState();
     const [descriptionCard, setDescriptionCard] = useState(null);
-    const [target, setTarget] = useState();
+    const [target, setTarget] = useState(1000);
     
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export default function Accounts(){
             setNumberAccount(Math.floor(Math.random() * 10000000000000000))
             console.log(owners);
         } else {   
-            console.log(currentUser.email);
+            console.log(owners);
             
             let updatedOwners
             if (currentUser.email && !owners.includes(currentUser.email)) {
@@ -182,7 +182,8 @@ export default function Accounts(){
                                     <ColorPicker pt={{input : {className : 'right-0'}}} format="rgb" value={colorRGB} onChange={changeColorCard} />
                                 </div>
                                 <InputText placeholder="Descripción" pt={{root: {className : 'w-full'}}} type="text" value={descriptionCard} onChange={(e) => setDescriptionCard(e.target.value)} />
-                                 <InputNumber placeholder="Objetivo" pt={{root: {className : 'w-full'}}} type="number" value={target} onChange={(e) => setTarget(e.target.value)} />
+                                <InputNumber className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Objetivo" value={target} onChange={(e) => setTarget(e.target.value)} step={0.25} mode="currency" currency="EUR" locale="es-ES" min={0} />
+
                                 <Toast ref={toast}></Toast>
                                 <Chips 
                                 pt={{
