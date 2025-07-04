@@ -241,7 +241,7 @@ const addMovementToFirestore = async (newMovement) => {
     
     if (typeMovement === "Retirar" && inputValue && (totalMoney - inputValue) >= 0 ) {
       confirm(e)
-    } else if ((totalMoney - inputValue) < 0) {
+    } else if (typeMovement === "Retirar" && (totalMoney - inputValue) < 0) {
       const ejemplo = totalMoney - inputValue;
       toast.current.show({ severity: 'warn', summary: 'Movimiento invalido!', detail: 'La cuenta no puede quedar en negativo o números rojos', life: 3000 });
     }else{
@@ -276,7 +276,7 @@ const addMovementToFirestore = async (newMovement) => {
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex flex-col md:flex-row gap-3 items-center">
                 <Dropdown className="w-full md:w-1/3" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
-                <InputNumber pt={{}} className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
+                <InputNumber className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
               <div className="flex flex-col gap-2">
               <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
