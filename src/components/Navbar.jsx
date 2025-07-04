@@ -25,7 +25,7 @@ export default function Navbar({page}) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-95 fixed z-2 w-full' : 'animate-slide-in-right md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
+      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-97 fixed z-2 w-full' : 'animate-slide-in-right md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
         {
           page && !open
           ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>{page}</p>
