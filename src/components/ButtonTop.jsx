@@ -23,7 +23,7 @@ const scrollTop = () => {
           }
 
 return (
-    <div hidden={isAtTop} className="fixed right-5 bottom-0 rounded-md backdrop-blur-md w-10 h-10 animate-slide-out-top md:border md:border-gray-200 flex justify-center items-center" onClick={scrollTop}>
+    <div hidden={isAtTop} className="fixed right-5 bottom-0 rounded-md backdrop-blur-md w-10 h-10 animate-slide-out-top border border-gray-100 flex justify-center items-center" onClick={scrollTop}>
         <span className="pi pi-arrow-up"></span>
     </div>
 
