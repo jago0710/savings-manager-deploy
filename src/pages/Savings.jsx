@@ -257,8 +257,8 @@ const addMovementToFirestore = async (newMovement) => {
         <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b bg-white border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
         </div>
-        <div className="flex flex-col gap-4 lg:gap-2 w-full p-2 md:p-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-2">
+        <div className="flex flex-col gap-2 lg:gap-2 w-full p-2 md:p-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-2">
           <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2 bg-white">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
             <b className="font-bold text-3xl">
