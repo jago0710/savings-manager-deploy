@@ -172,6 +172,41 @@ export default function Loans() {
             )
           }
 
+          const addMovementToFirestore = async () => {
+            // Crear nuevo movimiento
+            const today = new Date();
+            const newMovement = {
+            id: crypto.randomUUID(),
+            date: today.toLocaleDateString(),
+            description: "Pago",
+            amount: amount.toFixed(2),
+            total: newTotal,
+            "user": currentUser?.displayName,
+            userPhoto: currentUser?.photoURL
+            };
+
+            try {
+              //Busco el documento de la cuenta por el número
+              const q = query(collection(db, "ACCOUNTS"), where("number", "==", parseInt(count)));
+              const querySnapshot = await getDocs(q);
+          
+              if (!querySnapshot.empty) {
+                const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtengo el ID del documento para actualizar el docmento
+          
+                // Actualizo y agrego el movimiento
+                await updateDoc(docRef, {
+                  movements: arrayUnion(newMovement),
+                  total: totalMoney
+                })
+          
+                console.log("Movimiento agregado correctamente.");
+              } else {
+                console.error("No se encontró la cuenta.");
+              }
+            } catch (error) {
+              console.error("Error al agregar movimiento:", error);
+            }
+          };
 
     return (
         <>
