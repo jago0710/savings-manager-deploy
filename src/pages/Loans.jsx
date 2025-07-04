@@ -11,6 +11,7 @@ import { Column } from 'primereact/column';
 import { Tag } from 'primereact/tag';
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
+import ButtonTop from "../components/ButtonTop.jsx";
         
         
         
@@ -134,14 +135,12 @@ export default function Loans() {
 
           const resetValuesForViewAlls = () => {
             setViewAllLoans(!viewAllloans)
-            setSelectedLoans(null)
           }
 
 
           const getButtonsOfAction = () => {
             return(
-                        <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} severity="success" raised  disabled={!selectedLoans || !selectedLoans.length} onClick={mostrarLog} ></Button>
-                        
+                <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={mostrarLog} ></Button>  
             )
           }
 
@@ -165,9 +164,10 @@ export default function Loans() {
 
           const allHeader = () => {
             return(
-                <span className="pi pi-thumbtack" style={{width: "22px"}}></span>
+                <span className="pi pi-eye" style={{width: "22px"}}></span>
             )
           }
+
 
     return (
         <>
@@ -188,10 +188,11 @@ export default function Loans() {
                     <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                             <div>
-                                <Button icon={viewAllloans ? "pi pi-user" : "pi pi-users"}  label={viewAllloans ? "Mis prestamos" : "Ver todos"} severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
+                                <Button icon={viewAllloans ? "pi pi-user" : "pi pi-users"}  label={viewAllloans ? "Mis prestamos" : "Ver todos"} 
+                                severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
                             </div>
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
-                            sortField="date" sortOrder={-1} value={loans[0]?.loans}>
+                            sortField="date" sortOrder={-1} value={viewAllloans ? loans[0]?.loans : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
                                 {!viewAllloans 
                                 ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple" exportable={false}></Column> 
                                 : <Column pt={{root : {className : 'w-3'}}} header={allHeader}></Column>}
@@ -200,7 +201,7 @@ export default function Loans() {
                                 <Column field="amount" header="Monto" body={amountRow} sortable></Column>
                                 <Column field="status" header="Estado" body={statusRow} sortable></Column>
                             </DataTable>
-                        
+                            <ButtonTop></ButtonTop>
                     </div>
 
                     {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}

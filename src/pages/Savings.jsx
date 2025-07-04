@@ -12,6 +12,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Toast } from 'primereact/toast';
 import { ScrollTop } from "primereact/scrolltop";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
+import ButtonTop from "../components/ButtonTop.jsx";
         
          
 
@@ -386,6 +387,7 @@ const addMovementToFirestore = async (newMovement) => {
       </div>
       <ScrollTop target="parent" threshold={100} className="w-2rem h-2rem border-round bg-primary" icon="pi pi-arrow-up text-base" />
       </div>
+      <ButtonTop></ButtonTop>
     </section>
   );
 }
