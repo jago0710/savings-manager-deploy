@@ -112,7 +112,7 @@ export default function Savings() {
       userEmail: user?.email,
       "user": user?.displayName,
       userPhoto: user?.photoURL,
-      amount: amount.toFixed(2),
+      amount: amount,
       status: "pendiente",
       date: today.toLocaleDateString(),
     }
@@ -131,10 +131,10 @@ export default function Savings() {
 
     // Actualizar totalMoney
     if (typeMovement === "Retirar" && (totalMoney - amount) >= 0) {
-      newTotal = totalMoney - amount;
+      newTotal = parseFloat(totalMoney) - parseFloat(amount);
       setTotalMoney(newTotal);
     } else if (typeMovement === "Ingresar"){
-      newTotal = totalMoney + amount;
+      newTotal = parseFloat(totalMoney) + parseFloat(amount);
       setTotalMoney(newTotal);
     } else {
       console.log("No se sumo ni resto el valor");
@@ -155,7 +155,7 @@ export default function Savings() {
       id: crypto.randomUUID(),
       date: today.toLocaleDateString(),
       description: type,
-      amount: typeMovement === "Ingresar" ? amount.toFixed(2) : -amount.toFixed(2),
+      amount: typeMovement === "Ingresar" ? amount : -amount,
       total: newTotal,
       "user": user?.displayName,
       userPhoto: user?.photoURL
@@ -204,7 +204,7 @@ const addMovementToFirestore = async (newMovement) => {
       // Actualizo y agrego el movimiento
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
-        total: totalMoney
+        total: (parseFloat(totalMoney) + parseFloat(inputValue))
       })
 
       console.log("Movimiento agregado correctamente.");
@@ -275,7 +275,7 @@ const addMovementToFirestore = async (newMovement) => {
             <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex flex-col md:flex-row gap-3 items-center">
-                <Dropdown className="w-full md:w-1/3" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
+                <Dropdown className="w-full md:w-1/2" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
                 <InputNumber className="p-inputtext-md w-full" inputStyle={{width: '100%'}} placeholder="Ingresa una cantidad..." value={inputValue} onValueChange={(e) => setInputValue(e.value)} step={0.25} showButtons mode="currency" currency="EUR" locale="es-ES" decrementButtonClassName="p-button-secondary" incrementButtonClassName="p-button-secondary" min={0} />
               </div>
               <div className="flex flex-col gap-2">

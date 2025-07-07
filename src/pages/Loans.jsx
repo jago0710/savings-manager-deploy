@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { Dropdown } from "primereact/dropdown";
-import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase/database.jsx";
 import useUser from "../hook/useUser.jsx";
 import 'primeicons/primeicons.css';
@@ -12,6 +12,7 @@ import { Tag } from 'primereact/tag';
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
 import ButtonTop from "../components/ButtonTop.jsx";
+import { Toast } from "primereact/toast";
         
         
         
@@ -26,6 +27,7 @@ export default function Loans() {
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [selectedLoans, setSelectedLoans] = useState(null);
     const [viewAllloans, setViewAllLoans] = useState(false)
+    const [payTotal, setPayTotal] = useState(0)
 
         useEffect(() => {
              const fetchLoans = async () => {
@@ -130,7 +132,7 @@ export default function Loans() {
 
           const mostrarLog = () => {
             console.log(selectedLoans);
-            
+            console.log(loans);
           }
 
           const resetValuesForViewAlls = () => {
@@ -141,7 +143,8 @@ export default function Loans() {
           const getButtonsOfAction = () => {
             return(
                 <div className="flex gap-2">
-                    <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={mostrarLog} ></Button>  
+                    <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} 
+                    severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addMovementToFirestore} ></Button>  
                     <Button icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
                     severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
                 </div>
@@ -149,10 +152,11 @@ export default function Loans() {
           }
 
           const getTotal = () => {
-            let total = 0;
+            var total = 0;
             if (selectedLoans) {
                 selectedLoans.forEach(item => {
                 total =  parseFloat(total) + parseFloat(item.amount)
+                setPayTotal(total)
             });
             }
             return(
@@ -172,6 +176,8 @@ export default function Loans() {
             )
           }
 
+          var totalMoney = (parseFloat(loans[0]?.total) + parseFloat(payTotal));
+          
           const addMovementToFirestore = async () => {
             // Crear nuevo movimiento
             const today = new Date();
@@ -179,15 +185,15 @@ export default function Loans() {
             id: crypto.randomUUID(),
             date: today.toLocaleDateString(),
             description: "Pago",
-            amount: amount.toFixed(2),
-            total: newTotal,
+            amount: payTotal,
+            total: totalMoney,
             "user": currentUser?.displayName,
             userPhoto: currentUser?.photoURL
             };
 
             try {
               //Busco el documento de la cuenta por el número
-              const q = query(collection(db, "ACCOUNTS"), where("number", "==", parseInt(count)));
+              const q = query(collection(db, "ACCOUNTS"), where("number", "==", parseInt(selectedAccount)));
               const querySnapshot = await getDocs(q);
           
               if (!querySnapshot.empty) {
@@ -200,6 +206,7 @@ export default function Loans() {
                 })
           
                 console.log("Movimiento agregado correctamente.");
+                changeStatusOfPayments()
               } else {
                 console.error("No se encontró la cuenta.");
               }
@@ -208,30 +215,33 @@ export default function Loans() {
             }
           };
 
+          const changeStatusOfPayments = () => {
+            const q = query(collection(db, "ACCOUNTS"), where("loans.id", "array-contains", selectedLoans.id))
+          }
+
     return (
         <>
             <div className="sm:grid md:flex">
                 <Navbar page="PRESTAMOS"></Navbar>
-                <div className="mt-0 md:ml-67 bg-gray-50 md:mt-0 w-full h-screen">
-                    {/**Aqui de pondrá un header mobile */}
+                <div className="md:ml-67 bg-gray-50 w-full h-[calc(100vh-74px)]">
+                    {/**Header descktop */}
                     <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
-                    {/**<div className="flex gap-5">
-                        <button className="border" onClick={mostrar}>mostrar loans</button>
-                        <button className="border" onClick={mostrar2}>number</button>
-                    </div>*/}
+                    
+                    {/**Header para móvil */}
                     <div className="md:hidden mt-[73px] mx-2">
                         <Dropdown loading={accounts.length <= 0 ? true : false} filter 
                         value={selectedAccount} onChange={(e) => setSelectedAccount(e.target.value)} options={accounts} optionLabel="label" 
                         placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
                     </div>
-                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
+
+                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
-                            sortField="date" sortOrder={-1} value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
+                            value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
                                 {!viewAllloans 
                                 ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple" exportable={false}></Column> 
                                 : <Column pt={{root : {className : 'w-3'}}} header={allHeader}></Column>}
-                                <Column field="user" header="Usuario" body={userRow} sortable> </Column>
+                                <Column field="user" header="Usuario" body={userRow} sortable></Column>
                                 <Column field="date" header="Fecha" sortable></Column>
                                 <Column field="amount" header="Monto" body={amountRow} sortable></Column>
                                 <Column field="status" header="Estado" body={statusRow} sortable></Column>
@@ -240,11 +250,11 @@ export default function Loans() {
                     </div>
 
                     {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}
-                    <div hidden={loans[0]?.loans?.length <= 0 ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
-                        <h1 className="text-center">No tienes prestamos aqui <span className="pi pi-sparkles" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
+                    <div hidden={loans[0]?.loans?.length <= 0 ? false : true} className="m-2 md:mt-2 bg-white border h-[calc(100%-65px)] md:h-[calc(100vh-89px)] border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                        <h1 className="text-center">No encontramos prestamos <span className="pi pi-sparkles" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
 
-                    <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-full border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                    <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 bg-white border h-[calc(100%-65px)] md:h-[calc(100vh-89px)] border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                         <h1>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                     </div>
                 </div>

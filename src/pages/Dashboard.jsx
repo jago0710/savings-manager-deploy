@@ -55,10 +55,9 @@ export default function Dashboard() {
           <div className="mt-0 md:ml-67 bg-gray-50 w-full h-screen">
             <Header title="DASHBOARD" dropdown dropdownData={accounts} dropValue={selectedAccount} change={setSelectedAccount}></Header>
                 <div className="md:hidden mt-[73px] mx-2">
-                                        <Dropdown loading={accounts.length <= 0 ? true : false} filter 
-                                        value={selectedAccount} onChange={(e) => setSelectedAccount(e.target.value)} options={accounts} optionLabel="label" 
-                                        placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
-                                    </div>
+                    <Dropdown loading={accounts.length <= 0 ? true : false} filter value={selectedAccount} onChange={(e) => setSelectedAccount(e.target.value)} 
+                    options={accounts} optionLabel="label" placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
+                </div>
             <div className="md:mt-0  p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={selectedAccount ? false : true}>
                 <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
                     <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
@@ -103,7 +102,7 @@ export default function Dashboard() {
                 </div>
             </div>
                 {/** Abajo cuando este en mantenimiento */}
-                <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-2 bg-white h-full border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
+                <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-2 bg-white h-[calc(100%-141px)] md:h-[calc(100vh-89px)] border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                     <h1 hidden={selectedAccount ? true : false}>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
                 </div>
           </div>
