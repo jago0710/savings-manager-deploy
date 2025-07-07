@@ -70,9 +70,6 @@ export default function Savings() {
     )
   }
 
-  console.log("DATES-COUNT",countSavings);
-  
-
   const confirm = (event) => {
         confirmDialog({
             target: event.currentTarget,
