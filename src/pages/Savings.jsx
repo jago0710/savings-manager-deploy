@@ -46,7 +46,6 @@ export default function Savings() {
           const docData =  querySnapshot.docs[0].data();
           const movements = Array.isArray(docData.movements) ? docData.movements : [];
           setCountSavings({ ...docData, movements });
-          console.log("-------", docData.movements[docData.movements.length - 1].total);
           
           setTotalMoney(parseFloat(docData.movements[docData.movements.length - 1].total));
         }
