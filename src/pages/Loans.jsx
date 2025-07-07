@@ -216,7 +216,31 @@ export default function Loans() {
           };
 
           const changeStatusOfPayments = () => {
-            const q = query(collection(db, "ACCOUNTS"), where("loans.id", "array-contains", selectedLoans.id))
+            console.log("ENTRADA");
+            
+            try{
+              selectedAccount.forEach( async (item) => {
+              const q = query(collection(db, "ACCOUNTS"), where("loans.id", "==", item.id))
+              const querySnapshot = await getDocs(q)
+              if (!querySnapshot.empty) {
+                const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtengo el ID del documento para actualizar el docmento
+
+                // Actualizo y agrego el movimiento
+                await updateDoc(docRef, {
+                  "loans.status": "Pagado",
+                })
+          
+                //Toast de los pagos
+                setSelectedLoans()
+
+              } else {
+                console.error("No se encontró la cuenta.");
+              }
+            });
+            } catch (e){
+              console.error("Error al cambiar estado en la Base de datos",e);
+              
+            }
           }
 
     return (

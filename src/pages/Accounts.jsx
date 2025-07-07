@@ -133,16 +133,15 @@ export default function Accounts(){
         
         if (e.value.length > owners.length) {
             if (owners.length === 0) {
-            setOwners(e.value)
-        } else {
-            if (owners.includes(e.value[e.value.length - 1])){
-                show(e.value[e.value.length - 1]);
-            } else {
-                console.log(e.value);
-                
                 setOwners(e.value)
+            } else {
+                if (owners.includes(e.value[e.value.length - 1])){
+                    show(e.value[e.value.length - 1]);
+                } else {
+                    console.log(e.value);
+                    setOwners(e.value)
+                }
             }
-        }
         } else {
             setOwners(e.value)
         }

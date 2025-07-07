@@ -20,9 +20,6 @@ export default function Savings() {
   const user = useUser();
   const { count } = useParams();
   const countParse = parseInt(count);
-
-  console.log("USER", user);
-  console.log("COUNT: ", count);
   
   const toast = useRef(null);
 
