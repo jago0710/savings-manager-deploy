@@ -86,7 +86,7 @@ export default function Loans() {
 
           const amountRow = (rowData) => {
             return (
-                <p>{Intl.NumberFormat("es-ES", {
+                <p>{Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(rowData.amount))}</p>
@@ -162,7 +162,7 @@ export default function Loans() {
             return(
                 <div className="flex items-center gap-2">
                     <p className="font-bold text-xl md:text-3xl">Total:</p>
-                    <p className="font-bold text-xl md:text-3xl">{Intl.NumberFormat("es-ES", {
+                    <p className="font-bold text-xl md:text-3xl">{Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(total))}</p>

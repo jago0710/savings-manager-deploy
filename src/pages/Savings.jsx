@@ -256,10 +256,12 @@ const addMovementToFirestore = async (newMovement) => {
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
             <b className="font-bold text-3xl">
               Saldo:{" "}
-              {Intl.NumberFormat("es-ES", {
+              {Intl.NumberFormat("de-DE", {
                 style: "currency",
                 currency: "EUR",
-              }).format(totalMoney)}
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(parseFloat(totalMoney))}
             </b>
             <p className="text-gray-600">Nº de cuenta: {count}</p>
           </div>
@@ -277,8 +279,8 @@ const addMovementToFirestore = async (newMovement) => {
             {screen.width < 480 ? null 
             : <div className="grid grid-cols-4 sm:grid-cols-4 gap-2">
               {[5, 10, 20, 50].map((num) => (
-                <Button key={num} onClick={() => setInputValue(num.toString())} type="submit" 
-                label={Intl.NumberFormat("es-ES", {
+                <Button key={num} onClick={() => inputValue ? setInputValue(inputValue + parseFloat(num)) : setInputValue(parseFloat(num))} type="submit" 
+                label={Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
                   }).format(num)} severity="secondary" text raised></Button>
@@ -326,7 +328,7 @@ const addMovementToFirestore = async (newMovement) => {
 
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Monto:</span>
-                        <span>{Intl.NumberFormat("es-ES", {
+                        <span>{Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
                                 }).format(detailMovement.amount)}</span>
@@ -334,7 +336,7 @@ const addMovementToFirestore = async (newMovement) => {
 
                       <div className="flex justify-between text-sm text-gray-700">
                         <span className="font-medium">Total:</span>
-                        <span>{Intl.NumberFormat("es-ES", {
+                        <span>{Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
                                 }).format(detailMovement.total)}</span>
@@ -362,13 +364,13 @@ const addMovementToFirestore = async (newMovement) => {
                     {movement.description}
                   </p>
                   <p className={movement.description == "Ingresar" ? "text-green-700" : movement.description == "Retirar" ? "text-red-600" : movement.description == "Prestamo" ?  "text-orange-500" : "text-blue-500"}>
-                    {Intl.NumberFormat("es-ES", {
+                    {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(movement.amount))}
                   </p>
                   <p>
-                    {Intl.NumberFormat("es-ES", {
+                    {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(movement.total))}
