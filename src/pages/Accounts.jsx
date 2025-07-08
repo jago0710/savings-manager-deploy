@@ -98,6 +98,7 @@ export default function Accounts(){
                 newAccount.createAccount = new Date().toLocaleDateString()
                 newAccount.owners = [currentUser.email]
                 newAccount.color = colorCard
+                newAccount.loans = []
                 newAccount.movements = [{
                 userPhoto: currentUser.photoURL,
                 user: currentUser.displayName,

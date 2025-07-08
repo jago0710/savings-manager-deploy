@@ -106,7 +106,7 @@ export default function Savings() {
       "user": user?.displayName,
       userPhoto: user?.photoURL,
       amount: amount,
-      status: "pendiente",
+      status: "Pendiente",
       date: today.toLocaleDateString(),
     }
 

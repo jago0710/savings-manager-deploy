@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { Dropdown } from "primereact/dropdown";
 import { arrayUnion, collection, doc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
@@ -20,7 +20,9 @@ import { Toast } from "primereact/toast";
 export default function Loans() {
 
     const currentUser = useUser();
+    const toast = useRef(null);
 
+    const [refresh, setRefresh] = useState(false);
     const [loans, setLoans] = useState([]);
     const [accountsData, setAccountsData] = useState([])
     const [accounts,  setAccounts] = useState([]);
@@ -33,18 +35,15 @@ export default function Loans() {
              const fetchLoans = async () => {
                 if (!currentUser?.email) return;
                 try{
-                    
                     const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", selectedAccount))
                     const querySnapshot = await getDocs(q);
                     const loansData = querySnapshot.docs.map(doc => doc.data());
 
-                    //const prevLoans = loansData.loans.map(element => ({
-                    //    name: element.nombre, value: element.cantidad
-                    //}))
-
                     setLoans(loansData)
 
                     console.log("Loans Data: ",loansData);
+                    console.log("Select Account: ",selectedAccount);
+                    console.log("Select Loans: ",selectedLoans);
                     
 
                 } catch (e){
@@ -55,7 +54,7 @@ export default function Loans() {
             if (selectedAccount != null) {
                 fetchLoans();
             }
-        }, [selectedAccount])
+        }, [currentUser?.email, refresh ,selectedAccount])
 
         useEffect(() => {
             
@@ -75,14 +74,18 @@ export default function Loans() {
                     
                 }, (error) => {
                     console.error("Error en la subcripción:", error);
-                    
                 });
 
             return () => {
                 unsubscripte();
             }
                    
-          }, [currentUser?.email]);
+        }, [currentUser?.email, selectedLoans]);
+
+        const mostrar = () => {
+          console.log("Loans", loans);
+          
+        }
 
           const amountRow = (rowData) => {
             return (
@@ -110,9 +113,9 @@ export default function Loans() {
 
           const getIconStatus = (status) => {
             switch (status) {
-                case 'pendiente':
+                case 'Pendiente':
                     return 'pi pi-exclamation-triangle'
-                case 'pagado':
+                case 'Pagado':
                     return 'pi pi-check-circle'
                 default:
                     return 'pi pi-exclamation-circle'
@@ -121,18 +124,13 @@ export default function Loans() {
 
           const getSeverity = (status) => {
             switch (status) {
-                case 'pendiente':
+                case 'Pendiente':
                     return 'warning'
-                case 'pagado':
+                case 'Pagado':
                     return 'success'
                 default:
                     return 'info'
             }
-          }
-
-          const mostrarLog = () => {
-            console.log(selectedLoans);
-            console.log(loans);
           }
 
           const resetValuesForViewAlls = () => {
@@ -147,6 +145,7 @@ export default function Loans() {
                     severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addMovementToFirestore} ></Button>  
                     <Button icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
                     severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
+                    <button onClick={mostrar}>click</button>
                 </div>
             )
           }
@@ -215,33 +214,64 @@ export default function Loans() {
             }
           };
 
-          const changeStatusOfPayments = () => {
-            console.log("ENTRADA");
-            
-            try{
-              selectedAccount.forEach( async (item) => {
-              const q = query(collection(db, "ACCOUNTS"), where("loans.id", "==", item.id))
-              const querySnapshot = await getDocs(q)
-              if (!querySnapshot.empty) {
-                const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtengo el ID del documento para actualizar el docmento
+         
 
-                // Actualizo y agrego el movimiento
-                await updateDoc(docRef, {
-                  "loans.status": "Pagado",
-                })
+    const changeStatusOfPayments = async () => {
+      try {
+        if (!Array.isArray(selectedLoans) || selectedLoans.length === 0) {
+          console.warn("selectedLoans no es un array válido.");
+          return;
+        }
+
+        
+        for (const selectedLoan of selectedLoans) {
+          console.log("ID => ",selectedLoan.id);
+          // Traemos todos los documentos de ACCOUNTS
+          const accountsSnapshot = await getDocs(collection(db, "ACCOUNTS"), where("number", "==", selectedAccount));
           
-                //Toast de los pagos
-                setSelectedLoans()
+          let loanUpdated;
+          loanUpdated = false
+          for (const accountDoc of accountsSnapshot.docs) {
+            
+            const accountData = accountDoc.data();
 
-              } else {
-                console.error("No se encontró la cuenta.");
-              }
+            if (!accountData.loans || !Array.isArray(accountData.loans)) continue;
+
+            const loanExists = accountData.loans.some(loan => loan.id === selectedLoan.id);
+            
+            
+            if (!loanExists) continue;
+
+            // se crea el nuevo objeto que le pasaremos para que se pueda actulizar todos los Loans
+            const updatedLoans = accountData.loans.map(loan => {
+              if (loan.id === selectedLoan.id) {
+                return {...loan, status: "Pagado"};
+              } 
+              return loan;
             });
-            } catch (e){
-              console.error("Error al cambiar estado en la Base de datos",e);
-              
-            }
+
+            const accountRef = doc(db, "ACCOUNTS", accountDoc.id);
+            await updateDoc(accountRef, { loans: updatedLoans });
+            console.log(`Loan ${selectedLoan.id} actualizado en doc ${accountDoc.id}`);
+            loanUpdated = true;
+            break;
           }
+
+          if (!loanUpdated) {
+            console.warn(`Loan ${selectedLoan.id} no se encontró en ningún documento.`);
+          }
+        }
+        
+        setSelectedLoans()
+        setRefresh(!refresh)
+        toast.current.show({ severity: 'success', summary: '¡Pago realizado!', detail: `Se hizo el pago de ${payTotal}€`, life: 3000 });
+        console.log("Todos los préstamos seleccionados fueron actualizados.");
+      
+      } catch (error) {
+        console.error("Error al actualizar los préstamos:", error);
+      }
+    };
+
 
     return (
         <>
@@ -260,6 +290,7 @@ export default function Loans() {
 
                     <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
+                            <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
                             value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
                                 {!viewAllloans 
@@ -270,7 +301,7 @@ export default function Loans() {
                                 <Column field="amount" header="Monto" body={amountRow} sortable></Column>
                                 <Column field="status" header="Estado" body={statusRow} sortable></Column>
                             </DataTable>
-                            <ButtonTop></ButtonTop>
+                            <ButtonTop/>
                     </div>
 
                     {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}
