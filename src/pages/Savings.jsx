@@ -13,6 +13,7 @@ import { Toast } from 'primereact/toast';
 import { ScrollTop } from "primereact/scrolltop";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import ButtonTop from "../components/ButtonTop.jsx";
+import { ArrowUpRight, ArrowDownRight, HandCoins, Handshake, PiggyBank, ArrowDownLeft } from "lucide-react";
         
          
 
@@ -252,7 +253,7 @@ const addMovementToFirestore = async (newMovement) => {
         </div>
         <div className="flex flex-col gap-2 lg:gap-2 w-full p-2 md:p-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-2">
-          <div className="border border-gray-300 rounded-lg p-5 flex flex-col gap-2 bg-white">
+          <div className="border border-gray-300 rounded-lg p-4 flex flex-col gap-2 bg-white">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
             <b className="font-bold text-3xl">
               Saldo:{" "}
@@ -266,8 +267,8 @@ const addMovementToFirestore = async (newMovement) => {
             <p className="text-gray-600">Nº de cuenta: {count}</p>
           </div>
           {/**ACCIONES RÁPIDAS PAR INGRESAR DINERO O RETIRAR */}
-          <div className="border border-gray-300 rounded-lg p-5 flex gap-2 flex-col bg-white">
-            <p className="font-bold text-2xl mb-4">Acciones Rápidas</p>
+          <div className="border border-gray-300 rounded-lg p-4 flex gap-2 flex-col bg-white">
+            <p className="font-bold text-2xl mb-2">Acciones Rápidas</p>
             <div className="grid gap-2 sm:grid-cols-1 lg:grid-cols-1 ">
               <div className="flex flex-col md:flex-row gap-3 items-center">
                 <Dropdown className="w-full md:w-1/2" value={typeMovement} placeholder="Seleccionar una opción" onChange={(e) => setTypeMovement(e.value)} options={movementsOptions} optionLabel="label"  />
@@ -297,7 +298,8 @@ const addMovementToFirestore = async (newMovement) => {
             </div>
           </div>
         </div>
-        <div className="border border-gray-300 bg-white rounded-lg p-5 w-full">
+        {screen.width > 550 ? 
+        <div className="border border-gray-300 bg-white rounded-lg p-4 w-full">
           <p className="font-bold text-2xl mb-5">Historial de movimientos</p>
           <div className="grid grid-cols-4 md:grid-cols-5 border-b border-b-gray-300 pb-5 text-center">
             <p>Fecha</p>
@@ -307,7 +309,77 @@ const addMovementToFirestore = async (newMovement) => {
             <p>Usuario</p>
           </div>
           <div className="flex flex-col-reverse">
-            <Dialog headerStyle={ {width : "80vw"}} contentStyle={{width : "80vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
+            {countSavings.movements && countSavings.movements.length > 0 ? (
+              countSavings.movements.map((movement, index) => (
+                <div 
+                  onClick={() => viewMovement(movement)}
+                  key={index}
+                  className="grid grid-cols-4 md:grid-cols-5 justify-around py-5 md:py-5 border-b-gray-200 border-b text-center hover:bg-blue-100 "
+                >
+                  <p>{movement.date}</p>
+
+                  <p className={movement.description == "Ingresar" ? "hidden md:block" : movement.description == "Retirar" ? "hidden md:block" : movement.description == "Prestamo" ?  "hidden md:block" : "hidden md:block"}>
+                    {movement.description}
+                  </p>
+                  <p className={movement.description == "Ingresar" ? "text-green-700" : movement.description == "Retirar" ? "text-red-600" : movement.description == "Prestamo" ?  "text-orange-500" : "text-blue-500"}>
+                    {Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(movement.amount))}
+                  </p>
+                  <p>
+                    {Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(movement.total))}
+                  </p>
+
+                    <span className="flex items-center gap-2">
+                    <img className="rounded-full h-7 w-7" src={movement.userPhoto} alt="Perfil de usuario" />
+                    <p className="truncate">{movement.user}</p>
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p>No hay movimientos.</p>
+            )}
+          </div>
+        </div> 
+        :
+        <div className="border border-gray-300 bg-white rounded-lg w-full">
+          <p className="font-bold text-2xl m-4">Historial de movimientos</p>
+          <div className="flex flex-col-reverse">
+          {countSavings.movements.map((movement, index) => (
+            <div  onClick={() => viewMovement(movement)} key={index} className="border h-15 rounded-md border-gray-200 bg-white flex justify-between gap-4 mx-2 my-1 p-2 items-center">
+              <div className="flex gap-2.5 items-center">
+                <div className="rounded-full h-10 w-10 flex justify-center items-center" >
+                {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5"/> 
+                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5"/> 
+                : movement.description == "Prestamo" ?  <HandCoins color="#f39722" strokeWidth="1.5"/> 
+                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5"/> : <PiggyBank/>}
+              </div>         
+              <div className="flex flex-col gap-1">
+                <p>{movement.description}</p>
+                <p className="text-xs text-gray-300 ">{movement.date}</p>
+              </div>
+              </div>
+              <div className="flex flex-col gap-1 items-end">
+                <p >
+                  {Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(movement.amount))}</p>
+                <p className="text-gray-300 text-sm">{Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(movement.total))}</p>
+              </div>
+            </div>
+        ))}
+          </div>
+        </div>
+        }
+        <Dialog headerStyle={ {width : "90vw"}} contentStyle={{width : "90vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
                 ? <div className="space-y-4">
                       
@@ -351,42 +423,6 @@ const addMovementToFirestore = async (newMovement) => {
  
                 :<p>No hay datos.</p>}
             </Dialog>
-            {countSavings.movements && countSavings.movements.length > 0 ? (
-              countSavings.movements.map((movement, index) => (
-                <div 
-                  onClick={() => viewMovement(movement)}
-                  key={index}
-                  className="grid grid-cols-4 md:grid-cols-5 justify-around py-5 md:py-5 border-b-gray-200 border-b text-center hover:bg-blue-100 "
-                >
-                  <p>{movement.date}</p>
-
-                  <p className={movement.description == "Ingresar" ? "hidden md:block" : movement.description == "Retirar" ? "hidden md:block" : movement.description == "Prestamo" ?  "hidden md:block" : "hidden md:block"}>
-                    {movement.description}
-                  </p>
-                  <p className={movement.description == "Ingresar" ? "text-green-700" : movement.description == "Retirar" ? "text-red-600" : movement.description == "Prestamo" ?  "text-orange-500" : "text-blue-500"}>
-                    {Intl.NumberFormat("de-DE", {
-                      style: "currency",
-                      currency: "EUR",
-                    }).format(parseFloat(movement.amount))}
-                  </p>
-                  <p>
-                    {Intl.NumberFormat("de-DE", {
-                      style: "currency",
-                      currency: "EUR",
-                    }).format(parseFloat(movement.total))}
-                  </p>
-
-                    <span className="flex items-center gap-2">
-                    <img className="rounded-full h-7 w-7" src={movement.userPhoto} alt="Perfil de usuario" />
-                    <p className="truncate">{movement.user}</p>
-                  </span>
-                </div>
-              ))
-            ) : (
-              <p>No hay movimientos.</p>
-            )}
-          </div>
-        </div>
       </div>
       <ScrollTop target="parent" threshold={100} className="w-2rem h-2rem border-round bg-primary" icon="pi pi-arrow-up text-base" />
       </div>
