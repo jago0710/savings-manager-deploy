@@ -13,7 +13,8 @@ import { Toast } from 'primereact/toast';
 import { ScrollTop } from "primereact/scrolltop";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import ButtonTop from "../components/ButtonTop.jsx";
-import { ArrowUpRight, ArrowDownRight, HandCoins, Handshake, PiggyBank, ArrowDownLeft } from "lucide-react";
+import { ArrowUpRight, HandCoins, Handshake, PiggyBank, ArrowDownLeft, CalendarDays, FileText, DollarSign, Euro, TrendingUp, TrendingDown } from "lucide-react";
+import { Tag } from "primereact/tag"
         
          
 
@@ -244,6 +245,33 @@ const addMovementToFirestore = async (newMovement) => {
     
   }
 
+  const getHeaderDetail = (movement) => {
+    return(
+      <div className="flex items-center gap-1 ">
+        {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5" size={20}/> 
+                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5" size={20}/> 
+                : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="1.5" size={20}/> 
+                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5" size={20}/> : <PiggyBank/>}
+        <p className="text-base" >Detalles del movimiento</p>
+      </div>
+    )
+  }
+
+  const getSeverity = (status) => {
+            switch (status) {
+              case 'Ingresar':
+                    return 'success'
+                case 'Pago':
+                    return 'primary'
+                case 'Prestamo':
+                    return 'warning'
+                case 'Retirar':
+                    return 'danger'
+                default:
+                    return 'info'
+            }
+          }
+
   return (
     <section className="sm:grid md:flex overflow-auto bg-gray-50">
       <Navbar page="MOVIMIENTOS"/>
@@ -346,25 +374,29 @@ const addMovementToFirestore = async (newMovement) => {
           </div>
         </div> 
         :
+        // Cards de movimientos para móvil 
         <div className="border border-gray-300 bg-white rounded-lg w-full">
           <p className="font-bold text-2xl m-4">Historial de movimientos</p>
           <div className="flex flex-col-reverse">
           {countSavings.movements.map((movement, index) => (
             <div  onClick={() => viewMovement(movement)} key={index} className="border h-15 rounded-md border-gray-200 bg-white flex justify-between gap-4 mx-2 my-1 p-2 items-center">
               <div className="flex gap-2.5 items-center">
-                <div className="rounded-full h-10 w-10 flex justify-center items-center" >
-                {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5"/> 
-                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5"/> 
-                : movement.description == "Prestamo" ?  <HandCoins color="#f39722" strokeWidth="1.5"/> 
-                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5"/> : <PiggyBank/>}
+              <div className="rounded-full h-10 w-10 flex justify-center items-center" >
+                  <img src={movement.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
               </div>         
-              <div className="flex flex-col gap-1">
+              <div>
+                <div className="flex flex-row gap-1 items-center justify-start">
+                {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5" size={20}/> 
+                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5" size={20}/> 
+                : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="1.5" size={20}/> 
+                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5" size={20}/> : <PiggyBank size={20}/>}
                 <p>{movement.description}</p>
-                <p className="text-xs text-gray-300 ">{movement.date}</p>
+              </div>              
+                <p className="text-xs text-gray-300">{movement.date}</p>
               </div>
               </div>
               <div className="flex flex-col gap-1 items-end">
-                <p >
+                <p className="font-semibold">
                   {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
@@ -379,48 +411,53 @@ const addMovementToFirestore = async (newMovement) => {
           </div>
         </div>
         }
-        <Dialog headerStyle={ {width : "90vw"}} contentStyle={{width : "90vw"}} header="Detalles del movimiento" visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
+        <Dialog headerStyle={ {width : "90vw"}} contentStyle={{width : "90vw"}} header={() => getHeaderDetail(detailMovement)} visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
-                ? <div className="space-y-4">
-                      
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium"></span>
-                        <img className="h-15 w-15 rounded-full" src={detailMovement.userPhoto} alt="Foto del implicado" />
-                      </div>
+                ?
+                <div>
+                  <div className="flex flex-row items-center gap-2 pb-2">
+                      <img className="rounded-full" src={detailMovement.userPhoto} alt="Perfil" height={35} width={35}/>
+                      <p className="truncate">{detailMovement.user}</p>
+                  </div>
+                  
+                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                    <span className="flex flex-row text-sm gap-1.5">
+                      <CalendarDays strokeWidth="1.5" size={20}/>Fecha
+                    </span>
+                    <p>{detailMovement.date}</p>
+                  </div>
 
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium">Usuario:</span>
-                        <span>{detailMovement.user}</span>
-                      </div>
-                      
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium">Descripción:</span>
-                        <span>{detailMovement.description}</span>
-                      </div>
+                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                    <span className="flex flex-row text-sm gap-1.5">
+                      <FileText strokeWidth="1.5" size={20}/>Descripción
+                    </span>
+                    <p>{detailMovement.description}</p>
+                  </div>
 
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium">Monto:</span>
-                        <span>{Intl.NumberFormat("de-DE", {
-                                style: "currency",
-                                currency: "EUR",
-                                }).format(detailMovement.amount)}</span>
-                      </div>
-
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium">Total:</span>
-                        <span>{Intl.NumberFormat("de-DE", {
-                                style: "currency",
-                                currency: "EUR",
-                                }).format(detailMovement.total)}</span>
-                      </div>
-
-                      <div className="flex justify-between text-sm text-gray-700">
-                        <span className="font-medium">Fecha:</span>
-                        <span>{detailMovement.date}</span>
-                      </div>
-
-                    </div>
- 
+                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                    <span className="flex flex-row text-sm gap-1.5">
+                      <Euro strokeWidth="1.5" size={20}/>Monto
+                    </span>
+                    <p className={detailMovement.description == "Ingresar" ? "text-green-600 text-xl font-bold" : detailMovement.description == "Retirar" ? "text-red-600 text-xl font-bold" : detailMovement.description == "Prestamo" ?  "text-orange-500 text-xl font-bold" : "text-cyan-500  text-xl font-bold"}>
+                      {Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(detailMovement.amount))}</p>
+                  </div>
+                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                    <span className="flex flex-row text-sm gap-1.5">
+                      {detailMovement.amount > 0 
+                      ? <TrendingUp strokeWidth="1.5" size={20}/>
+                      : <TrendingDown strokeWidth="1.5" size={20}/>}
+                      Total
+                    </span>
+                    <p className="text-xl font-bold">
+                      {Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(parseFloat(detailMovement.total))}</p>
+                  </div>
+                </div>
                 :<p>No hay datos.</p>}
             </Dialog>
       </div>
