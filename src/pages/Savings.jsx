@@ -246,7 +246,7 @@ const addMovementToFirestore = async (newMovement) => {
 
   const getHeaderDetail = (movement) => {
     return(
-      <div className="flex items-center gap-1 ">
+      <div className="flex items-center gap-1 mr-10">
         {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="2" size={22}/> 
                 : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="2" size={22}/> 
                 : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="2" size={22}/> 
@@ -410,7 +410,7 @@ const addMovementToFirestore = async (newMovement) => {
           </div>
         </div>
         }
-        <Dialog headerStyle={ {width : "90vw"}} contentStyle={{width : "90vw"}} header={() => getHeaderDetail(detailMovement)} visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
+        <Dialog header={() => getHeaderDetail(detailMovement)} visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
                 ?
                 <div className="flex flex-col gap-2">

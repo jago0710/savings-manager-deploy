@@ -150,7 +150,7 @@ export default function Loans() {
           const getTotal = () => {
             var total = 0;
             if (selectedLoans) {
-                selectedLoans.forEach(item => {
+                selectedLoans.forEach((item) => {
                 total =  parseFloat(total) + parseFloat(item.amount)
                 setPayTotal(total)
             });
@@ -271,6 +271,25 @@ export default function Loans() {
 
     const filteredLoans = viewAllloans ? loans[0]?.loans.filter(loan => loan.userEmail !== currentUser.email)  : loans[0]?.loans.filter(loan => loan.userEmail === currentUser.email)
 
+    const addToSelectLoans = (loan) => {
+        let exist = false;
+        if (selectedLoans != null) {
+            selectedLoans.forEach(item => {
+                if (item == loan) {
+                    exist = true;
+                }
+            });
+
+            if (!exist){
+                setSelectedLoans([...selectedLoans, loan])
+                console.log(selectedLoans);
+                
+            }
+        } else {
+            setSelectedLoans([loan])            
+        }
+    }
+
     return (
         <>
             <div className="sm:grid md:flex">
@@ -304,10 +323,11 @@ export default function Loans() {
                     </div>
                     : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                       <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
+                      <h1 className="text-gray-700 pl-2">Selecciona los prestamos a pagar</h1>
                       <div className="flex flex-col-reverse gap-2">
                         {filteredLoans?.map((loan, index) => (
-                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-3">
-                          <div key={index} className="flex justify-between items-center">
+                          <div onClick={() => addToSelectLoans(loan)} key={index} className="border rounded-md border-gray-200 bg-white gap-4 p-3">
+                          <div className="flex justify-between items-center">
                             <div className="flex gap-2.5 items-center">
                               <div className="rounded-full h-10 w-10 flex justify-center items-center" >
                                   <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
@@ -337,7 +357,7 @@ export default function Loans() {
                               }).format(parseFloat(loan.amount))}</p>
                             </div>
                           </div>
-                        </section>
+                        </div>
                         ))}
                     </div>
                   </div>
