@@ -84,9 +84,6 @@ export default function Loans() {
                    
         }, [currentUser?.email, selectedLoans]);
 
-        const mostrar = () => {
-          console.log("Loans", loans);
-        }
 
           const amountRow = (rowData) => {
             return (
@@ -309,7 +306,7 @@ export default function Loans() {
                       <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                       <div className="flex flex-col-reverse gap-2">
                         {filteredLoans?.map((loan, index) => (
-                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-2 py-4">
+                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-4">
                           <div key={index} className="flex justify-between items-center">
                             <div className="flex gap-2.5 items-center">
                               <div className="rounded-full h-10 w-10 flex justify-center items-center" >
@@ -319,15 +316,15 @@ export default function Loans() {
                             </div>
                             <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
                           </div>
-                          <div>
-                            <div className="flex flex-row justify-between items-center border-gray-100 pt-3">
+                          <div className="flex flex-col gap-1 mt-2">
+                            <div className="flex flex-row justify-between items-center border-gray-100">
                               <span className="flex flex-row text-sm gap-1.5 items-center">
                                 <CalendarDays strokeWidth="1.5" size={15}/>Fecha
                               </span>
                               <p className="text-gray-400 text-sm">{loan.date}</p>
                             </div>
-                            <div className="flex flex-row justify-between items-center border-gray-100 pt-3">
-                              <span className="flex flex-row text-sm gap-1.5">
+                            <div className="flex flex-row justify-between items-center border-gray-100">
+                              <span className="flex flex-row items-center text-sm gap-1.5">
                                 <Euro strokeWidth="1.5" size={15}/>Monto
                               </span>
                               <p className="text-md font-semibold">
