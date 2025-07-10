@@ -313,7 +313,7 @@ export default function Loans() {
                                   <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
                               </div>  
                                 <div>
-                                    <p className="text-sm truncate">{loan.user}</p>
+                                    <p className="text-sm text-gray-700 truncate">{loan.user}</p>
                                     <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
                                 </div>
                             </div>
