@@ -321,13 +321,13 @@ export default function Loans() {
                               <span className="flex flex-row text-sm gap-1.5 items-center">
                                 <CalendarDays strokeWidth="1.5" size={15}/>Fecha
                               </span>
-                              <p className="text-gray-400 text-sm">{loan.date}</p>
+                              <p className="text-sm text-gray-700">{loan.date}</p>
                             </div>
                             <div className="flex flex-row justify-between items-center border-gray-100">
                               <span className="flex flex-row items-center text-sm gap-1.5">
                                 <Euro strokeWidth="1.5" size={15}/>Monto
                               </span>
-                              <p className="text-md font-semibold">
+                              <p className="text-md font-semibold text-gray-700">
                                 {Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
