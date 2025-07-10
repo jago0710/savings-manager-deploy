@@ -9,10 +9,12 @@ import Header from "../components/Header.jsx";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Tag } from 'primereact/tag';
+import StatusTag from '../components/StatusTag.jsx';
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
 import ButtonTop from "../components/ButtonTop.jsx";
 import { Toast } from "primereact/toast";
+import { CalendarDays, Euro } from "lucide-react";
         
         
         
@@ -84,7 +86,6 @@ export default function Loans() {
 
         const mostrar = () => {
           console.log("Loans", loans);
-          
         }
 
           const amountRow = (rowData) => {
@@ -142,10 +143,9 @@ export default function Loans() {
             return(
                 <div className="flex gap-2">
                     <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} 
-                    severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addMovementToFirestore} ></Button>  
+                    severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addloanToFirestore} ></Button>  
                     <Button icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
                     severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
-                    <button onClick={mostrar}>click</button>
                 </div>
             )
           }
@@ -177,10 +177,10 @@ export default function Loans() {
 
           var totalMoney = (parseFloat(loans[0]?.total) + parseFloat(payTotal));
           
-          const addMovementToFirestore = async () => {
+          const addloanToFirestore = async () => {
             // Crear nuevo movimiento
             const today = new Date();
-            const newMovement = {
+            const newloan = {
             id: crypto.randomUUID(),
             date: today.toLocaleDateString(),
             description: "Pago",
@@ -200,7 +200,7 @@ export default function Loans() {
           
                 // Actualizo y agrego el movimiento
                 await updateDoc(docRef, {
-                  movements: arrayUnion(newMovement),
+                  loans: arrayUnion(newloan),
                   total: totalMoney
                 })
           
@@ -272,6 +272,7 @@ export default function Loans() {
       }
     };
 
+    const filteredLoans = viewAllloans ? loans[0]?.loans.filter(loan => loan.userEmail !== currentUser.email)  : loans[0]?.loans.filter(loan => loan.userEmail === currentUser.email)
 
     return (
         <>
@@ -288,7 +289,8 @@ export default function Loans() {
                         placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
                     </div>
 
-                    <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
+                    { screen.width > 550 
+                    ? <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                             <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
@@ -303,7 +305,43 @@ export default function Loans() {
                             </DataTable>
                             <ButtonTop/>
                     </div>
-
+                    : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
+                      <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
+                      <div className="flex flex-col-reverse gap-2">
+                        {filteredLoans?.map((loan, index) => (
+                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-2 py-4">
+                          <div key={index} className="flex justify-between items-center">
+                            <div className="flex gap-2.5 items-center">
+                              <div className="rounded-full h-10 w-10 flex justify-center items-center" >
+                                  <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
+                              </div>  
+                                <p className="text-sm">{loan.user}</p>
+                            </div>
+                            <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
+                          </div>
+                          <div>
+                            <div className="flex flex-row justify-between items-center border-gray-100 pt-3">
+                              <span className="flex flex-row text-sm gap-1.5 items-center">
+                                <CalendarDays strokeWidth="1.5" size={15}/>Fecha
+                              </span>
+                              <p className="text-gray-400 text-sm">{loan.date}</p>
+                            </div>
+                            <div className="flex flex-row justify-between items-center border-gray-100 pt-3">
+                              <span className="flex flex-row text-sm gap-1.5">
+                                <Euro strokeWidth="1.5" size={15}/>Monto
+                              </span>
+                              <p className="text-md font-semibold">
+                                {Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                              }).format(parseFloat(loan.amount))}</p>
+                            </div>
+                          </div>
+                        </section>
+                        ))}
+                    </div>
+                  </div>
+                      }
                     {/**Este bloque se renderizará cuando se haga uan consulta a bbdd y no se encuentren resultados*/}
                     <div hidden={loans[0]?.loans?.length <= 0 ? false : true} className="m-2 md:mt-2 bg-white border h-[calc(100%-65px)] md:h-[calc(100vh-89px)] border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                         <h1 className="text-center">No encontramos prestamos <span className="pi pi-sparkles" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>
