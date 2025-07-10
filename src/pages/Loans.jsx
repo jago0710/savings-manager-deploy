@@ -306,13 +306,16 @@ export default function Loans() {
                       <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                       <div className="flex flex-col-reverse gap-2">
                         {filteredLoans?.map((loan, index) => (
-                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-4">
+                          <section className="border  rounded-md border-gray-200 bg-white gap-4 p-3">
                           <div key={index} className="flex justify-between items-center">
                             <div className="flex gap-2.5 items-center">
                               <div className="rounded-full h-10 w-10 flex justify-center items-center" >
                                   <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
                               </div>  
-                                <p className="text-sm">{loan.user}</p>
+                                <div>
+                                    <p className="text-sm truncate">{loan.user}</p>
+                                    <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
+                                </div>
                             </div>
                             <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
                           </div>
