@@ -237,7 +237,6 @@ const addMovementToFirestore = async (newMovement) => {
     if (typeMovement === "Retirar" && inputValue && (totalMoney - inputValue) >= 0 ) {
       confirm(e)
     } else if (typeMovement === "Retirar" && (totalMoney - inputValue) < 0) {
-      const ejemplo = totalMoney - inputValue;
       toast.current.show({ severity: 'warn', summary: 'Movimiento invalido!', detail: 'La cuenta no puede quedar en negativo o números rojos', life: 3000 });
     }else{
       saveValue()
@@ -248,11 +247,11 @@ const addMovementToFirestore = async (newMovement) => {
   const getHeaderDetail = (movement) => {
     return(
       <div className="flex items-center gap-1 ">
-        {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5" size={20}/> 
-                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5" size={20}/> 
-                : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="1.5" size={20}/> 
-                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5" size={20}/> : <PiggyBank/>}
-        <p className="text-base" >Detalles del movimiento</p>
+        {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="2" size={22}/> 
+                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="2" size={22}/> 
+                : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="2" size={22}/> 
+                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="2" size={22}/> : <PiggyBank/>}
+        <p className="text-lg" >Detalles del movimiento</p>
       </div>
     )
   }
@@ -414,27 +413,27 @@ const addMovementToFirestore = async (newMovement) => {
         <Dialog headerStyle={ {width : "90vw"}} contentStyle={{width : "90vw"}} header={() => getHeaderDetail(detailMovement)} visible={viewModalMovement}  onHide={() => {if (!viewModalMovement) return; setViewModalMovement(false); }}>
                 {detailMovement
                 ?
-                <div>
-                  <div className="flex flex-row items-center gap-2 pb-2">
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-row items-center gap-2">
                       <img className="rounded-full" src={detailMovement.userPhoto} alt="Perfil" height={35} width={35}/>
                       <p className="truncate">{detailMovement.user}</p>
                   </div>
                   
-                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                  <div className="flex flex-row justify-between items-center">
                     <span className="flex flex-row text-sm gap-1.5">
                       <CalendarDays strokeWidth="1.5" size={20}/>Fecha
                     </span>
                     <p>{detailMovement.date}</p>
                   </div>
 
-                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                  <div className="flex flex-row justify-between items-center">
                     <span className="flex flex-row text-sm gap-1.5">
                       <FileText strokeWidth="1.5" size={20}/>Descripción
                     </span>
                     <p>{detailMovement.description}</p>
                   </div>
 
-                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+                  <div className="flex flex-row justify-between items-center">
                     <span className="flex flex-row text-sm gap-1.5">
                       <Euro strokeWidth="1.5" size={20}/>Monto
                     </span>
@@ -448,7 +447,8 @@ const addMovementToFirestore = async (newMovement) => {
                       currency: "EUR",
                     }).format(parseFloat(detailMovement.amount))}</p>
                   </div>
-                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pt-3 pb-2">
+
+                  <div className="flex flex-row justify-between items-center">
                     <span className="flex flex-row text-sm gap-1.5">
                       {detailMovement.amount > 0 
                       ? <TrendingUp strokeWidth="1.5" size={20}/>
