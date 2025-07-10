@@ -438,7 +438,11 @@ const addMovementToFirestore = async (newMovement) => {
                     <span className="flex flex-row text-sm gap-1.5">
                       <Euro strokeWidth="1.5" size={20}/>Monto
                     </span>
-                    <p className={detailMovement.description == "Ingresar" ? "text-green-600 text-xl font-bold" : detailMovement.description == "Retirar" ? "text-red-600 text-xl font-bold" : detailMovement.description == "Prestamo" ?  "text-orange-500 text-xl font-bold" : "text-cyan-500  text-xl font-bold"}>
+                    <p className={
+                      detailMovement.description == "Ingresar" ? "text-green-600 text-xl font-bold" 
+                      : detailMovement.description == "Retirar" ? "text-red-600 text-xl font-bold" 
+                      : detailMovement.description == "Prestamo" ?  "text-orange-500 text-xl font-bold" 
+                      : "text-cyan-500  text-xl font-bold"}>
                       {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
