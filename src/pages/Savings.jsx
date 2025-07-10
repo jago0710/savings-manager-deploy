@@ -419,7 +419,7 @@ const addMovementToFirestore = async (newMovement) => {
                       <p className="truncate">{detailMovement.user}</p>
                   </div>
                   
-                  <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-row justify-between items-center mt-2">
                     <span className="flex flex-row text-sm gap-1.5">
                       <CalendarDays strokeWidth="1.5" size={20}/>Fecha
                     </span>
@@ -433,15 +433,15 @@ const addMovementToFirestore = async (newMovement) => {
                     <p>{detailMovement.description}</p>
                   </div>
 
-                  <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-row justify-between items-center border-b border-gray-100 pb-2">
                     <span className="flex flex-row text-sm gap-1.5">
                       <Euro strokeWidth="1.5" size={20}/>Monto
                     </span>
                     <p className={
-                      detailMovement.description == "Ingresar" ? "text-green-600 text-xl font-bold" 
-                      : detailMovement.description == "Retirar" ? "text-red-600 text-xl font-bold" 
-                      : detailMovement.description == "Prestamo" ?  "text-orange-500 text-xl font-bold" 
-                      : "text-cyan-500  text-xl font-bold"}>
+                      detailMovement.description == "Ingresar" ? "text-green-600 text-lg font-semibold" 
+                      : detailMovement.description == "Retirar" ? "text-red-600 text-lg font-semibold" 
+                      : detailMovement.description == "Prestamo" ?  "text-orange-500 text-lg font-semibold" 
+                      : "text-cyan-500  text-xl font-semibold"}>
                       {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
@@ -455,7 +455,7 @@ const addMovementToFirestore = async (newMovement) => {
                       : <TrendingDown strokeWidth="1.5" size={20}/>}
                       Total
                     </span>
-                    <p className="text-xl font-bold">
+                    <p className="text-lg font-semibold">
                       {Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
