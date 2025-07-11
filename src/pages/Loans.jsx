@@ -272,23 +272,36 @@ export default function Loans() {
     const filteredLoans = viewAllloans ? loans[0]?.loans.filter(loan => loan.userEmail !== currentUser.email)  : loans[0]?.loans.filter(loan => loan.userEmail === currentUser.email)
 
     const addToSelectLoans = (loan) => {
-        let exist = false;
+        let idRemove;
         if (selectedLoans != null) {
             selectedLoans.forEach(item => {
                 if (item.id == loan.id) {
-                    exist = true;
+                    idRemove = loan.id
                 }
             });
 
-            if (!exist){
+            if (!idRemove){
                 setSelectedLoans([...selectedLoans, loan])
                 console.log(selectedLoans);
             } else {
-                setSelectedLoans()
+                setSelectedLoans(prev => selectedLoans.filter(item => item.id != idRemove))
               console.log("Este loan ya existe en la lista para pagar");
             }
         } else {
             setSelectedLoans([loan])            
+        }
+    }
+
+    const getStyleSelected = (loan) => {
+      if (selectedLoans != null) {
+            selectedLoans.forEach(item => {
+                if (item.id == loan.id && loan.status == "Pagado") {
+                    return "select-none border rounded-md border-blue-200 bg-white gap-4 p-3 pointer-events-none" 
+                }
+            });
+        } else {
+            return "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" 
+            /**REAL STYLE "loan.status == "Pagado" && viewAllSelected ?select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3" */
         }
     }
 
@@ -324,23 +337,25 @@ export default function Loans() {
                             <ButtonTop/>
                     </div>
                     : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
-                      <div hidden={selectedLoans == null} className="animate-bouncing fixed left-0 border-t border-gray-200 px-3 bottom-0 bg-white w-screen">
+                      <div hidden={!selectedLoans || selectedLoans.length == 0} className="animate-slide-in-bottom fixed left-0 border-t border-gray-200 px-3 bottom-0 bg-white w-screen">
                         <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                       </div>
                       <h1 className="text-gray-500 text-lg pl-1 pt-1">{!viewAllloans ? "Selecciona los prestamos a pagar" : "Modo vista de todos los prestamos"}</h1>
                       <div className="flex flex-col-reverse gap-2">
                         {filteredLoans?.map((loan, index) => (
                           <div onClick={() => addToSelectLoans(loan)} key={index} 
-                          className={loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>
+                          className={selectedLoans?.some(item => item?.id === loan.id)
+      ? "select-none border rounded-md border-sky-500 bg-blue-50 gap-4 p-3"
+      : loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>
                             <div className="flex justify-between items-center">
                               <div className="flex gap-2.5 items-center">
                                 <div className="rounded-full h-10 w-10 flex justify-center items-center" >
                                     <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
-                                </div>  
-                                  <div>
-                                      <p className="text-sm text-gray-700 truncate">{loan.user}</p>
-                                      <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
-                                  </div>
+                                </div>
+                                <div>
+                                  <p className="text-sm text-gray-700 truncate">{loan.user}</p>
+                                  <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
+                                </div>
                               </div>
                               <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
                             </div>
