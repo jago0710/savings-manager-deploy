@@ -275,7 +275,7 @@ export default function Loans() {
         let exist = false;
         if (selectedLoans != null) {
             selectedLoans.forEach(item => {
-                if (item == loan) {
+                if (item.id == loan.id) {
                     exist = true;
                 }
             });
@@ -283,7 +283,9 @@ export default function Loans() {
             if (!exist){
                 setSelectedLoans([...selectedLoans, loan])
                 console.log(selectedLoans);
-                
+            } else {
+                setSelectedLoans()
+              console.log("Este loan ya existe en la lista para pagar");
             }
         } else {
             setSelectedLoans([loan])            
