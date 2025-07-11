@@ -23,9 +23,9 @@ export default function StatusTag({value, severity = "info", rounded, icon }){
     const getSeverityText = () => {
         switch (severity) {
             case "success":
-                return "text-green-500 rounde-md text-xs flex flex-row py-1 px-2 gap-1 items-center"
+                return "text-green-700 rounde-md text-xs flex flex-row py-1 px-2 gap-1 items-center"
             case "info":
-                return "text-cyan-500 rounde-md text-xs flex flex-row py-1 px-2 gap-1 items-center"
+                return "text-cyan-600 rounde-md text-xs flex flex-row py-1 px-2 gap-1 items-center"
             case "warning":
                 return "text-orange-400 rounde-md text-xs flex flex-row py-1 px-2 gap-1 items-center"
             case "danger":

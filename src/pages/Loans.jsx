@@ -197,7 +197,7 @@ export default function Loans() {
           
                 // Actualizo y agrego el movimiento
                 await updateDoc(docRef, {
-                  loans: arrayUnion(newloan),
+                  movements: arrayUnion(newloan),
                   total: totalMoney
                 })
           
@@ -260,9 +260,9 @@ export default function Loans() {
         }
         
         setSelectedLoans()
-        setRefresh(!refresh)
-        toast.current.show({ severity: 'success', summary: '¡Pago realizado!', detail: `Se hizo el pago de ${payTotal}€`, life: 3000 });
+        toast.current?.show({ severity: 'success', summary: '¡Pago realizado!', detail: `Se hizo el pago de ${payTotal}€`, life: 3000 });
         console.log("Todos los préstamos seleccionados fueron actualizados.");
+        setRefresh(!refresh)
       
       } catch (error) {
         console.error("Error al actualizar los préstamos:", error);
