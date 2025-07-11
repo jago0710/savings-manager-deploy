@@ -378,20 +378,20 @@ const addMovementToFirestore = async (newMovement) => {
           <p className="font-bold text-2xl m-4">Historial de movimientos</p>
           <div className="flex flex-col-reverse">
           {countSavings.movements.map((movement, index) => (
-            <div  onClick={() => viewMovement(movement)} key={index} className="border h-15 rounded-md border-gray-200 bg-white flex justify-between gap-4 mx-2 my-1 p-2 items-center">
-              <div className="flex gap-2.5 items-center">
+            <div  onClick={() => viewMovement(movement)} key={index} className="border h-15 rounded-md border-gray-200 backdrop-blur-md flex justify-between gap-4 mx-2 my-1 p-2 items-center">
+              <div className="flex items-center">
               <div className="rounded-full h-10 w-10 flex justify-center items-center" >
-                  <img src={movement.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
+                  <img src={movement.userPhoto} alt="Perfil" className="rounded-full h-9 w-9" />
               </div>         
-              <div>
+              <div className="flex flex-col gap-1 relative -left-1">
                 <div className="flex flex-row gap-1 items-center justify-start">
-                {movement.description == "Ingresar" ? <ArrowUpRight color="#0ea62a" strokeWidth="1.5" size={20}/> 
-                : movement.description == "Retirar" ? <ArrowDownLeft color="#e62e2e" strokeWidth="1.5" size={20}/> 
-                : movement.description == "Prestamo" ?  <HandCoins color="#f27612" strokeWidth="1.5" size={20}/> 
-                :  movement.description == "Pago" ? <Handshake color="#17a2ce" strokeWidth="1.5" size={20}/> : <PiggyBank size={20}/>}
+                {movement.description == "Ingresar" ? <div className=" backdrop-blur-xs rounded-full p-[2px]"><ArrowUpRight color="#0ea62a" strokeWidth="1.5" size={20}/> </div>
+                : movement.description == "Retirar" ? <div className="backdrop-blur-xs rounded-full p-[2px]"><ArrowDownLeft color="#e62e2e" strokeWidth="1.5" size={20}/> </div>
+                : movement.description == "Prestamo" ?  <div className="backdrop-blur-xs rounded-full p-[2px]"><HandCoins color="#f27612" strokeWidth="1.5" size={20}/> </div>
+                :  movement.description == "Pago" ? <div className="backdrop-blur-xs rounded-full p-[2px]"><Handshake color="#17a2ce" strokeWidth="1.5" size={20}/> </div> : <div className="backdrop-blur-xs rounded-full p-[2px]"><PiggyBank size={20}/></div>}
                 <p>{movement.description}</p>
               </div>              
-                <p className="text-xs text-gray-300">{movement.date}</p>
+                <p className="text-xs text-gray-300 ml-7">{movement.date}</p>
               </div>
               </div>
               <div className="flex flex-col gap-1 items-end">

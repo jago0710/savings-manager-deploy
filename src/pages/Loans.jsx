@@ -56,7 +56,7 @@ export default function Loans() {
             if (selectedAccount != null) {
                 fetchLoans();
             }
-        }, [currentUser?.email, refresh ,selectedAccount])
+        }, [currentUser?.email, refresh ,selectedAccount, viewAllloans, payTotal])
 
         useEffect(() => {
             
@@ -141,7 +141,7 @@ export default function Loans() {
                 <div className="flex gap-2">
                     <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} 
                     severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addloanToFirestore} ></Button>  
-                    <Button icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
+                    <Button hidden icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
                     severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
                 </div>
             )
@@ -156,9 +156,9 @@ export default function Loans() {
             });
             }
             return(
-                <div className="flex items-center gap-2">
-                    <p className="font-bold text-xl md:text-3xl">Total:</p>
-                    <p className="font-bold text-xl md:text-3xl">{Intl.NumberFormat("de-DE", {
+                <div className="flex items-center gap-2 font-bold text-xl md:text-3xl text-gray-700">
+                    <p>Total:</p>
+                    <p>{Intl.NumberFormat("de-DE", {
                       style: "currency",
                       currency: "EUR",
                     }).format(parseFloat(total))}</p>
@@ -322,41 +322,44 @@ export default function Loans() {
                             <ButtonTop/>
                     </div>
                     : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
-                      <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
-                      <h1 className="text-gray-700 pl-2">Selecciona los prestamos a pagar</h1>
+                      <div hidden={selectedLoans == null} className="animate-bouncing fixed left-0 border-t border-gray-200 px-3 bottom-0 bg-white w-screen">
+                        <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
+                      </div>
+                      <h1 className="text-gray-500 text-lg pl-1 pt-1">{!viewAllloans ? "Selecciona los prestamos a pagar" : "Modo vista de todos los prestamos"}</h1>
                       <div className="flex flex-col-reverse gap-2">
                         {filteredLoans?.map((loan, index) => (
-                          <div onClick={() => addToSelectLoans(loan)} key={index} className="border rounded-md border-gray-200 bg-white gap-4 p-3">
-                          <div className="flex justify-between items-center">
-                            <div className="flex gap-2.5 items-center">
-                              <div className="rounded-full h-10 w-10 flex justify-center items-center" >
-                                  <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
-                              </div>  
-                                <div>
-                                    <p className="text-sm text-gray-700 truncate">{loan.user}</p>
-                                    <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
-                                </div>
+                          <div onClick={() => addToSelectLoans(loan)} key={index} 
+                          className={loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>
+                            <div className="flex justify-between items-center">
+                              <div className="flex gap-2.5 items-center">
+                                <div className="rounded-full h-10 w-10 flex justify-center items-center" >
+                                    <img src={loan.userPhoto} alt="Perfil" className="rounded-full h-10 w-10" />
+                                </div>  
+                                  <div>
+                                      <p className="text-sm text-gray-700 truncate">{loan.user}</p>
+                                      <p className="text-xs text-gray-300 truncate">{loan.userEmail}</p>
+                                  </div>
+                              </div>
+                              <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
                             </div>
-                            <StatusTag severity={getSeverity(loan.status)} value={loan.status} icon={getIconStatus(loan.status)}></StatusTag>   
-                          </div>
-                          <div className="flex flex-col gap-1 mt-2">
-                            <div className="flex flex-row justify-between items-center border-gray-100">
-                              <span className="flex flex-row text-sm gap-1.5 items-center">
-                                <CalendarDays strokeWidth="1.5" size={15}/>Fecha
-                              </span>
-                              <p className="text-sm text-gray-700">{loan.date}</p>
+                            <div className="flex flex-col gap-1 mt-2">
+                              <div className="flex flex-row justify-between items-center border-gray-100">
+                                <span className="flex flex-row text-sm gap-1.5 items-center">
+                                  <CalendarDays strokeWidth="1.5" size={15}/>Fecha
+                                </span>
+                                <p className="text-sm text-gray-700">{loan.date}</p>
+                              </div>
+                              <div className="flex flex-row justify-between items-center border-gray-100">
+                                <span className="flex flex-row items-center text-sm gap-1.5">
+                                  <Euro strokeWidth="1.5" size={15}/>Monto
+                                </span>
+                                <p className="text-md font-semibold text-gray-700">
+                                  {Intl.NumberFormat("de-DE", {
+                                  style: "currency",
+                                  currency: "EUR",
+                                }).format(parseFloat(loan.amount))}</p>
+                              </div>
                             </div>
-                            <div className="flex flex-row justify-between items-center border-gray-100">
-                              <span className="flex flex-row items-center text-sm gap-1.5">
-                                <Euro strokeWidth="1.5" size={15}/>Monto
-                              </span>
-                              <p className="text-md font-semibold text-gray-700">
-                                {Intl.NumberFormat("de-DE", {
-                                style: "currency",
-                                currency: "EUR",
-                              }).format(parseFloat(loan.amount))}</p>
-                            </div>
-                          </div>
                         </div>
                         ))}
                     </div>
