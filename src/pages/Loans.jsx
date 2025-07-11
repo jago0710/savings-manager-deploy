@@ -177,7 +177,7 @@ export default function Loans() {
           const addloanToFirestore = async () => {
             // Crear nuevo movimiento
             const today = new Date();
-            const newloan = {
+            const newloanForMovement = {
             id: crypto.randomUUID(),
             date: today.toLocaleDateString(),
             description: "Pago",
@@ -197,7 +197,7 @@ export default function Loans() {
           
                 // Actualizo y agrego el movimiento
                 await updateDoc(docRef, {
-                  movements: arrayUnion(newloan),
+                  movements: arrayUnion(newloanForMovement),
                   total: totalMoney
                 })
           
