@@ -1,9 +1,12 @@
 import { Knob } from "primereact/knob";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TableDashboard({ hidden, totalCurrent, totalTarget, TotalIncome, totalRatreats, totalLoans, totalBenefits}) {
 
-    const [porcentajeOb, setporcentajeOb] = useState(80,6); //Porsentaje del objetivo a llegar
+    const [porcentajeOb, setporcentajeOb] = useState(); //Porcentaje del objetivo a llegar
+
+        const porcentaje = Number(parseFloat((totalCurrent / totalTarget) * 100).toFixed(2))
+      
     
     return(
         <div className="md:mt-0  p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={hidden}>
@@ -18,7 +21,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                             </p> {/**Total actual */}
                             <p>Actual</p>
                         </div>
-                        <Knob pt={{root : {className : ''}}} value={porcentajeOb} onChange={(e) => setValue(e.value)} valueTemplate={porcentajeOb + "%"} />
+                        <Knob value={porcentaje} onChange={(e) => setValue(e.value)} valueTemplate={porcentaje + "%"} />
                         <div>
                             <p className="text-xl sm:text-3xl">
                             {Intl.NumberFormat("de-DE", {
