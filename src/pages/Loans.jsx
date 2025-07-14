@@ -43,11 +43,6 @@ export default function Loans() {
 
                     setLoans(loansData)
 
-                    console.log("Loans Data: ",loansData);
-                    console.log("Select Account: ",selectedAccount);
-                    console.log("Select Loans: ",selectedLoans);
-                    
-
                 } catch (e){
                     console.error("Error al hacer feching de los prestamos", e)
                 }
@@ -345,8 +340,8 @@ export default function Loans() {
                         {filteredLoans?.map((loan, index) => (
                           <div onClick={() => addToSelectLoans(loan)} key={index} 
                           className={selectedLoans?.some(item => item?.id === loan.id)
-      ? "select-none border rounded-md border-sky-500 bg-blue-50 gap-4 p-3"
-      : loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>
+                            ? "select-none border rounded-md border-sky-500 bg-blue-50 gap-4 p-3"
+                            : loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>
                             <div className="flex justify-between items-center">
                               <div className="flex gap-2.5 items-center">
                                 <div className="rounded-full h-10 w-10 flex justify-center items-center" >

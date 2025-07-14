@@ -52,7 +52,7 @@ export const onChangeUser = (setUser) => {
 
    const auth = getAuth();
    onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      console.log("Auth: ",user.displayName);
       const usuario = user ? user : null 
       setUser(usuario)
    })

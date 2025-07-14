@@ -1,0 +1,83 @@
+import { Knob } from "primereact/knob";
+import { useState } from "react";
+
+export default function TableDashboard({ hidden, totalCurrent, totalTarget, TotalIncome, totalRatreats, totalLoans, totalBenefits}) {
+
+    const [porcentajeOb, setporcentajeOb] = useState(80,6); //Porsentaje del objetivo a llegar
+    
+    return(
+        <div className="md:mt-0  p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={hidden}>
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
+                    <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
+                        <div>
+                            <p className="text-xl sm:text-3xl">
+                                {Intl.NumberFormat("de-DE", {
+                                    style: "currency",
+                                    currency: "EUR",
+                                    }).format(parseFloat(totalCurrent))}
+                            </p> {/**Total actual */}
+                            <p>Actual</p>
+                        </div>
+                        <Knob pt={{root : {className : ''}}} value={porcentajeOb} onChange={(e) => setValue(e.value)} valueTemplate={porcentajeOb + "%"} />
+                        <div>
+                            <p className="text-xl sm:text-3xl">
+                            {Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(parseFloat(totalTarget))}    
+                            </p> {/**Total objetivo */}
+                            <p>Objetivo</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="h-40 rounded-md border border-gray-200 flex flex-col-reverse md:flex-row justify-around items-center bg-white">
+                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
+                        <span className="pi pi-arrow-up-right" style={{ fontSize: '1.5rem', color : "#0384fc" }}></span>
+                        <p className="text-2xl sm:text-3xl">
+                        {Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(parseFloat(TotalIncome))}    
+                        </p> {/**Total ingresos */}
+                        <p className="text-xl">Ingresos</p>
+                    </div>
+                </div>
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
+                        <span className="pi pi-arrow-down-right" style={{ fontSize: '1.5rem', color : "red"}}></span>
+                        <p className="text-2xl sm:text-3xl">
+                        {Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(parseFloat(totalRatreats - totalRatreats * 2))}    
+                        </p> {/**Total retiros */}
+                        <p className="text-xl">Retiros</p>
+                    </div>
+                </div>
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
+                        <span className="pi pi-building-columns" style={{ fontSize: '1.5rem', color : "#ffa600"}}></span>
+                        <p className="text-2xl sm:text-3xl">
+                        {Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(parseFloat(totalLoans - totalLoans * 2))}    
+                        </p> {/**Total prestamos */}
+                        <p className="text-xl">Prestamos</p>
+                    </div>
+                </div>
+                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                    <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
+                        <span className="pi pi-chart-line" style={{ fontSize: '1.5rem', color : "#069c0b"}}></span>
+                        <p className="text-2xl sm:text-3xl">
+                            {Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(parseFloat(totalBenefits - totalBenefits * 2))}    
+                        </p> {/**Total beneficios */}
+                        <p className="text-xl">Benefios</p>
+                    </div>
+                </div>
+            </div>
+    )
+}

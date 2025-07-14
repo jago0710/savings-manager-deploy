@@ -9,6 +9,7 @@ import LoginContext from "../context/LoginContext";
 import { useContext } from "react";
 import useUser from "../hook/useUser";
 import Loans from "../pages/Loans";
+import { LogIn } from "lucide-react";
 
 export default function RoutesOfNavigation(){
 
@@ -16,7 +17,9 @@ const user = useUser();
 
 
 const {isLogin} = useContext(LoginContext)
-console.log("IS LOGIN", isLogin);
+if (isLogin) {
+    console.log("LOGUEADO...");
+}
 
     const getRoutes = () =>{
 
