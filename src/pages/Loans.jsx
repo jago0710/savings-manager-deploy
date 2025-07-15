@@ -35,14 +35,14 @@ export default function Loans() {
 
         useEffect(() => {
              const fetchLoans = async () => {
-                if (!currentUser?.email) return;
-                try{
+               
+               if (!currentUser?.email) return;
+               try{
                     const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", selectedAccount))
                     const querySnapshot = await getDocs(q);
                     const loansData = querySnapshot.docs.map(doc => doc.data());
 
                     setLoans(loansData)
-
                 } catch (e){
                     console.error("Error al hacer feching de los prestamos", e)
                 }
@@ -50,8 +50,9 @@ export default function Loans() {
 
             if (selectedAccount != null) {
                 fetchLoans();
+                setSelectedLoans(null)
             }
-        }, [currentUser?.email, refresh ,selectedAccount, viewAllloans, payTotal])
+        }, [currentUser?.email, refresh ,selectedAccount, viewAllloans])
 
         useEffect(() => {
             
@@ -127,7 +128,7 @@ export default function Loans() {
           }
 
           const resetValuesForViewAlls = () => {
-            setViewAllLoans(!viewAllloans)
+            setPayTotal(0)
           }
 
 
@@ -195,7 +196,8 @@ export default function Loans() {
                   movements: arrayUnion(newloanForMovement),
                   total: totalMoney
                 })
-          
+        
+
                 console.log("Movimiento agregado correctamente.");
                 changeStatusOfPayments()
               } else {
@@ -212,12 +214,17 @@ export default function Loans() {
       try {
         if (!Array.isArray(selectedLoans) || selectedLoans.length === 0) {
           console.warn("selectedLoans no es un array válido.");
+          toast.current?.show({
+            severity: 'warn',
+            summary: 'Atención',
+            detail: 'No hay préstamos seleccionados.',
+            life: 3000
+          });
           return;
         }
 
         
         for (const selectedLoan of selectedLoans) {
-          console.log("ID => ",selectedLoan.id);
           // Traemos todos los documentos de ACCOUNTS
           const accountsSnapshot = await getDocs(collection(db, "ACCOUNTS"), where("number", "==", selectedAccount));
           
@@ -231,7 +238,6 @@ export default function Loans() {
 
             const loanExists = accountData.loans.some(loan => loan.id === selectedLoan.id);
             
-            
             if (!loanExists) continue;
 
             // se crea el nuevo objeto que le pasaremos para que se pueda actulizar todos los Loans
@@ -244,7 +250,7 @@ export default function Loans() {
 
             const accountRef = doc(db, "ACCOUNTS", accountDoc.id);
             await updateDoc(accountRef, { loans: updatedLoans });
-            console.log(`Loan ${selectedLoan.id} actualizado en doc ${accountDoc.id}`);
+            console.log(`Loan ${selectedLoan.id} ACTUALIZADO...`);
             loanUpdated = true;
             break;
           }
@@ -254,13 +260,26 @@ export default function Loans() {
           }
         }
         
-        setSelectedLoans()
-        toast.current?.show({ severity: 'success', summary: '¡Pago realizado!', detail: `Se hizo el pago de ${payTotal}€`, life: 3000 });
+        setSelectedLoans(null)
         console.log("Todos los préstamos seleccionados fueron actualizados.");
-        setRefresh(!refresh)
+        
+        toast.current?.show({ 
+          severity: 'success', 
+          summary: '¡Pago realizado!', 
+          detail: `Se hizo el pago de ${payTotal}€`, 
+          life: 3000 });
+        setTimeout(()=> {
+          setRefresh(!refresh)
+        }, 500)
       
       } catch (error) {
         console.error("Error al actualizar los préstamos:", error);
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Hubo un problema al procesar el pago.',
+          life: 3000
+        });
       }
     };
 
@@ -287,12 +306,12 @@ export default function Loans() {
         }
     }
 
-  
 
     return (
         <>
             <div className="sm:grid md:flex">
                 <Navbar page="PRESTAMOS"></Navbar>
+                      <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
                 <div className="md:ml-67 bg-gray-50 w-full h-[calc(100vh-74px)]">
                     {/**Header descktop */}
                     <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
@@ -307,7 +326,6 @@ export default function Loans() {
                     { screen.width > 550 
                     ? <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
-                            <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
                             value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
                                 {!viewAllloans 
@@ -328,7 +346,7 @@ export default function Loans() {
                         <p className="text-blue-500 text-xs pl-1" onClick={() => setViewAllLoans(!viewAllloans)}>{!viewAllloans ? "ver todos" : "volver"}</p>
                       <div className={`flex flex-col-reverse gap-2 ${!selectedLoans || selectedLoans.length == 0 ? "mb-0" : "mb-20"}`}>
                         {filteredLoans?.map((loan, index) => (
-                          <div onClick={() => addToSelectLoans(loan)} key={index} 
+                          <div onClick={() => addToSelectLoans(loan)} key={index}
                           className={selectedLoans?.some(item => item?.id === loan.id)
                             ? "select-none border rounded-md border-sky-500 bg-blue-50 gap-4 p-3"
                             : loan.status == "Pagado" || viewAllloans ? "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3"}>

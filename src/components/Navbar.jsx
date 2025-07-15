@@ -25,7 +25,7 @@ export default function Navbar({page}) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-97 fixed z-2 w-full' : 'animate-slide-in-right md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
+      <div className={!open ? 'md:hidden h-16 p-3 flex justify-between items-center backdrop-blur-md backdrop-brightness-97 fixed z-2 w-full transition-transform duration-700 delay-200' : 'duration-700 delay-200 transition-transform animate-slide-in-right md:hidden h-16 p-3 flex bg-white justify-between items-center border-b border-b-gray-200 fixed z-2 w-full'}>
         {
           page && !open
           ? <p className="text-xl font-bold "><b className="text-red-700">/ </b>{page}</p>
@@ -55,7 +55,7 @@ export default function Navbar({page}) {
                 key={index}
                 href={label === "Cerrar cuenta" ? "" : href}
                 onClick={label === "Cerrar cuenta" ? () => closeSession() : () => setOpen(false)}
-                className={`flex items-center gap-3 pl-3 py-2 rounded-md transition duration-200 hover:scale-105 hover:text-gray-700 select-none 
+                className={`flex items-center gap-3 pl-3 py-2 rounded-md transition-all duration-200 hover:scale-105 hover:text-gray-700 select-none 
                   ${currentPath === href
                     ? "bg-neutral-100 text-primary font-semibold"
                     : "text-muted-foreground hover:bg-gray-100"
