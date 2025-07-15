@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup,  } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
 import { createUser, ExistUserInDataBase } from "./database";
 
@@ -41,18 +41,17 @@ export function LoginGoogle(){
     } else {
       addUserInDataBase(result.user);
     }
- })
- .catch((error) => {
-    console.log(error);
-    
- })
-}
+   })
+   .catch((error) => {
+      console.log(error);
+      
+   })
+   }
 
 export const onChangeUser = (setUser) => {
 
    const auth = getAuth();
    onAuthStateChanged(auth, (user) => {
-      console.log("Auth: ",user.displayName);
       const usuario = user ? user : null 
       setUser(usuario)
    })
