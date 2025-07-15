@@ -287,18 +287,7 @@ export default function Loans() {
         }
     }
 
-    const getStyleSelected = (loan) => {
-      if (selectedLoans != null) {
-            selectedLoans.forEach(item => {
-                if (item.id == loan.id && loan.status == "Pagado") {
-                    return "select-none border rounded-md border-blue-200 bg-white gap-4 p-3 pointer-events-none" 
-                }
-            });
-        } else {
-            return "select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" 
-            /**REAL STYLE "loan.status == "Pagado" && viewAllSelected ?select-none border rounded-md border-gray-200 bg-white gap-4 p-3 pointer-events-none" : "select-none border rounded-md border-gray-200 bg-white gap-4 p-3" */
-        }
-    }
+  
 
     return (
         <>
@@ -331,12 +320,13 @@ export default function Loans() {
                             </DataTable>
                             <ButtonTop/>
                     </div>
-                    : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
+                    : <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-1 text-xl md:text-3xl text-gray-500">
                       <div hidden={!selectedLoans || selectedLoans.length == 0} className="animate-slide-in-bottom fixed left-0 border-t border-gray-200 px-3 bottom-0 bg-white w-screen">
                         <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                       </div>
-                      <h1 className="text-gray-500 text-lg pl-1 pt-1">{!viewAllloans ? "Selecciona los prestamos a pagar" : "Modo vista de todos los prestamos"}</h1>
-                      <div className="flex flex-col-reverse gap-2">
+                        <p className="text-gray-800 text-lg pl-1 pt-1">{!viewAllloans ? "Selecciona los prestamos a pagar" : "Vista de todos los prestamos"}</p>
+                        <p className="text-blue-500 text-xs pl-1" onClick={() => setViewAllLoans(!viewAllloans)}>{!viewAllloans ? "ver todos" : "volver"}</p>
+                      <div className={`flex flex-col-reverse gap-2 ${!selectedLoans || selectedLoans.length == 0 ? "mb-0" : "mb-20"}`}>
                         {filteredLoans?.map((loan, index) => (
                           <div onClick={() => addToSelectLoans(loan)} key={index} 
                           className={selectedLoans?.some(item => item?.id === loan.id)
