@@ -21,7 +21,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                             </p> {/**Total actual */}
                             <p>Actual</p>
                         </div>
-                        <Knob value={porcentaje} onChange={(e) => setValue(e.value)} valueTemplate={porcentaje + "%"} />
+                        <Knob value={porcentaje} onChange={(e) => setValue(e?.value)} valueTemplate={porcentaje + "%"} />
                         <div>
                             <p className="text-xl sm:text-3xl">
                             {Intl.NumberFormat("de-DE", {

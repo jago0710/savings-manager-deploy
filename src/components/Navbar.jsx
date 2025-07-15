@@ -55,8 +55,8 @@ export default function Navbar({page}) {
                 key={index}
                 href={label === "Cerrar cuenta" ? "" : href}
                 onClick={label === "Cerrar cuenta" ? () => closeSession() : () => setOpen(false)}
-                className={`flex items-center gap-3 pl-3 py-2 rounded-md transition duration-200 hover:scale-105 hover:text-gray-700 select-none ${
-                  currentPath === href
+                className={`flex items-center gap-3 pl-3 py-2 rounded-md transition duration-200 hover:scale-105 hover:text-gray-700 select-none 
+                  ${currentPath === href
                     ? "bg-neutral-100 text-primary font-semibold"
                     : "text-muted-foreground hover:bg-gray-100"
                 }`}

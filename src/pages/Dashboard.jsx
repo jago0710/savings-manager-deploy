@@ -82,7 +82,7 @@ export default function Dashboard() {
     const movementsIngresos = accountSelected.movements.filter((movement) => movement.description == "Ingresar")
     let total = 0;
     movementsIngresos.forEach(movement => {
-        total = total + movement.amount;
+        total = total + movement?.amount;
     });
 
     setIngresos(total)
