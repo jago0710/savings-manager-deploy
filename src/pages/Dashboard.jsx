@@ -82,7 +82,7 @@ export default function Dashboard() {
     const movementsIngresos = accountSelected.movements.filter((movement) => movement.description == "Ingresar")
     let total = 0;
     movementsIngresos.forEach(movement => {
-        total = total + movement?.amount;
+        total = parseFloat(total) + parseFloat(movement?.amount);
     });
 
     setIngresos(total)
@@ -92,7 +92,7 @@ export default function Dashboard() {
     const movementsIngresos = accountSelected.movements.filter((movement) => movement.description == "Retirar" || movement.description == "Prestamo")
     let total = 0;
     movementsIngresos.forEach(movement => {
-        total = total + movement.amount;
+        total = parseFloat(total) + parseFloat(movement?.amount);
     });
 
     setRetiros(total)
@@ -102,7 +102,7 @@ export default function Dashboard() {
     const movementsIngresos = accountSelected.movements.filter((movement) => movement.description == "Prestamo")
     let total = 0;
     movementsIngresos.forEach(movement => {
-        total = total + movement.amount;
+        total = parseFloat(total) + parseFloat(movement?.amount);
     });
 
     setPrestamos(total)
@@ -112,7 +112,7 @@ export default function Dashboard() {
     const movementsIngresos = accountSelected.movements.filter((movement) => movement.description == "Retirar")
     let total = 0;
     movementsIngresos.forEach(movement => {
-        total = total + movement.amount;
+        total = parseFloat(total) + parseFloat(movement?.amount);
     });
 
     setBeneficios(total)
