@@ -196,10 +196,18 @@ const addMovementToFirestore = async (newMovement) => {
     if (!querySnapshot.empty) {
       const docRef = doc(db, "ACCOUNTS", querySnapshot.docs[0].id); // obtengo el ID del documento para actualizar el docmento
 
+      let totalFinal = 0;
+
+      if (newMovement.description == "Ingresar" || newMovement.description == "Pago") {
+        totalFinal = parseFloat(totalMoney) + parseFloat(inputValue)
+      } else if (newMovement.description == "Retirar" || newMovement.description == "Prestamo") {
+        totalFinal = parseFloat(totalMoney) - parseFloat(inputValue)
+      }
+
       // Actualizo y agrego el movimiento
       await updateDoc(docRef, {
         movements: arrayUnion(newMovement),
-        total: (parseFloat(totalMoney) + parseFloat(inputValue))
+        total: totalFinal
       })
 
       console.log("Movimiento agregado correctamente.");
