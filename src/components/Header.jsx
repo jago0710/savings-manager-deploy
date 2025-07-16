@@ -1,11 +1,11 @@
 import { Dropdown } from "primereact/dropdown";
 
-export default function Header({dropdown = false, dropdownData, title, dropValue, change}){
+export default function Header({dropdown = false, dropdownData = [], title, dropValue, change}){
 
     
 
     return(
-    <div className="hidden md:flex w-full py-3 px-7 text-xl bg-white md:border-b md:border-b-gray-200  flex-row justify-between items-center">
+    <div className={`hidden md:flex w-full ${dropdown ? "py-3" : "py-5"} px-7 text-xl bg-white md:border-b md:border-b-gray-200  flex-row justify-between items-center`}>
         <h1 className="font-bold font-sans">{title}</h1>
         <div hidden={!dropdown} className="w-[23rem]">
             <Dropdown loading={dropdownData.length <= 0 ? true : false} filter 

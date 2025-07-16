@@ -13,6 +13,7 @@ import { ColorPicker } from "primereact/colorpicker";
 import { InputText } from 'primereact/inputtext';
 import { Toast } from "primereact/toast";
 import { InputNumber } from "primereact/inputnumber";
+import Header from "../components/Header";
 
 
 
@@ -154,9 +155,7 @@ export default function Accounts(){
             <section className="sm:grid md:flex">
                 <Navbar page="CUENTAS DE AHORRO" />
                 <div className="w-full mt-12 md:mt-0 md:ml-67 bg-gray-50">
-                    <div className="w-full py-5 px-7 text-xl md:border-b md:block hidden bg-white md:border-b-gray-200">
-                        <h1 className="hidden md:block font-bold font-sans">CUENTAS DE AHORRO </h1>
-                    </div>
+                    <Header title="CUENTAS DE AHORROS"></Header>
                     <div className={cards ? "flex flex-wrap gap-7 md:mt-0 mt-[64px] py-5 sm:px-5 md:p-5 md:justify-start justify-center" : "flex justify-center items-center h-screen"}>
                         <div className={cards ? "flex flex-wrap gap-5 justify-center items-center sm:justify-start sm:items-start" : "flex justify-center items-center h-screen"}>
                               {cards ? cards.map((card, index) => (
