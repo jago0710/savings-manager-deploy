@@ -15,6 +15,7 @@ import { Button } from "primereact/button";
 import ButtonTop from "../components/ButtonTop.jsx";
 import { Toast } from "primereact/toast";
 import { CalendarDays, Euro } from "lucide-react";
+import { useParams } from "react-router";
         
         
         
@@ -23,6 +24,7 @@ export default function Loans() {
 
     const currentUser = useUser();
     const toast = useRef(null);
+    const { numberAccount } = useParams();
 
     const [refresh, setRefresh] = useState(false);
     const [loans, setLoans] = useState([]);
@@ -34,24 +36,44 @@ export default function Loans() {
     const [payTotal, setPayTotal] = useState(0)
 
         useEffect(() => {
-             const fetchLoans = async () => {
-               
-               if (!currentUser?.email) return;
-               try{
-                    const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", selectedAccount))
-                    const querySnapshot = await getDocs(q);
-                    const loansData = querySnapshot.docs.map(doc => doc.data());
+          if (numberAccount) {
+            setSelectedAccount(numberAccount)
+          }
 
-                    setLoans(loansData)
-                } catch (e){
-                    console.error("Error al hacer feching de los prestamos", e)
+        })
+
+        useEffect(() => {
+            const fetchLoans = async () => {
+               
+              if (!currentUser?.email) return;
+
+              if(numberAccount){
+                if(numberAccount != selectedAccount){
+                  window.location.href = `/loans/${selectedAccount}`
                 }
+              }
+
+              try{
+                const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", parseInt(selectedAccount)))
+                const querySnapshot = await getDocs(q);
+                const loansData = querySnapshot.docs.map(doc => doc.data());
+                console.log("He pasado por aqui", selectedAccount);
+                console.log(q);
+                
+
+                setLoans(loansData)
+                
+              } catch (e){
+                console.error("Error al hacer feching de los prestamos", e)
+              }
             }
 
             if (selectedAccount != null) {
                 fetchLoans();
                 setSelectedLoans(null)
             }
+
+            
         }, [currentUser?.email, refresh ,selectedAccount, viewAllloans])
 
         useEffect(() => {
@@ -69,6 +91,7 @@ export default function Loans() {
                     }));
                     
                     setAccounts(formattedAccounts);
+                    setRefresh(!refresh)
                     
                 }, (error) => {
                     console.error("Error en la subcripción:", error);
@@ -78,7 +101,7 @@ export default function Loans() {
                 unsubscripte();
             }
                    
-        }, [currentUser?.email, selectedLoans]);
+        }, [currentUser?.email]);
 
 
           const amountRow = (rowData) => {

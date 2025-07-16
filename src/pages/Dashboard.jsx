@@ -9,9 +9,11 @@ import { db } from "../firebase/database";
 import Header from "../components/Header";
 import TableDashboard from "../components/TableDashboard";
 import { Toast } from "primereact/toast";
+import { useParams } from "react-router";
 
 export default function Dashboard() {
     const currentUser = useUser();
+    const {numberAccount} = useParams();
 
     const [accountDataSelected, setAccountsDataSelected] = useState();//Aqui estará el objeto con los datos de la cuenta
     const [accounts,  setAccounts] = useState([]); // Este es el useState para el Dropdown, no queda muy bien nombrado porque confunde
@@ -22,11 +24,18 @@ export default function Dashboard() {
     const [beneficios, setBeneficios] = useState();
     const [total, setTotal] = useState();
     const [objetivo, setObjetivo] = useState();
+
+            useEffect(() => {
+              if (numberAccount) {
+                setSelectedAccount(numberAccount)
+              }
+    
+            })
                 
         //Este useEffect es para ordenar el Dropdown para seleccionar
         useEffect(() => { 
             if (!currentUser?.email) return;
-                
+
                 const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser?.email));
                 const unsubscripte = onSnapshot(q, (querySnapshot) => {
                     const accountsData = querySnapshot.docs.map(doc => doc.data());
@@ -53,9 +62,15 @@ export default function Dashboard() {
         useEffect(() => {
              const fetchAccount = async () => {
                 if (!currentUser?.email) return;
+                
+                if(numberAccount){
+                    if(numberAccount != selectedAccount){
+                    window.location.href = `/dashboard/${selectedAccount}`
+                    }
+                }
 
                 try{
-                    const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", selectedAccount))
+                    const q = query(collection(db, "ACCOUNTS"), where("owners", "array-contains", currentUser.email), where("number", "==", parseInt(selectedAccount)))
                     const querySnapshot = await getDocs(q);
                     const accountSelected = querySnapshot.docs.map(doc => doc.data());
                     

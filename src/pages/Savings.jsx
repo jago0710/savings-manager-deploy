@@ -275,8 +275,12 @@ const addMovementToFirestore = async (newMovement) => {
     <section className="sm:grid md:flex overflow-auto bg-gray-50">
       <Navbar page="MOVIMIENTOS"/>
       <div className="flex flex-col w-full mt-16 md:mt-0 md:ml-67 overflow-auto">
-        <div className="hidden w-full py-5 px-5 md:flex gap-1 text-xl border-b bg-white border-b-gray-200">
+        <div className="hidden w-full py-5 px-5 md:flex justify-between gap-1 text-xl border-b bg-white border-b-gray-200">
           <h1 className="font-bold font-sans">MOVIMIENTOS</h1>
+          <div className="flex flex-row gap-2">
+            <a className="bg-gray-500 text-white text-lg py-1 px-2 rounded-md" href={`/loans/${count}`}>Ver prestamos</a>
+            <a className="bg-gray-500 text-white text-lg py-1 px-2 rounded-md" href={`/dashboard/${count}`}>Ver dashboard</a>
+          </div>
         </div>
         <div className="flex flex-col gap-2 lg:gap-2 w-full p-2 md:p-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-2">
