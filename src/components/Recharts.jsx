@@ -50,8 +50,8 @@ export function Recharts() {
             <YAxis tick={{fontSize : "12px"}} />
             <Tooltip />
             <Legend wrapperStyle={{ fontSize: '11px', justifyContent: 'center'}} />
-            <Bar dataKey="Beneficios" fill="#3b82f6" />
-            <Bar dataKey="Ingresos" fill="#22c55e" />
+            <Bar dataKey="Beneficios" fill="#22c55e" />
+            <Bar dataKey="Ingresos" fill="#3b82f6" />
             <Bar dataKey="Prestamos" fill="#F99910" />
             <Bar dataKey="Retiros" fill="#ef4444" />
         </BarChart>
