@@ -16,6 +16,7 @@ import ButtonTop from "../components/ButtonTop.jsx";
 import { Toast } from "primereact/toast";
 import { CalendarDays, Euro } from "lucide-react";
 import { useParams } from "react-router";
+import { Checkbox } from "primereact/checkbox";
         
         
         
@@ -74,7 +75,7 @@ export default function Loans() {
             }
 
             
-        }, [currentUser?.email, refresh ,selectedAccount, viewAllloans])
+        }, [currentUser?.email, refresh ,selectedAccount])
 
         useEffect(() => {
             
@@ -336,7 +337,7 @@ export default function Loans() {
                 <Navbar page="PRESTAMOS"></Navbar>
                       <Toast position={screen.width < 500 ? "top-center" : "top-right"} ref={toast} />
                 <div className="md:ml-67 bg-gray-50 w-full h-[calc(100vh-74px)]">
-                    {/**Header descktop */}
+                    {/**Header descktop  con dropdown incluido */}
                     <Header dropdownData={accounts} dropdown title="PRESTAMOS" dropValue={selectedAccount} change={setSelectedAccount}></Header>
                     
                     {/**Header para móvil */}
@@ -346,13 +347,14 @@ export default function Loans() {
                         placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
                     </div>
 
-                    { screen.width > 550 
+                    { screen.width > 760
                     ? <div hidden={loans[0]?.loans?.length > 0 && selectedAccount ? false : true} className="m-2 md:my-2 bg-white border border-gray-200 rounded-md p-2 flex flex-col gap-3 text-xl md:text-3xl text-gray-500">
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
-                            value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}>
+                            value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}
+                            isDataSelectable={false}>
                                 {!viewAllloans 
-                                ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple" exportable={false}></Column> 
+                                ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple"></Column> 
                                 : <Column pt={{root : {className : 'w-3'}}} header={allHeader}></Column>}
                                 <Column field="user" header="Usuario" body={userRow} sortable></Column>
                                 <Column field="date" header="Fecha" sortable></Column>

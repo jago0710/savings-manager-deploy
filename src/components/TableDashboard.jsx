@@ -1,7 +1,8 @@
 import { Knob } from "primereact/knob";
 import { useEffect, useState } from "react";
+import { Recharts } from "./Recharts";
 
-export default function TableDashboard({ hidden, totalCurrent, totalTarget, TotalIncome, totalRatreats, totalLoans, totalBenefits}) {
+export default function TableDashboard({ hidden, totalCurrent, totalTarget, TotalIncome, totalRatreats, totalLoans, totalBenefits, chartData}) {
 
     const [porcentajeOb, setporcentajeOb] = useState(); //Porcentaje del objetivo a llegar
 
@@ -10,7 +11,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
     
     return(
         <div className="md:mt-0  p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={hidden}>
-                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
+                <div className="h-30 md:h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
                     <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
                         <div>
                             <p className="text-xl sm:text-3xl">
@@ -19,7 +20,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                                     currency: "EUR",
                                     }).format(parseFloat(totalCurrent))}
                             </p> {/**Total actual */}
-                            <p>Actual</p>
+                            <p>Saldo</p>
                         </div>
                         <Knob value={porcentaje} onChange={(e) => setValue(e?.value)} valueTemplate={porcentaje + "%"} />
                         <div>
@@ -33,9 +34,13 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                         </div>
                     </div>
                 </div>
-                <div className="h-40 rounded-md border border-gray-200 flex flex-col-reverse md:flex-row justify-around items-center bg-white">
+                <div className="col-span-2 md:col-span-4 bg-white border border-gray-200 rounded-md p-2">
+                        <p className="text-center py-2 text-gray-600">Registros mensuales</p>
+                        <Recharts />
+                    </div>
+                <div className="h-35 md:h-40 rounded-md border border-gray-200 flex flex-col-reverse md:flex-row justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <span className="pi pi-arrow-up-right" style={{ fontSize: '1.5rem', color : "#0384fc" }}></span>
+                        <span className="pi pi-arrow-up-right" style={{ fontSize: '1.5rem', color : "#0374ff" }}></span>
                         <p className="text-2xl sm:text-3xl">
                         {Intl.NumberFormat("de-DE", {
                             style: "currency",
@@ -45,7 +50,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                         <p className="text-xl">Ingresos</p>
                     </div>
                 </div>
-                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-35 md:h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
                         <span className="pi pi-arrow-down-right" style={{ fontSize: '1.5rem', color : "red"}}></span>
                         <p className="text-2xl sm:text-3xl">
@@ -57,9 +62,9 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                         <p className="text-xl">Retiros</p>
                     </div>
                 </div>
-                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-35 md:h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
-                        <span className="pi pi-building-columns" style={{ fontSize: '1.5rem', color : "#ffa600"}}></span>
+                        <span className="pi pi-building-columns" style={{ fontSize: '1.5rem', color : "#F98510"}}></span>
                         <p className="text-2xl sm:text-3xl">
                         {Intl.NumberFormat("de-DE", {
                             style: "currency",
@@ -69,7 +74,7 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                         <p className="text-xl">Prestamos</p>
                     </div>
                 </div>
-                <div className="h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
+                <div className="h-35 md:h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white">
                     <div className="w-full text-center flex flex-col gap-2 justify-center items-center">
                         <span className="pi pi-chart-line" style={{ fontSize: '1.5rem', color : "#069c0b"}}></span>
                         <p className="text-2xl sm:text-3xl">

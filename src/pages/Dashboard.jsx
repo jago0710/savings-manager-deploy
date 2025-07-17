@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import TableDashboard from "../components/TableDashboard";
 import { Toast } from "primereact/toast";
 import { useParams } from "react-router";
+import { Recharts } from "../components/Recharts";
 
 export default function Dashboard() {
     const currentUser = useUser();
@@ -132,6 +133,12 @@ export default function Dashboard() {
 
     setBeneficios(total)
  }
+
+ const getChartData = () => {
+    console.log("Creamos el array de objetos para renderizar el calculo mensual");
+    
+ }
+
   return (
     <>
       <div className="sm:grid md:flex">
@@ -143,8 +150,10 @@ export default function Dashboard() {
                 options={accounts} optionLabel="label" placeholder="Selecciona una cuenta" className="w-full md:w-14rem" />
             </div>
             
-            <TableDashboard hidden={!selectedAccount} totalCurrent={total} totalTarget={objetivo} TotalIncome={ingresos} totalRatreats={retiros} totalLoans={prestamos} totalBenefits={beneficios} ></TableDashboard>
-
+            <TableDashboard 
+            hidden={!selectedAccount} totalCurrent={total} totalTarget={objetivo} TotalIncome={ingresos} 
+            totalRatreats={retiros} totalLoans={prestamos} totalBenefits={beneficios} chartData={getChartData}>
+            </TableDashboard>
                 {/** Abajo cuando este en mantenimiento */}
                 <div hidden={!selectedAccount ? false : true} className="m-2 md:mt-2 mt-2 bg-white h-[calc(100%-141px)] md:h-[calc(100vh-89px)] border border-gray-200 rounded-md p-5 flex gap-3 justify-center items-center text-xl md:text-3xl text-gray-500">
                     <h1 hidden={selectedAccount ? true : false}>Selecciona una cuenta <span className="pi pi-search" style={screen.width > 500 ? {fontSize: '1.5rem'} : {fontSize: '1rem'}}></span></h1>

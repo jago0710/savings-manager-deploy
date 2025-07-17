@@ -13,7 +13,7 @@ console.log("=> ", user);
                 <Navbar page="INICIO"/>
                 <div className="md:ml-67 bg-gray-50 w-full h-[calc(100vh-74px)]">
                   <Header title="INICIO"></Header>
-                  <div className="mt-15 bg-gray-200 md:mt-0 w-full h-screen flex justify-center items-center">
+                  <div className="mt-18 bg-white w-[calc(100% - 4px)] md:mt-2 m-2 h-screen border border-gray-200 rounded-md flex justify-center items-center">
                     <h1 className="text-3xl md:text-4xl">EN MANTENIMIENTO...</h1>
                   </div>
                 </div>
