@@ -38,27 +38,6 @@ const data = [
     Prestamos: 2050,
     Beneficios: 1200,
   },
-  {
-    name: "Jun",
-    Ingresos: 4800,
-    Retiros: 3000,
-    Prestamos: 2050,
-    Beneficios: 1800,
-  },
-  {
-    name: "Jul",
-    Ingresos: 4800,
-    Retiros: 3000,
-    Prestamos: 2050,
-    Beneficios: 1800,
-  },
-  {
-    name: "Ago",
-    Ingresos: 4800,
-    Retiros: 3000,
-    Prestamos: 2050,
-    Beneficios: 1800,
-  },
 ]
 
 export function Recharts() {
