@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, where, query, getDocs} from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA6C1M3iaDxIzwtdGK9mjDlL2G0FacGfC8",
-    authDomain: "savingsmanager-64a27.firebaseapp.com",
-    projectId: "savingsmanager-64a27",
-    storageBucket: "savingsmanager-64a27.firebasestorage.app", // <--- Pasar a Enviroments
-    messagingSenderId: "897149478707",
-    appId: "1:897149478707:web:89420aa72712783b7d4046",
-    measurementId: "G-GR5PYF0VJE"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET, // <--- Pasar a Enviroments
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 }
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
