@@ -6,36 +6,37 @@ export default function PresentationCards (){
     return(
         <>
             <Accordion activeIndex={0}>
-                <AccordionTab header="Introducción">
-                    <p>Para poder saber como funciona la aplicacío puedes consultar una guía por cada sección de la aplicación.</p>
-                    <p className='mt-2'>En estas secciones se explica el funcionamiento y conceptos que se tienen que tener en cuenta para poder evitar errores a futuro</p>
-                    <p className='mt-2'></p>
-                </AccordionTab>
                 <AccordionTab header="Guía de cuentas">
-                    <section className='m-0 flex flex-col gap-7'>
-                        <div className='flex flex-col md:flex-row gap-5'>
-                            <img src="./assets/accounts/NewCard.png" className='w-60 border border-gray-200 rounded-md' alt="new-card" />  
-                            <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>    
+                    <section className='m-0 flex flex-col gap-10'>
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 1</h1> 
+                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                            </div>    
                         </div>
-                        <div className='flex flex-col-reverse md:flex-row gap-3'>
-                            <div>
-                                <p>Una vez presionado nos saldrá la siguiente ventana por la derecha, en esta ventana tendremos que rellenar los datos con los que queremos crear esta nueva tarjeta, como lo siguientes campos:</p>
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/accounts/FormNewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="form-new-card" />
+                            <div className='flex flex-col justify-center'>
+                                <h1 className='text-xl font-semibold'>Paso 2</h1>
+                                <p className='text-[15px]'>Una vez presionado nos saldrá la siguiente ventana por la derecha, en esta ventana tendremos que rellenar los datos con los que queremos crear esta nueva tarjeta, como lo siguientes campos:</p>
 
-                                <h2 className='mt-5 mb-1.5 text-lg font-semibold text-black'>Selector de color</h2>
-                                <p>El <b>selector de color</b> es para que se pueda elegir a gusto el color de la card y asi tenerlo personalizado</p>
-                                <h2 className='mt-5 mb-1.5 text-lg font-semibold text-black'>Campo descripción</h2>
-                                <p>El campo <b>descripción</b> se debe de poner un nombre de la tarjeta para el tipo de ahorro por ejemplo <b>Viajes</b>, 
-                                poniendo esto es más facil de identificarlo entre las tarjetas</p>
-                                <h2 className='mt-5 mb-1.5 text-lg font-semibold text-black'>Campo objetivo</h2>
-                                <p>En el campo objetivo se ingresa la cantidad de dinero que tienes como objetivo en tus ahorros y asi poder mostrar en tiempo real 
-                                   el porcentaje que te falta para llegar a este objetivo puesto, se puede visualizar en dashboard</p>
-                                 <h2 className='mt-5 mb-1.5 text-lg font-semibold text-black'>Campo miembros</h2>
-                                 <p>Este campo es uno de los más importantes, ya que se tiene que poner</p>
+                                <h2 className='mt-5 mb-1.5 text-[17px] font-semibold text-black'>Selector de color</h2>
+                                <p className='text-[15px]'>El <b>selector de color</b> es para poder personalizar el color de nuestras tarjetas.</p>
+                                <h2 className='mt-5 mb-1.5 text-[17px] font-semibold text-black'>Campo descripción</h2>
+                                <p className='text-[15px]'>En el campo <b>descripción</b> se debe de poner el nombre de la tarjeta para el tipo de ahorro, por ejemplo <b>"Viajes"</b>, 
+                                poniendo esto es más facil de identificarlo entre las tarjetas.</p>
+                                <h2 className='mt-5 mb-1.5 text-[17px] font-semibold text-black'>Campo objetivo</h2>
+                                <p className='text-[15px]'>En el campo objetivo se ingresa la cantidad de dinero que tienes como objetivo en tus ahorros y asi poder mostrar en tiempo real 
+                                   el porcentaje que te falta para llegar a este objetivo puesto, se puede visualizar en dashboard.</p>
+                                 <h2 className='mt-5 mb-1.5 text-[17px] font-semibold text-black'>Campo miembros</h2>
+                                 <p className='text-[15px]'>Este campo es uno de los más importantes, ya que se tiene que poner el correo exacto de los miembro de la cuenta que se creará y al final teclear el botón <b>Enter</b>, para así agregarlo correctamente.</p>
+                                 <br />
+                                 <p className='text-[15px]'>Para finalizar presionamos <b>"Crear nueva tarjeta"</b> y nos tendrá que salir como resultado una tarjeta creada en nuestro tablero de tarjetas.</p>
                             </div>
-                            <img src="./assets/accounts/FormNewCard.png" className='w-60 border border-gray-200 rounded-md' alt="form-new-card" />
                         </div>
-                            <div>
-                                <img src="./assets/accounts/CreateCard.png" className='w-120 border border-gray-200 rounded-md' alt="new-card" />
+                            <div className="flex flex-row gap-2">
+                                <img src="./assets/accounts/CreateCard.png" className="w-full md:w-150 border object-cover border-gray-200 rounded-md" alt="new-card" />
                             </div>
                     </section>
                 </AccordionTab>
