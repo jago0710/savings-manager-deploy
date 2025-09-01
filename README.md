@@ -1,4 +1,4 @@
-# Savings Manager
+# Savings Bank
 <img src="https://github.com/user-attachments/assets/2380f43c-7257-4ee2-8c8f-f042c3380b4b" width="700"/>
 
 ## Descripción
