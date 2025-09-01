@@ -13,7 +13,33 @@ También se pueden realizar prestamos en la cuenta compartida, con esto quiero d
 ## ¿Como descargar el proyecto?
 
 Para poder descargarlo tendremos que poner en nuestro CLI el comando:
-
 ```
 git clone https://github.com/jago0710/savings-manager-deploy.git
 ```
+Para entrar en el proyecto utilizamos el siguiente comando:
+```
+cd savings-manager-deploy
+```
+Para abrir en nuestro VS Code ejecutamos el siguiente comando:
+```
+code .
+```
+
+## ¿Como ejecutar el proyecto?
+
+**Antes de ejecutar el proyecto tendremos que descargar la dependencias para que pueda funcionar correctamente.**
+
+Para descargar las dependencias ejecutaremos en la terminal en el VS Code lo siguiente:
+
+```
+npm install
+```
+
+Una vez de descarguen todas las dependencias podremos ejecutar el proyecto con el siguiente comando:
+
+```
+npm run dev
+```
+
+> [!IMPORTANT]
+> Para que el proyecto te funcione también tienes que enlazar tu firebase con tus credenciales en las variables de entorno.
