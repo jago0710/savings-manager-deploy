@@ -29,6 +29,9 @@ code .
 
 ## ¿Como ejecutar el proyecto?
 
+> [!IMPORTANT]
+> Para que el proyecto te funcione también tienes que enlazar tu firebase con tus credenciales en las variables de entorno.
+
 **Antes de ejecutar el proyecto tendremos que descargar la dependencias para que pueda funcionar correctamente.**
 
 Para descargar las dependencias ejecutaremos en la terminal en el VS Code lo siguiente:
@@ -43,5 +46,5 @@ Una vez de descarguen todas las dependencias podremos ejecutar el proyecto con e
 npm run dev
 ```
 
-> [!IMPORTANT]
-> Para que el proyecto te funcione también tienes que enlazar tu firebase con tus credenciales en las variables de entorno.
+Nos responderá con un link al que tendremos que presionar para que nos redirija a la aplicación web.
+
