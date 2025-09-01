@@ -2,6 +2,8 @@
 ## Descripción
 El proyecto esta hecho para poder gestionar de mejor manera los ahorros personales o compartidos.
 
+También contamos con un panel en el que se puede ver metricas de las cuentas como los ingresos, retiros, beneficios y prestamos totales, también el porcentaje que llevas y cantidad de dinero para comparar cuan cerca estas de tu objetivo.
+
 * ### Ahorros personales
   Los ahorros personales son más faciles de llevar, ya que son ahorros que se controlan por uno mismo. Con nuestra aplicación web se podrá tener registrado los ingresos y retiros de dinero.
   
