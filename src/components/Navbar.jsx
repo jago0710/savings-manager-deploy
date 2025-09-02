@@ -18,7 +18,7 @@ export default function Navbar({page}) {
     { href: "/loans", label: "Prestamos", icon: HandCoins},
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
-    { href: "/", label: "Cerrar cuenta", icon: LogOut },
+    { href: "/close-session", label: "Cerrar cuenta", icon: LogOut },
   ];
 
 

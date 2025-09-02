@@ -6,6 +6,7 @@ export default function PresentationCards (){
     return(
         <>
             <Accordion activeIndex={0}>
+                {/** GUIA DE CUENTAS */}
                 <AccordionTab header="Guía de cuentas">
                     <section className='m-0 flex flex-col gap-10'>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
@@ -40,11 +41,13 @@ export default function PresentationCards (){
                             </div>
                     </section>
                 </AccordionTab>
+
+                {/** GUIA DE PRESTAMOS */}
                 <AccordionTab header="Guía de prestamos">
                     <section className='m-0 flex flex-col gap-10'>
                         <h1 className='text-xl font-semibold'>¿Como pedir prestamos?</h1>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPedir.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 1</h1> 
                                 <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
@@ -52,7 +55,7 @@ export default function PresentationCards (){
                         </div>
 
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPedir2.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 2</h1> 
                                 <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
@@ -60,21 +63,45 @@ export default function PresentationCards (){
                         </div>
 
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPedir3.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 3</h1> 
+                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                            </div>  
+                        </div>
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPedir4.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 4</h1> 
                                 <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
                             </div>  
                         </div>
 
                         <h1 className='text-xl font-semibold'>¿Como pagar prestamos?</h1>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPagar.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 1</h1> 
                                 <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
                             </div>  
                         </div>
+
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPagar1.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 2</h1> 
+                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                            </div>  
+                        </div>
+
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPagar2.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 3</h1> 
+                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                            </div>  
+                        </div>
+
                     </section>
                 </AccordionTab>
                 <AccordionTab header="Guía de Dashboard">
