@@ -352,9 +352,9 @@ export default function Loans() {
                             <Toolbar pt={{root : {class : 'flex justify-between w-full px-2 pb-5 pt-3 border-b border-b-gray-100'}}} start={getTotal} end={getButtonsOfAction}></Toolbar>
                             <DataTable className="w-full" removableSort selection={selectedLoans} onSelectionChange={!viewAllloans ? (e) => setSelectedLoans(e.value) : false}
                             value={viewAllloans ? loans[0]?.loans.filter(row => row.userEmail != currentUser.email) : loans[0]?.loans.filter(row => row.userEmail == currentUser.email)}
-                            isDataSelectable={false}>
+                            isDataSelectable={false} rowClassName={(data) => data.status == "Pagado" ? 'p-disabled': ''}>
                                 {!viewAllloans 
-                                ? <Column pt={{root : {className : 'w-3'}}} selectionMode="multiple"></Column> 
+                                ? <Column pt={{root : {className : 'w-3'}, headerCell : {className : 'p-disabled'}}}  selectionMode="multiple"></Column> 
                                 : <Column pt={{root : {className : 'w-3'}}} header={allHeader}></Column>}
                                 <Column field="user" header="Usuario" body={userRow} sortable></Column>
                                 <Column field="date" header="Fecha" sortable></Column>
