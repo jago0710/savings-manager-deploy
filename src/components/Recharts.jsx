@@ -38,11 +38,18 @@ const data = [
     Prestamos: 2050,
     Beneficios: 1200,
   },
+  {
+    name: "Jun",
+    Ingresos: 4300,
+    Retiros: 3100,
+    Prestamos: 2050,
+    Beneficios: 1200,
+  },
 ]
 
 export function Recharts() {
   return (
-    <section className="flex justify-center -left-3 relative">
+    <section className="flex justify-center relative">
         <ResponsiveContainer width="100%" height={350}>
         <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
