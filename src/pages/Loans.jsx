@@ -161,8 +161,8 @@ export default function Loans() {
                 <div className="flex gap-2">
                     <Button pt={{label : {className : 'text-sm'}, badge : {class : 'rounded-full text-xs bg-green-200 text-green-600 ml-1 w-4 h-4'}}} label="Pagar" badge={selectedLoans ? selectedLoans.length : false} 
                     severity="success" raised  disabled={!selectedLoans || !selectedLoans.length || viewAllloans} onClick={addloanToFirestore} ></Button>  
-                    <Button hidden icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
-                    severity="secondary" raised text ={viewAllloans ? false : true} onClick={resetValuesForViewAlls} ></Button>
+                    <Button icon={viewAllloans ? "pi pi-users" : "pi pi-user"} 
+                    severity="secondary" raised text ={viewAllloans ? false : true} onClick={() => setViewAllLoans(!viewAllloans)} ></Button>
                 </div>
             )
           }
