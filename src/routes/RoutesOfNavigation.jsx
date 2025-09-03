@@ -10,6 +10,7 @@ import { useContext } from "react";
 import useUser from "../hook/useUser";
 import Loans from "../pages/Loans";
 import { LogIn } from "lucide-react";
+import Help from "../pages/Help";
 
 export default function RoutesOfNavigation(){
 
@@ -36,6 +37,7 @@ if (isLogin) {
                     <Route path="dashboard" element={<Dashboard/>} />
                     <Route path="dashboard/:numberAccount" element={<Dashboard/>}/>
                     <Route path="settings" element={<Settings/>}/>
+                    <Route path="help" element={<Help/>}/>
                 </Routes>  
             )
         } else {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, Settings, Menu, LayoutDashboard, LogOut, WalletCardsIcon, HandCoins} from "lucide-react";
+import { Home, Settings, Menu, LayoutDashboard, LogOut, WalletCardsIcon, HandCoins, HelpCircleIcon} from "lucide-react";
 import closeSession from "./CloseSession";
 import useUser from "../hook/useUser";
 import { Chip } from "primereact/chip";
@@ -18,6 +18,7 @@ export default function Navbar({page}) {
     { href: "/loans", label: "Prestamos", icon: HandCoins},
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/settings", label: "Configuración", icon: Settings },
+    { href: "/help", label: "Ayuda", icon: HelpCircleIcon },
     { href: "/close-session", label: "Cerrar cuenta", icon: LogOut },
   ];
 
