@@ -50,7 +50,7 @@ export default function PresentationCards (){
                             <img src="./assets/loans/PrestamosPedir.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 1</h1> 
-                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                                <p>Para poder pedir un prestamo de nuestra cuenta de ahorro, lo primero que tendremos que hacer es ir a nuestra cuenta y hacer un movimiento en el apartado de acciones rápidas y seleccionamos <b>Retirar</b> en el desplegable.</p>
                             </div>  
                         </div>
 
@@ -58,15 +58,18 @@ export default function PresentationCards (){
                             <img src="./assets/loans/PrestamosPedir2.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 2</h1> 
-                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                                <p>Ingresamos la cantidad del movimiento que haremos en nuestro caso un retiro de 50€ y posteriormente presionamos en <b>"Registrar Movimiento"</b></p>
                             </div>  
                         </div>
 
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/loans/PrestamosPedir3.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPedir3.png" className='w-75 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 3</h1> 
-                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                                <p>Nos aparecerá una ventana que nos explicará que tipo de retiro queremos hacer, ya que existen 2 tipos.</p>
+                                <br />
+                                <p><b>Retiro de prestamo: </b>Se hace el retiro de dinero, pero quedas registrado con la cantidad a devolver en el apartado de <b>"Prestamos</b>.</p>
+                                <p><b>Retiro de beneficio:</b>Se hace el retiro para tu beneficio, es decir que no se tiene que devolver el dinero.</p>
                             </div>  
                         </div>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
