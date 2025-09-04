@@ -1,4 +1,20 @@
 @import "tailwindcss";
 @plugin "@midudev/tailwind-animations";
 @import 'primeicons/primeicons.css';
-        
+
+
+@keyframes welcome-animation {
+    0% {
+        color: rgb(230, 211, 41);
+    }
+    50% {
+        color: rgb(36, 185, 223);
+    }
+    100%{
+        color: rgb(255, 0, 98);
+    }
+}
+
+.welcome{
+    animation: welcome-animation 1.8s infinite;
+}
