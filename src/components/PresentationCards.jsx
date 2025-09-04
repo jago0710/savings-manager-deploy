@@ -13,7 +13,7 @@ export default function PresentationCards (){
                             <img src="./assets/accounts/NewCard.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 1</h1> 
-                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga un formulario para crear la nueva tarjeta.</p>
                             </div>    
                         </div>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
@@ -63,24 +63,56 @@ export default function PresentationCards (){
                         </div>
 
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
-                            <img src="./assets/loans/PrestamosPedir3.png" className='w-75 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <img src="./assets/loans/PrestamosPedir3.png" className='h-30 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
-                                <h1 className='text-xl font-semibold'>Paso 3</h1> 
+                                <h1 className='text-xl font-semibold'>Paso 3</h1>
                                 <p>Nos aparecerá una ventana que nos explicará que tipo de retiro queremos hacer, ya que existen 2 tipos.</p>
                                 <br />
                                 <p><b>Retiro de prestamo: </b>Se hace el retiro de dinero, pero quedas registrado con la cantidad a devolver en el apartado de <b>"Prestamos</b>.</p>
                                 <p><b>Retiro de beneficio:</b>Se hace el retiro para tu beneficio, es decir que no se tiene que devolver el dinero.</p>
+                                <br />
+                                <p>En nuestro caso presionamos <b>"Prestamo"</b>.</p>
                             </div>  
                         </div>
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
                             <img src="./assets/loans/PrestamosPedir4.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
                                 <h1 className='text-xl font-semibold'>Paso 4</h1> 
-                                <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
+                                <p>Para poder saber si realmente se hizo el retiro podremos verificarlo en el panel de movimientos y si presionamos encima nos mostrará todos los detalles.</p>
                             </div>  
                         </div>
 
                         <h1 className='text-xl font-semibold'>¿Como pagar prestamos?</h1>
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPagar.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 1</h1> 
+                                <p>Nos dirigimos al apartado de <b>"Prestamos"</b> y seleccionamos la cuenta de la que se hizo el prestamo, nos saldrán los prestamos que tenemos, tanto pagados como los pendientes.</p>
+                                <br />
+                                <p>Seleccionamos los prestamos que queremos pagar y nos hará una suma de la cantidad total a pagar, para pagar presionamos el botón de <b>"Pagar"</b> </p>
+                            </div>
+                        </div>
+
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPagar1.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 2</h1> 
+                                <p>Una vez pagado se nos cambiará el estado automáticamente de <b>Pendiente a Pagado</b> y verás que los prestamos pagados ya no son presinables.</p>
+                            </div>  
+                        </div>
+
+                        <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
+                            <img src="./assets/loans/PrestamosPagar2.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
+                            <div className='flex flex-col justify-center'> 
+                                <h1 className='text-xl font-semibold'>Paso 3</h1> 
+                                <p>Otra forma de verificar si realmente esta bien hecho el pagamento, es de ir al <b>panel de movimientos</b> y verifiar que se hizo un ingreso con la cantidad y la <b>descripción Pago</b></p>
+                            </div>  
+                        </div>
+
+                    </section>
+                </AccordionTab>
+                <AccordionTab header="Guía de Dashboard">
+                    <section id='guia-dashboard' className="m-0">
                         <div className='flex flex-col-reverse md:flex-row gap-7 border-b border-gray-200 pb-10'>
                             <img src="./assets/loans/PrestamosPagar.png" className='w-70 border object-cover border-gray-200 rounded-md' alt="new-card" />  
                             <div className='flex flex-col justify-center'> 
@@ -104,15 +136,6 @@ export default function PresentationCards (){
                                 <p>Una vez nos encontremos en la sección de <b>Cuentas</b> podremos ver una tarjeta que pone <b>Crear nueva tarjeta</b> presionamos la tarjeta para que nos salga la ventana donde se crean las tarjetas.</p>
                             </div>  
                         </div>
-
-                    </section>
-                </AccordionTab>
-                <AccordionTab header="Guía de Dashboard">
-                    <section id='guia-dashboard' className="m-0">
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti
-                        quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt
-                        mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-                        Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
                     </section>
                 </AccordionTab>
             </Accordion>
