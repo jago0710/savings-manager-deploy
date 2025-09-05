@@ -22,7 +22,7 @@ console.log("=> ", user);
                     <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 ">
                       <h1>Acciones Rápidas</h1>
                       {/** COMPONENTE */}
-                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(186, 3, 0, 1)" backgroundColor="rgba(186, 3, 0, 0.12)"/>
+                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(238, 32, 32, 0.8)" backgroundColor="rgba(238, 32, 32, 0.04)"/>
                       <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={PiggyBank}/>
                       <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing}/>
                       {/** FIN DE COMPONENTE */}
