@@ -1,5 +1,7 @@
+import { ChartColumnIncreasing, CreditCard, PiggyBank } from "lucide-react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import RedirectButton from "../components/RedirectButton";
 import useUser from "../hook/useUser"
 
 export default function Home(){
@@ -17,20 +19,15 @@ console.log("=> ", user);
                     <p className="text-2xl" >Bienvenido a <b className="text-red-700 welcome"><a href="/home"><span className="mr-0.5">/</span>Savings Bank</a></b></p>
                   </div>
                   <div className="flex flex-col sm:flex-row w-[calc(100% - 4px)] md:mt-2 m-2 gap-2">
-                    <div className="mt-0 bg-white w-full h-50 border border-gray-200 rounded-md flex justify-between p-2 ">
+                    <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 ">
+                      <h1>Acciones Rápidas</h1>
                       {/** COMPONENTE */}
-                      <div className="border h-15 w-full rounded-md border-gray-100 hover:bg-blue-100 flex flex-row hover:cursor-crosshair">
-                        <div className="p-2 w-15 flex justify-center items-center">
-                          icon
-                        </div>
-                        <div className="flex flex-col justify-center">
-                          <h1>Title</h1>
-                          <p>Description card</p>
-                        </div>
-                      </div>
+                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(186, 3, 0, 1)" backgroundColor="rgba(186, 3, 0, 0.12)"/>
+                      <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={PiggyBank}/>
+                      <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing}/>
                       {/** FIN DE COMPONENTE */}
                     </div>
-                    <div className="mt-0 bg-white w-full h-50 border border-gray-200 rounded-md flex justify-between p-2 ">
+                    <div className="mt-0 bg-white w-full border border-gray-200 rounded-md flex justify-between p-2 ">
                       
                     </div>
                   </div>
