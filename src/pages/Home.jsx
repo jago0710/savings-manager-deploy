@@ -28,9 +28,9 @@ console.log("=> ", user);
                       {/** FIN DE COMPONENTE */}
                     </div>
                     <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 ">
-                      <h1 className="text-xl mb-4 font-semibold">Acciones Rápidas</h1>
+                      <h1 className="text-xl mb-4 font-semibold">Funciones adicionales</h1>
 
-                      <RedirectButton href="/accounts" title="Configuración" description="Personaliza tu experiencia" icon={Settings} BorderColor="rgba(238, 32, 32, 0.8)" backgroundColor="rgba(238, 32, 32, 0.04)"/>
+                      <RedirectButton href="/accounts" title="Configuración" description="Personaliza tu experiencia" icon={Settings} />
                       <RedirectButton href="/loans" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle}/>
                       <RedirectButton href="/dashboard" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus}/>
                     </div>
