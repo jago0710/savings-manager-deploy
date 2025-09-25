@@ -14,12 +14,15 @@ import { InputText } from 'primereact/inputtext';
 import { Toast } from "primereact/toast";
 import { InputNumber } from "primereact/inputnumber";
 import Header from "../components/Header";
+import { useParams } from "react-router";
 
 
 
 
 export default function Accounts(){
     const currentUser = useUser();
+
+    const {newCard} = useParams()
 
     const toast = useRef(null);
     const [showForm, setShowForm ] = useState(false);
@@ -42,6 +45,8 @@ export default function Accounts(){
             const querySnapshot = await getDocs(q);
             const cardsData = querySnapshot.docs.map(doc => doc.data());
             setCards(cardsData);
+
+            setShowForm(newCard)
             } catch (e){
                 console.error("Error fechings accounts", e);
                 
@@ -171,7 +176,7 @@ export default function Accounts(){
                         <div className={showForm ? "animate-slide-in-right flex flex-col top-0 z-2 right-0 border fixed w-full sm:w-95 h-full bg-white border-gray-300 shadow-lg  rounded-l-xl" : "hidden"}>
                             <div className="flex justify-between items-center border-b border-gray-300 p-5">
                                 <h2 className="text-nowrap text-xl">Crear nueva tarjeta</h2>
-                                <button className="duration-500 hover:rotate-90"  onClick={() => setShowForm(!showForm)}>
+                                <button className="duration-500 hover:rotate-90"  onClick={newCard ? () =>window.location.replace("/accounts") : () => setShowForm(!showForm)}>
                                     <LucideX />
                                 </button>
                             </div>

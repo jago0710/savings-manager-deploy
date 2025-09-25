@@ -32,6 +32,7 @@ if (isLogin) {
                     <Route path="savings" element={<Savings/>} />
                     <Route path="savings/:count" element={<Savings/>} />
                     <Route path="accounts" element={<Accounts/>}/>
+                    <Route path="accounts/:newCard" element={<Accounts/>}/>
                     <Route path="loans" element={<Loans/>}/>
                     <Route path="loans/:numberAccount" element={<Loans/>}/>
                     <Route path="dashboard" element={<Dashboard/>} />
