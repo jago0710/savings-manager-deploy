@@ -29,7 +29,7 @@ console.log("=> ", user);
 
                       <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
                       <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)" />
-                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
+                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación" icon={HelpCircle} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
 
                     </div>
                   </div>
