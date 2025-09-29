@@ -27,9 +27,9 @@ console.log("=> ", user);
                     <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 sm:mt-16 md:mt-0">
                       <h1 className="text-xl mb-4 font-semibold">Funciones adicionales</h1>
 
-                      <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} BorderColor="rgba(213, 213, 213, 0.8)" backgroundColor="rgba(235, 235, 235, 0.14)" />
-                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle} BorderColor="rgba(4, 87, 246, 0.8)" backgroundColor="rgba(4, 87, 246, 0.08)"/>
-                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} BorderColor="rgba(4, 87, 246, 0.8)" backgroundColor="rgba(4, 87, 246, 0.08)"/>
+                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)"/>
+                      <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)" />
+                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)"/>
 
                     </div>
                   </div>
