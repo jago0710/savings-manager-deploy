@@ -27,7 +27,7 @@ console.log("=> ", user);
                     <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 sm:mt-16 md:mt-0">
                       <h1 className="text-xl mb-4 font-semibold">Funciones adicionales</h1>
 
-                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
+                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueva cuenta" icon={Plus} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
                       <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)" />
                       <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación" icon={HelpCircle} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
 
