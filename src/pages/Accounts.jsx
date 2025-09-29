@@ -34,6 +34,9 @@ export default function Accounts(){
     const [descriptionCard, setDescriptionCard] = useState(null);
     const [target, setTarget] = useState(1000);
     
+    console.log(showForm);
+    console.log(newCard);
+    
 
     useEffect(() => {
         setColorCard(`${colorRGB.r},${colorRGB.g},${colorRGB.b}`)
@@ -46,7 +49,9 @@ export default function Accounts(){
             const cardsData = querySnapshot.docs.map(doc => doc.data());
             setCards(cardsData);
 
-            setShowForm(newCard)
+            if (newCard != undefined) {
+                setShowForm(newCard)
+            }
             } catch (e){
                 console.error("Error fechings accounts", e);
                 
