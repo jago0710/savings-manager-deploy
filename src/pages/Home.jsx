@@ -20,7 +20,7 @@ console.log("=> ", user);
                       <h1 className="text-xl mb-4 font-semibold">Acciones Rápidas</h1>
                       
                       <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Realizar y ver movimientos" icon={CreditCard} BorderColor="rgba(0, 158, 25, 0.5)" backgroundColor="rgba(0, 224, 35, 0.03)" iconColor="rgba(0, 158, 35, 0.8)"/>
-                      <RedirectButton href="/loans" title="Ver Préstamos" description="Ver estado de prestamos" icon={HandCoins} BorderColor="rgba(255, 149, 6, 0.5)" backgroundColor="rgba(255, 149, 6, 0.03)" iconColor="rgba(255, 149, 6, 0.8)"/>
+                      <RedirectButton href="/loans" title="Ver Préstamos" description="Ver estado de prestamos" icon={HandCoins} BorderColor="rgba(247, 89, 6, 0.5)" backgroundColor="rgba(247, 89, 6, 0.03)" iconColor="rgba(247, 89, 6, 0.8)"/>
                       <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Ver análisis financiero" icon={ChartColumnIncreasing} BorderColor="rgba(4, 87, 246, 0.5)" backgroundColor="rgba(4, 87, 246, 0.03)" iconColor="rgba(4, 87, 246, 0.8)"/>
                      
                     </div>
