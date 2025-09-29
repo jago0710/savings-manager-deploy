@@ -34,9 +34,6 @@ export default function Accounts(){
     const [descriptionCard, setDescriptionCard] = useState(null);
     const [target, setTarget] = useState(1000);
     
-    console.log(showForm);
-    console.log(newCard);
-    
 
     useEffect(() => {
         setColorCard(`${colorRGB.r},${colorRGB.g},${colorRGB.b}`)
