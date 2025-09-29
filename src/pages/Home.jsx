@@ -16,15 +16,15 @@ console.log("=> ", user);
                 <div className="md:ml-67 bg-gray-50 w-full h-[calc(100vh-74px)]">
                   <Header title="INICIO"></Header>
                   <div className="flex flex-col sm:flex-row w-[calc(100% - 4px)] md:mt-2 m-2 gap-2">
-                    <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 ">
+                    <div className="md:mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 mt-16">
                       <h1 className="text-xl mb-4 font-semibold">Acciones Rápidas</h1>
                       
-                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(0, 158, 25, 0.5)" backgroundColor="rgba(0, 224, 35, 0.08)"/>
-                      <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={HandCoins} BorderColor="rgba(255, 149, 6, 0.8)" backgroundColor="rgba(255, 149, 6, 0.09)"/>
-                      <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing} BorderColor="rgba(4, 87, 246, 0.8)" backgroundColor="rgba(4, 87, 246, 0.08)"/>
+                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(0, 158, 25, 0.5)" backgroundColor="rgba(0, 224, 35, 0.03)"/>
+                      <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={HandCoins} BorderColor="rgba(255, 149, 6, 0.5)" backgroundColor="rgba(255, 149, 6, 0.03)"/>
+                      <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing} BorderColor="rgba(4, 87, 246, 0.5)" backgroundColor="rgba(4, 87, 246, 0.03)"/>
                      
                     </div>
-                    <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 ">
+                    <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 sm:mt-16 md:mt-0">
                       <h1 className="text-xl mb-4 font-semibold">Funciones adicionales</h1>
 
                       <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} BorderColor="rgba(213, 213, 213, 0.8)" backgroundColor="rgba(235, 235, 235, 0.14)" />
