@@ -19,17 +19,17 @@ console.log("=> ", user);
                     <div className="md:mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 mt-16">
                       <h1 className="text-xl mb-4 font-semibold">Acciones Rápidas</h1>
                       
-                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(0, 158, 25, 0.5)" backgroundColor="rgba(0, 224, 35, 0.03)"/>
-                      <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={HandCoins} BorderColor="rgba(255, 149, 6, 0.5)" backgroundColor="rgba(255, 149, 6, 0.03)"/>
-                      <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing} BorderColor="rgba(4, 87, 246, 0.5)" backgroundColor="rgba(4, 87, 246, 0.03)"/>
+                      <RedirectButton href="/accounts" title="Gestionar Cuentas" description="Ver y administrar todas tus cuentas" icon={CreditCard} BorderColor="rgba(0, 158, 25, 0.5)" backgroundColor="rgba(0, 224, 35, 0.03)" iconColor="rgba(0, 158, 35, 0.8)"/>
+                      <RedirectButton href="/loans" title="Ver Préstamos" description="Consulta el estado de tus préstamos" icon={HandCoins} BorderColor="rgba(255, 149, 6, 0.5)" backgroundColor="rgba(255, 149, 6, 0.03)" iconColor="rgba(255, 149, 6, 0.8)"/>
+                      <RedirectButton href="/dashboard" title="Ir al Dashboard" description="Análisis y reportes financieros" icon={ChartColumnIncreasing} BorderColor="rgba(4, 87, 246, 0.5)" backgroundColor="rgba(4, 87, 246, 0.03)" iconColor="rgba(4, 87, 246, 0.8)"/>
                      
                     </div>
                     <div className="mt-0 bg-white w-full  border border-gray-200 rounded-md flex flex-col justify-between gap-2 p-5 sm:mt-16 md:mt-0">
                       <h1 className="text-xl mb-4 font-semibold">Funciones adicionales</h1>
 
-                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)"/>
-                      <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)" />
-                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle} BorderColor="rgba(150, 150, 150, 0.7)" backgroundColor="rgba(213, 213, 213, 0.05)"/>
+                      <RedirectButton href="/accounts/true" title="Agregar Nueva Cuenta" description="Crea una nueeva cuenta" icon={Plus} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
+                      <RedirectButton href="/settings" title="Configuración" description="Personaliza tu experiencia" icon={Settings} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)" />
+                      <RedirectButton href="/help" title="Centro de ayuda" description="Soporte y documentación guía" icon={HelpCircle} iconColor="rgba(7, 175, 241, 0.8)" BorderColor="rgba(7, 175, 241, 0.5)" backgroundColor="rgba(7, 175, 241, 0.03)"/>
 
                     </div>
                   </div>
