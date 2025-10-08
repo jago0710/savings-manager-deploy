@@ -11,8 +11,8 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
     
     return(
         <div className="md:mt-0  p-2 grid lg:grid-cols-4 grid-cols-2 gap-2" hidden={hidden}>
-                <div className="h-30 md:h-40 rounded-md border border-gray-200 flex justify-around items-center bg-white col-span-2 md:col-span-4">
-                    <div className="w-full text-center flex flex-row gap-5 justify-center-safe items-center">
+                <div className=" rounded-md border p-3 border-gray-200 flex flex-col justify-around items-center bg-white col-span-2 md:col-span-4">
+                    <div className="w-full text-center flex flex-row gap-5 justify-center items-center">
                         <div>
                             <p className="text-xl sm:text-3xl">
                                 {Intl.NumberFormat("de-DE", {
@@ -28,11 +28,16 @@ export default function TableDashboard({ hidden, totalCurrent, totalTarget, Tota
                             {Intl.NumberFormat("de-DE", {
                                 style: "currency",
                                 currency: "EUR",
-                            }).format(parseFloat(totalTarget))}    
+                            }).format(parseFloat(totalTarget))}
                             </p> {/**Total objetivo */}
                             <p>Objetivo</p>
                         </div>
                     </div>
+                    <p className="text-gray-400 text-center">Falta {Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(parseFloat(totalTarget - totalCurrent))} para tu objetivo</p>
+
                 </div>
                 <div className="col-span-2 md:col-span-4 bg-white border border-gray-200 rounded-md p-2">
                         <p className="text-center py-2 text-gray-600">Registros mensuales</p>
