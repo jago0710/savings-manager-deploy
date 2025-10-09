@@ -15,6 +15,8 @@ import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import ButtonTop from "../components/ButtonTop.jsx";
 import { ArrowUpRight, HandCoins, Handshake, PiggyBank, ArrowDownLeft, CalendarDays, FileText, DollarSign, Euro, TrendingUp, TrendingDown } from "lucide-react";
 import { Tag } from "primereact/tag"
+import CardBank from "../components/CardBank.jsx";
+import CardNew from "../components/CardNew.jsx";
         
          
 
@@ -294,7 +296,7 @@ const addMovementToFirestore = async (newMovement) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-2">
           <div className="border border-gray-300 rounded-lg p-4 flex flex-col gap-2 bg-white">
             <p className="font-bold text-2xl">Resumen de la cuenta</p>
-            <b className="font-bold text-3xl">
+            {/**<b className="font-bold text-3xl">
               Saldo:{" "}
               {Intl.NumberFormat("de-DE", {
                 style: "currency",
@@ -303,7 +305,13 @@ const addMovementToFirestore = async (newMovement) => {
                 maximumFractionDigits: 2,
               }).format(parseFloat(totalMoney))}
             </b>
-            <p className="text-gray-600">Nº de cuenta: {count}</p>
+            <p className="text-gray-600">Nº de cuenta: {count}</p> */}
+            <CardBank isFromMoviment title={Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(parseFloat(totalMoney))}></CardBank>
           </div>
           {/**ACCIONES RÁPIDAS PAR INGRESAR DINERO O RETIRAR */}
           <div className="border border-gray-300 rounded-lg p-4 flex gap-2 flex-col bg-white">
