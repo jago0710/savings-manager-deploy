@@ -329,7 +329,7 @@ const addMovementToFirestore = async (newMovement) => {
                 </a>
               </li>
               <li>
-                <a href="/loans" className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
+                <a href={"/loans/" + countSavings.number} className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
                   <HandCoins></HandCoins>
                   <p className="text-[10px] text-center">Ver prestamos</p>
                 </a>
