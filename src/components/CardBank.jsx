@@ -47,12 +47,12 @@ export default function CardBank({
         <div className="w-full h-full rounded-xl">
           <div className="relative w-full h-full rounded-[0.85em] border border-transparent">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-[0.6em] shadow-[-1px_-1px_0_#ddd]">
-              <p className={isFromMoviment ? "absolute top-[1.6em] left-[1.0em] text-white text-opacity-60 text-[2.2em] md:text-[2.2em] text-shadow select-none" : "absolute top-[1em] left-[1.2em] text-white text-opacity-60 text-[1.2em] md:text-[1.2em] text-shadow select-none"}>
+              <p className={isFromMoviment ? "absolute top-[1.3em] left-[0.8em] text-white text-opacity-60 text-[2.5em] md:text-[2.7em] text-shadow select-none" : "absolute top-[1em] left-[1.2em] text-white text-opacity-60 text-[1.2em] md:text-[1.2em] text-shadow select-none"}>
                 <b className="opacity-80 mr-1" hidden={isFromMoviment ? true : false}>/</b>{title}
               </p>
-              <div className={isFromMoviment ? "select-none absolute top-[33px] md:top-[33px] left-[2.2em] md:left-[2.2rem] text-[1.1em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-15" : "select-none absolute top-[120px] md:top-[120px] left-[1.4em] md:left-[1.4rem] text-[1.1em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-2"}>
-                <p>{description == null ? "--:--" : isFromMoviment ? "Saldo actual" : description}</p>
-                <p >{number}</p>
+              <div className={isFromMoviment ? "select-none absolute top-[33px] md:top-[33px] left-[2.4em] md:left-[2.4rem] text-[0.9em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-17" : "select-none absolute top-[120px] md:top-[120px] left-[1.4em] md:left-[1.4rem] text-[1.1em] md:text-[1.1em] text-white text-opacity-75 text-shadow flex flex-col gap-2"}>
+                <p>{description == null ? "--:--" : isFromMoviment ? "SALDO ACTUAL" : description}</p>
+                <p className={isFromMoviment ? "opacity-40 text-[15px]": ""}>{number.toString().substring(0, number.toString().length - 5 ) + "*****"}</p>
               </div>
               <p className="absolute bottom-[0.75em] right-[1.8em] text-[0.9em] md:text-[0.9em] text-white text-opacity-75 text-shadow select-none">
                 {createDate}
@@ -61,11 +61,11 @@ export default function CardBank({
               {/* Círculos Mastercard */}
               <div
                 className="absolute bottom-[2em] md:bottom-[2em] right-[3em] md:right-[3em] md:w-[3em] md:h-[3em] h-[3.5em] w-[3.5em] rounded-full"
-                style={{ background }}
+                style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.30) 12%, rgba(255,255,255,0.50) 25%, rgba(255,255,255,0.30) 62%)` }}
               ></div>
               <div
                 className="absolute bottom-[2em] md:bottom-[2em] right-[1.2em] md:w-[3em] md:h-[3em] h-[3.5em] w-[3.5em] rounded-full"
-                style={{ background }}
+                style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.30) 12%, rgba(255,255,255,0.50) 25%, rgba(255,255,255,0.30) 62%)`  }}
               ></div>
 
               {/* Chip */}

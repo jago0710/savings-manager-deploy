@@ -13,7 +13,7 @@ import { Toast } from 'primereact/toast';
 import { ScrollTop } from "primereact/scrolltop";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import ButtonTop from "../components/ButtonTop.jsx";
-import { ArrowUpRight, HandCoins, Handshake, PiggyBank, ArrowDownLeft, CalendarDays, FileText, DollarSign, Euro, TrendingUp, TrendingDown } from "lucide-react";
+import { ArrowUpRight, HandCoins, Handshake, PiggyBank, BanknoteArrowDown, ArrowDownLeft, CalendarDays, FileText, ArrowRightLeft, Euro, TrendingUp, TrendingDown, LayoutDashboard } from "lucide-react";
 import { Tag } from "primereact/tag"
 import CardBank from "../components/CardBank.jsx";
 import CardNew from "../components/CardNew.jsx";
@@ -311,7 +311,36 @@ const addMovementToFirestore = async (newMovement) => {
                 currency: "EUR",
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              }).format(parseFloat(totalMoney))}></CardBank>
+              }).format(parseFloat(totalMoney))} color={countSavings.color} number={countSavings.number}></CardBank>
+          </div>
+          {/**ACCIONES RÁPIDAS NUEVA SECCIÓN */}
+          <div className="md:hidden">
+            <ul className="flex flex-row justify-between gap-2">
+              <li>
+                <a href="" className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
+                  <ArrowRightLeft></ArrowRightLeft>
+                  <p className="text-[10px] text-center">Realizar movimiento</p>
+                </a>
+              </li>
+              <li>
+                <a href="" className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
+                  <BanknoteArrowDown></BanknoteArrowDown>
+                  <p className="text-[10px] text-center">Realizar prestamo</p>
+                </a>
+              </li>
+              <li>
+                <a href="/loans" className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
+                  <HandCoins></HandCoins>
+                  <p className="text-[10px] text-center">Ver prestamos</p>
+                </a>
+              </li>
+              <li>
+                <a href={"/dashboard/" + countSavings.number} className="text-wrap flex flex-col items-center justify-center border-1 border-gray-300 bg-white p-2 rounded-xl">
+                  <LayoutDashboard></LayoutDashboard>
+                  <p className="text-[10px] text-center">Ver dashboard</p>
+                </a>
+              </li>
+            </ul>
           </div>
           {/**ACCIONES RÁPIDAS PAR INGRESAR DINERO O RETIRAR */}
           <div className="border border-gray-300 rounded-lg p-4 flex gap-2 flex-col bg-white">
